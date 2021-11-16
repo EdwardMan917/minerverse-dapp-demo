@@ -13,13 +13,19 @@ export const StyledMainContainer = styled.div`
 
 export const StyledMainValueContainer = styled.div`
   width: 100%;
-  height: 1800px;
+  height: 1600px;
   background-image: url(${Stars});
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   background-size: contain;
+  display: flex;
+  justify-content: center;
 `;
 
 export const StyledMainFooterContainer = styled.div`
   width: 100%;
   height: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

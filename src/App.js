@@ -1,9 +1,13 @@
+import NavBar from './components/NavBar';
 import './App.css';
-import MainContainer from './components/MainContainer';
+import MainContainer from './components/homepage/MainContainer';
 
 function App() {
   return (
-    <MainContainer />
+    <>
+      <NavBar />
+      <MainContainer />
+    </>
   );
 }
 
