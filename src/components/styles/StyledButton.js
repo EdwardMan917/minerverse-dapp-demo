@@ -40,6 +40,6 @@ export const NavButton = styled.button`
   border-width: 0px;
   border-radius: 20px;
   user-select: none;
-  height: 30px;
-  width: 180px;
+  height: 27px;
+  width: 160px;
 `;

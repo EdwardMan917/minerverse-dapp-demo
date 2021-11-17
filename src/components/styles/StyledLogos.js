@@ -39,6 +39,6 @@ export const CoinMarketCapLogo = styled(Svg)`
 export const MinerverseLogo = styled(Svg)`
   background-image: url(${MinerverseSvg});
   background-position-x: left;
-  height: 38px;
+  height: 35px;
   flex-grow: 1;
 `;
