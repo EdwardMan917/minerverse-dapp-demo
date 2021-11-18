@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, CardContainer, CardContent, CardIcon, CardTitle, GameFi, Home, ToolBox } from "../styles/StyledCard";
-import { CertikLogo, CoinGeckoLogo, CoinMarketCapLogo, LogoContainer } from "../styles/StyledLogos";
+import { Card, CardContainer, CardContent, CardIcon, CardTitle, GameFi, Home, ToolBox } from "../styles/Card";
+import { CertikLogo, CoinGeckoLogo, CoinMarketCapLogo, LogoContainer } from "../styles/BusinessLogos";
 import { StyledMainFooterContainer } from "../styles/StyledMainContainer";
 
 function Footer() {

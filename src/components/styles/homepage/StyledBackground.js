@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import MountainImage from "../../assets/images/common/mountain.png";
+import MountainImage from "../../../assets/images/common/mountain.png";
 
-export const StyledMainBackground = styled.div`
+export const StyledBackground = styled.div`
   position: relative;
   height: 100%;
   width: 100%;

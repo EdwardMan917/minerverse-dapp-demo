@@ -1,15 +1,22 @@
 import React from "react";
-import { StyledMainBackground, Mountain } from "../styles/StyledMainBackground";
-import { TopUFO, MidUFO, BottomUFO } from "../styles/StyledUFOs";
+import { StyledBackground, Mountain } from "../styles/homepage/StyledBackground";
+import * as Radiations from "../styles/Radiations";
+import { TopUFO, MidUFO, BottomUFO } from "../styles/UFOs";
 
 function Background() {
   return (
-    <StyledMainBackground>
+    <StyledBackground>
+      <Radiations.RadiationOne />
+      <Radiations.RadiationTwo />
+      <Radiations.RadiationThree />
+      <Radiations.RadiationFour />
+      <Radiations.RadiationFive />
+      <Radiations.RadiationSix />
       <TopUFO />
       <MidUFO />
       <BottomUFO />
       <Mountain />
-    </StyledMainBackground>
+    </StyledBackground>
   );
 }
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Routes, Route, Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -8,9 +9,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import MainContainer from './homepage/MainContainer';
-import { MinerverseLogo } from './styles/StyledLogos';
+import Homepage from '../pages/Homepage';
+import SoFiDashboard from '../pages/SoFiDashboard';
+
+import { MinerverseLogo } from './styles/BusinessLogos';
 import MenuDrawer from './MenuDrawer';
+import { NavButton } from './styles/Buttons';
+
+import { Colors } from "../constants/Colors.ts";
 
 
 const AppBar = styled(MuiAppBar, {
@@ -19,14 +25,17 @@ const AppBar = styled(MuiAppBar, {
   zIndex: theme.zIndex.drawer + 1
 }));
 
-const HamburgerIcon = styled(MenuIcon)({
+const IconStyle = () => ({
   height: '28px',
   width: '28px'
+})
+
+const HamburgerIcon = styled(MenuIcon)({
+  ...IconStyle()
 });
 
 const DrawerOpenedIcon = styled(ChevronLeftIcon)({
-  height: '28px',
-  width: '28px'
+  ...IconStyle()
 });
 
 export default function MainFrame() {
@@ -37,12 +46,12 @@ export default function MainFrame() {
   }
 
   const BoxStyle = {
-    background: '#000'
+    background: `${Colors.Black}`
   }
 
   const AppBarStyle = {
-    background: '#000',
-    borderBottom: '0.6px #313131 solid'
+    background: `${Colors.Black}`,
+    borderBottom: `0.6px ${Colors.NavBorderGrey} solid`
   }
 
   return (
@@ -57,17 +66,22 @@ export default function MainFrame() {
             edge="start"
             sx={{
               marginRight: '20px',
-              height: '28px',
-              width: '28px'
+              ...IconStyle()
             }}
           >
             {open ? <DrawerOpenedIcon /> : <HamburgerIcon />}
           </IconButton>
-          <MinerverseLogo />
+          <Link to="/">
+            <MinerverseLogo />
+          </Link>
+          <NavButton>Connect Wallet</NavButton>
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen}/>
-      <MainContainer />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/sofi-dashboard" element={<SoFiDashboard />} />
+      </Routes>
     </Box>
   );
 }

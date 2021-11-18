@@ -4,25 +4,15 @@ import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import * as MenuIcons from './styles/StyledMenuIcons';
 import { MultiLevelListItem, SingleListItem } from './MenuListItems';
+import MenuFooter from './MenuFooter';
 
+import { Colors } from "../constants/Colors.ts";
+import { MenuItems, DrawerSpecs } from '../constants/Menu';
 
-const drawerOpenedWidth = '200px';
-const drawerClosedWidth = '40px';
-const headerHeight = "64px";
-
-const Icons = [
-  { title: 'Farms & Pool', icon: <MenuIcons.FarmsIcon />, hasChild: false },
-  { title: 'Convert', icon: <MenuIcons.ConvertIcon />, hasChild: false },
-  { title: 'SoFi', icon: <MenuIcons.SoFiIcon />, hasChild: true, children: ['Dashboard', 'Market', 'My Portfolio', 'Following'] },
-  { title: 'NFT', icon: <MenuIcons.NFTIcon />, hasChild: false },
-  { title: 'Win', icon: <MenuIcons.WinIcon />, hasChild: false },
-  { title: 'More', icon: <MenuIcons.MoreIcon />, hasChild: true, children: ['Info', 'Voting', 'Docs'] }
-]
 
 const openedMixin = (theme) => ({
-  width: drawerOpenedWidth,
+  width: `${DrawerSpecs.OpenedWidth}`,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -36,20 +26,21 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: drawerClosedWidth
+  width: `${DrawerSpecs.ClosedWidth}`,
 });
 
 const DrawerStyle = () => ({
-  background: '#000',
-  borderRight: '0.6px #313131 solid',
-  top: headerHeight,
-  position: 'fixed'
+  background: `${Colors.Black}`,
+  borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
+  top: `${DrawerSpecs.headerHeight}`,
+  position: 'fixed',
+  height: `calc(100vh - ${DrawerSpecs.headerHeight})`
 });
 
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
-    width: drawerOpenedWidth,
+    width: `${DrawerSpecs.OpenedWidth}`,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -79,7 +70,7 @@ function MenuDrawer(props) {
   }, [props.open]);
 
   const MenuListStyle = {
-    background: '#000',
+    background: `${Colors.Black}`,
     paddingLeft: '10px'
   }
 
@@ -87,11 +78,12 @@ function MenuDrawer(props) {
     <Drawer variant="permanent" open={open}>
       <Divider />
       <List style={{ ...MenuListStyle }} >
-        {Icons.map((item)  => (
+        {MenuItems.map((item)  => (
           item.hasChild ? MultiLevelListItem(item, open, props.setDrawerOpen) : SingleListItem(item, props.setDrawerOpen)
         ))}
       </List>
       <Divider />
+      <MenuFooter visible={open} />
     </Drawer>
   );
 }

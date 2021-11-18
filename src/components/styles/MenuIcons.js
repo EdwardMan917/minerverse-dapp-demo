@@ -7,6 +7,8 @@ import NFTSvg from '../../assets/svg/pagr-menu/NFT.svg';
 import WinSvg from '../../assets/svg/pagr-menu/win.svg';
 import MoreSvg from '../../assets/svg/pagr-menu/more.svg';
 
+import I18NSvg from '../../assets/images/common/i18n.svg';
+
 
 const MenuIcon = styled.div`
   background-repeat: no-repeat;
@@ -37,4 +39,12 @@ export const WinIcon = styled(MenuIcon)`
 
 export const MoreIcon = styled(MenuIcon)`
   background-image: url(${MoreSvg});
+`;
+
+export const I18NIcon = styled.div`
+  background-image: url(${I18NSvg});
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 25px;
+  height: 25px;
 `;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import Stars from "../../assets/images/common/stars.png";
+import { Colors } from "../../constants/Colors.ts";
 
 
 export const StyledMainContainer = styled.div`
@@ -9,11 +10,12 @@ export const StyledMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
 `;
 
 export const StyledMainValueContainer = styled.div`
   width: 100%;
-  height: 1600px;
+  height: 1500px;
   background-image: url(${Stars});
   background-repeat: repeat;
   background-size: contain;
@@ -22,6 +24,8 @@ export const StyledMainValueContainer = styled.div`
 `;
 
 export const StyledMainFooterContainer = styled.div`
+  background: ${Colors.Black};
+  z-index: 1;
   width: 100%;
   height: 900px;
   display: flex;

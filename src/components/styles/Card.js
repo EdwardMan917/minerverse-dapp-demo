@@ -2,6 +2,7 @@ import styled from "styled-components";
 import GameFiSvg from "../../assets/svg/page-home/gameFi.svg";
 import ToolBoxSvg from "../../assets/svg/page-home/toolBox.svg";
 import HomeSvg from "../../assets/svg/page-home/home.svg";
+import { Colors } from "../../constants/Colors.ts";
 
 const Svg = styled.div`
   background-repeat: no-repeat;
@@ -27,11 +28,18 @@ export const Home = styled(Svg)`
 `;
 
 export const CardContainer = styled.div`
-  width: 1100px;
+  max-width: 1100px;
+  width: 70%;
+  min-width: 900px;
   height: 600px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+
+  @media (max-width: 1150px) {
+    width: 80%;
+    min-width: 600px;
+  }
 `;
 
 export const Card = styled.div`
@@ -41,10 +49,14 @@ export const Card = styled.div`
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
-  border-color: grey;
+  border-color: ${Colors.NavBorderGrey};
   border-radius: 20px;
   height: 100%;
   width: 30%;
+
+  @media (max-width: 1150px) {
+    width: 28%;
+  }
 `;
 
 export const CardTitle = styled.div`
@@ -55,7 +67,7 @@ export const CardTitle = styled.div`
   font-family: "GothamBold";
   font-size: 30px;
   line-height: 38px;
-  color: white;
+  color: ${Colors.White};
   height: 150px;
   width: 100%;
 `;
@@ -75,7 +87,7 @@ export const CardContent = styled.div`
   font-family: "GothamLight";
   font-size: 18px;
   line-height: 40px;
-  color: white;
+  color: ${Colors.White};
   height: 300px;
   width: 100%;
 `;
