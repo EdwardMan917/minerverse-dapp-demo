@@ -53,7 +53,7 @@ export const NavButton = styled.button`
   border-radius: 20px;
   user-select: none;
   height: 27px;
-  width: 160px;
+  min-width: 160px;
 
   :hover {
     background: ${Colors.Black};

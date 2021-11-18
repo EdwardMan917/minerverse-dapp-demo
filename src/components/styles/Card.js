@@ -37,9 +37,18 @@ export const CardContainer = styled.div`
   justify-content: space-evenly;
 
   @media (max-width: 1150px) {
-    width: 80%;
-    min-width: 600px;
+    width: 100%;
   }
+
+  @media (max-width: 910px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 1300px;
+    min-width: 0px;
+  }
+
 `;
 
 export const Card = styled.div`
@@ -56,6 +65,12 @@ export const Card = styled.div`
 
   @media (max-width: 1150px) {
     width: 28%;
+  }
+
+  @media (max-width: 910px) {
+    width: 80%;
+    margin-top: 20px;
+    height: 400px;
   }
 `;
 
@@ -77,6 +92,10 @@ export const CardIcon = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 910px) {
+    height: 150px;
+  }
 `;
 
 export const CardContent = styled.div`

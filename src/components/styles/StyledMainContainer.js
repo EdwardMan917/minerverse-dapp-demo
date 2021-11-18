@@ -32,4 +32,9 @@ export const StyledMainFooterContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  @media (max-width: 910px) {
+    height: 1500px;
+  }
+
 `;

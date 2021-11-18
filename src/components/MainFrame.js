@@ -30,6 +30,10 @@ const IconStyle = () => ({
   width: '28px'
 })
 
+const LinkStyle = () => ({
+  flexGrow: 1
+})
+
 const HamburgerIcon = styled(MenuIcon)({
   ...IconStyle()
 });
@@ -71,7 +75,7 @@ export default function MainFrame() {
           >
             {open ? <DrawerOpenedIcon /> : <HamburgerIcon />}
           </IconButton>
-          <Link to="/">
+          <Link to="/" style={{ ...LinkStyle() }} >
             <MinerverseLogo />
           </Link>
           <NavButton>Connect Wallet</NavButton>

@@ -8,6 +8,11 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   width: 550px;
   justify-content: center;
+
+  @media (max-width: 910px) {
+    width: 60%;
+  }
+
 `;
 
 export const IntroTitle = styled.div`
