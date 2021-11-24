@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import MountainImage from "../../assets/images/common/mountain.png";
+import MountainImage from "../../../assets/images/common/mountain.png";
 
-export const StyledMainBackground = styled.div`
+export const StyledBackground = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 `;
 
 export const Mountain = styled.div`
@@ -16,4 +17,9 @@ export const Mountain = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position-y: bottom;
+  
+  @media (max-width: 550px){
+    width: 150%;
+    transform: translateX(-20%);
+  }
 `;
