@@ -21,6 +21,10 @@ export const StyledMainValueContainer = styled.div`
   background-size: contain;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 550px){
+    background-size: 300%;  
+  }
 `;
 
 export const StyledMainFooterContainer = styled.div`
@@ -35,6 +39,10 @@ export const StyledMainFooterContainer = styled.div`
   
   @media (max-width: 910px) {
     height: 1500px;
+  }
+
+  @media (max-width: 550px) {
+    height: 1850px;
   }
 
 `;

@@ -31,7 +31,8 @@ const IconStyle = () => ({
 })
 
 const LinkStyle = () => ({
-  flexGrow: 1
+  flexGrow: 1,
+  width: '120px'
 })
 
 const HamburgerIcon = styled(MenuIcon)({

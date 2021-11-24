@@ -13,7 +13,7 @@ export const ValueBox = styled.div`
   border-radius: 15px;
   margin-bottom: 40px;
   padding-left: 20px;
-  background: ${Colors.Black}
+  background: ${Colors.Black};
 `;
 
 export const BoxTitle = styled.div`
@@ -22,6 +22,10 @@ export const BoxTitle = styled.div`
   font-size: 25px;
   color: ${Colors.White};
   margin-top: 30px;
+
+  @media (max-width: 900px){
+    font-size: 25px;
+  }
 `;
 
 export const BoxValue = styled.div`
@@ -32,4 +36,8 @@ export const BoxValue = styled.div`
   text-shadow: 
     0 0 7px ${Colors.MinerverseYellow};
   margin-top: 15px;
+
+  @media (max-width: 900px){
+    font-size: 35px;
+  }
 `;

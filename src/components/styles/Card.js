@@ -49,6 +49,10 @@ export const CardContainer = styled.div`
     min-width: 0px;
   }
 
+  @media (max-width: 550px) {
+    height: 1700px;
+  }
+
 `;
 
 export const Card = styled.div`
@@ -72,6 +76,10 @@ export const Card = styled.div`
     margin-top: 20px;
     height: 400px;
   }
+
+  @media (max-width: 550px) {
+    height: 450px;
+  }
 `;
 
 export const CardTitle = styled.div`
@@ -85,6 +93,11 @@ export const CardTitle = styled.div`
   color: ${Colors.White};
   height: 150px;
   width: 100%;
+
+  @media (max-width: 550px) {
+   font-size: 25px;
+   height: 100px;
+  }
 `;
 
 export const CardIcon = styled.div`
@@ -93,8 +106,8 @@ export const CardIcon = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 910px) {
-    height: 150px;
+  @media (max-width: 550px) {
+    height: 130px;
   }
 `;
 

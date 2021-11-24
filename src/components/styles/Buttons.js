@@ -9,6 +9,14 @@ export const StyledButtonContainer = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   margin: 50px 0 100px 0;
+
+  @media (max-width: 910px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    margin: 0 0 30px 0;
+  }
 `;
 
 export const LongButton = styled.button`
@@ -25,6 +33,12 @@ export const LongButton = styled.button`
     opacity: 0.98;
     transform: translateY(2px);
   }
+
+  @media (max-width: 910px) {
+    width: 80%;
+    margin: 5px 0;
+    height: 50px;
+  }
 `;
 
 export const ShortButton = styled.button`
@@ -37,6 +51,7 @@ export const ShortButton = styled.button`
   user-select: none;
   padding: 0 20px 0 20px;
   min-width: 100px;
+  height: 60px;
   
   :active {
     opacity: 0.98;
@@ -58,6 +73,11 @@ export const NavButton = styled.button`
   :hover {
     background: ${Colors.Black};
     color: ${Colors.MinerverseYellow};;
+  }
+
+  @media (max-width: 910px) {
+    font-size: 12px;
+    min-width: 120px;
   }
 
 `;

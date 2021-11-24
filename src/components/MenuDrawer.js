@@ -1,4 +1,3 @@
-import React from 'react';
 import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,7 +16,7 @@ const openedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
-  overflowX: 'hidden',
+  overflowX: 'hidden'
 });
 
 const closedMixin = (theme) => ({
@@ -26,7 +25,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `${DrawerSpecs.ClosedWidth}`,
+  width: `${DrawerSpecs.ClosedWidth}`
 });
 
 const DrawerStyle = () => ({
@@ -34,11 +33,15 @@ const DrawerStyle = () => ({
   borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
   top: `${DrawerSpecs.headerHeight}`,
   position: 'fixed',
-  height: `calc(100vh - ${DrawerSpecs.headerHeight})`
+  height: `calc(100vh - ${DrawerSpecs.headerHeight})`,
+  "@media (max-width:600px)": {
+    top: `${DrawerSpecs.mobileHeaderHeight}`,
+    height: `calc(100vh - ${DrawerSpecs.mobileHeaderHeight})`
+  }
 });
 
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const Drawer = styled(MuiDrawer)(
   ({ theme, open }) => ({
     width: `${DrawerSpecs.OpenedWidth}`,
     flexShrink: 0,
@@ -64,9 +67,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function MenuDrawer(props) {
 
   const [open, setOpen] = useState(props.open);
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     setOpen(props.open);
+    window.addEventListener("resize", () => {
+      setWidth(window.innerWidth);
+    })
   }, [props.open]);
 
   const MenuListStyle = {
@@ -75,7 +82,7 @@ function MenuDrawer(props) {
   }
 
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer variant={ width < 550 ? "temporary" : "permanent" } open={open}>
       <Divider />
       <List style={{ ...MenuListStyle }} >
         {MenuItems.map((item)  => (

@@ -5,6 +5,7 @@ export const StyledBackground = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 `;
 
 export const Mountain = styled.div`
@@ -16,4 +17,9 @@ export const Mountain = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position-y: bottom;
+  
+  @media (max-width: 550px){
+    width: 150%;
+    transform: translateX(-20%);
+  }
 `;

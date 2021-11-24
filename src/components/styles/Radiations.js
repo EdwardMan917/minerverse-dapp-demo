@@ -2,11 +2,17 @@ import styled from "styled-components";
 import { Colors } from "../../constants/Colors.ts";
 
 const BaseRadiation =  styled.div`
-  border: 2px ${Colors.RadiationGrey} solid;
+  border-width: 2px;
+  border-color: ${Colors.RadiationGrey};
+  border-style: solid;
   border-radius: 50%;
   right: 0;
   top: 70%;
   position: absolute;
+
+  @media (max-width: 550px){
+    border-width: 0.6px;
+  }
 `;
 
 export const RadiationOne = styled(BaseRadiation)`

@@ -20,6 +20,13 @@ export const LogoContainer = styled.div`
     width: 80%;
   }
 
+  @media (max-width: 550px) {
+    flex-direction: column;
+    width: 250px;
+    height: 200px;
+    align-items: center;
+    margin-top: 0px;
+  }
 `;
 
 const Svg = styled.div`
@@ -29,6 +36,11 @@ const Svg = styled.div`
   height: 100%;
   width: 250px;
   margin: 10px;
+  
+  @media (max-width: 550px) {
+    width: 100%;
+    height: 50px;
+  }
 `;
 
 export const CertikLogo = styled(Svg)`

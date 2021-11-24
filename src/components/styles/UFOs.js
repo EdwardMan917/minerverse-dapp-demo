@@ -28,6 +28,14 @@ export const TopUFO = styled(UFO)`
   right: 10%;
   background-image: url(${TopUFOImage});
   animation-delay: 0s;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    width: 250px;
+    height: 200px;
+    align-items: center;
+    margin-top: 0px;
+  }
 `
 
 export const MidUFO = styled(UFO)`

@@ -5,7 +5,8 @@ import { ReactComponent as Farms} from '../assets/svg/pagr-menu/farms.svg';
 export const DrawerSpecs = {
   OpenedWidth: '200px',
   ClosedWidth: '40px',
-  headerHeight: "64px"
+  headerHeight: "64px",
+  mobileHeaderHeight: "57px"
 }
 
 export const MenuItems = [
