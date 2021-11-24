@@ -65,6 +65,7 @@ export const SingleListItem = (item, setDrawerOpen) => {
   );
 }
 
+
 export const MultiLevelListItem = (item, drawerOpened, setDrawerOpen) => {
   let children = item.children;
 
@@ -86,8 +87,8 @@ export const MultiLevelListItem = (item, drawerOpened, setDrawerOpen) => {
   }, [drawerOpened])
 
   return (
-    <React.Fragment>
-      <StyledListItem button onClick={handleClick}>
+    <React.Fragment key={item.title} >
+      <StyledListItem button key={item.title} onClick={handleClick}>
         <StyledListIcon>
           {item.icon}
         </StyledListIcon>
@@ -96,8 +97,8 @@ export const MultiLevelListItem = (item, drawerOpened, setDrawerOpen) => {
       </StyledListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {Object.keys(children).map((name) => (
-            <StyledMenuItem>{name}</StyledMenuItem> // TODO: add link
+          {children.map((child) => (
+            <StyledMenuItem key={child.index} >{child.title}</StyledMenuItem> // TODO: add link
           ))}
         </List>
       </Collapse>
