@@ -8,6 +8,11 @@ export const ContentWrapper = styled.div`
   flex-direction: column;
   width: 550px;
   justify-content: center;
+
+  @media (max-width: 910px) {
+    width: 85%;
+  }
+
 `;
 
 export const IntroTitle = styled.div`
@@ -18,6 +23,10 @@ export const IntroTitle = styled.div`
   font-size: 65px;
   color: ${Colors.White};
   margin-bottom: 10px;
+
+  @media (max-width: 910px) {
+    font-size: 40px;
+  }
 `;
 
 export const IntroSlogan = styled.div`
@@ -27,6 +36,10 @@ export const IntroSlogan = styled.div`
   font-family: "GothamLight";
   font-size: 25px;
   color: ${Colors.White};
+
+  @media (max-width: 910px) {
+    font-size: 20px;
+  }
 `;
 
 export const IntroContainer = styled.div`

@@ -28,6 +28,14 @@ export const TopUFO = styled(UFO)`
   right: 10%;
   background-image: url(${TopUFOImage});
   animation-delay: 0s;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    width: 250px;
+    height: 200px;
+    align-items: center;
+    margin-top: 0px;
+  }
 `
 
 export const MidUFO = styled(UFO)`
@@ -42,8 +50,8 @@ export const MidUFO = styled(UFO)`
 export const BottomUFO = styled(UFO)`
   height: 79px;
   width: 127px;
-  top: 1400px;
-  right: 600px;
+  top: 90%;
+  right: 30%;
   z-index: 2;
   background-image: url(${BottomUFOImage});
   animation-delay: 1s;
