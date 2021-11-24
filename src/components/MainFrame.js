@@ -84,8 +84,8 @@ export default function MainFrame() {
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen}/>
       <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/sofi-dashboard" element={<SoFiDashboard />} />
+        <Route path="/minerverse-dapp-demo/" element={<Homepage />} />
+        <Route path="/minerverse-dapp-demo/sofi-dashboard" element={<SoFiDashboard />} />
       </Routes>
     </Box>
   );
