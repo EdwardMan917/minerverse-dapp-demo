@@ -97,7 +97,7 @@ export default function MainFrame() {
           >
             {open ? <DrawerOpenedIcon /> : <HamburgerIcon />}
           </IconButton>
-          <Link to="/" style={{ ...LinkStyle() }} >
+          <Link to="/minerverse-dapp-demo/" style={{ ...LinkStyle() }} >
             <MinerverseLogo />
           </Link>
           <NavButtonContainer>
