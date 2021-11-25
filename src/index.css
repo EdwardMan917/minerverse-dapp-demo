@@ -16,11 +16,22 @@
 body, html {
   min-height: 100%;
   width: 100%;
+  padding: 0px !important;
 }
 
 body {
   background: #000;
   margin: 0px;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 code {
