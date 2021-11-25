@@ -22,7 +22,8 @@ import { Colors } from "../constants/Colors.ts";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })( ({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1
+  zIndex: theme.zIndex.drawer + 1,
+  paddingRight: "0px !important"
 }));
 
 const IconStyle = () => ({

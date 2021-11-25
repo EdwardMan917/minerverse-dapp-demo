@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Colors } from "../../../constants/Colors.ts";
+import { DrawerSpecs } from "../../../constants/Menu";
 
 
 export const ContentWrapper = styled.div`
@@ -10,7 +11,11 @@ export const ContentWrapper = styled.div`
   justify-content: center;
 
   @media (max-width: 910px) {
-    width: 85%;
+    width: calc(85% - ${DrawerSpecs.OpenedWidth});
+  }
+
+  @media (max-width: 670px) {
+    width: calc(90%);
   }
 
 `;
