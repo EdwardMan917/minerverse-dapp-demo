@@ -41,3 +41,29 @@ export const BoxValue = styled.div`
     font-size: 35px;
   }
 `;
+
+
+export const AddressBox = styled.div`
+  background: ${Colors.Black};
+  font-family: "GothamMedium";
+  color: ${Colors.White};
+  font-size: 14px;
+  border: 2px ${Colors.White} solid;
+  border-radius: 20px;
+  user-select: none;
+  height: 27px;
+  min-width: 160px;
+  visibility: ${props => props.visible ? "visible" : "hidden" };
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0px;
+
+  @media (max-width: 910px) {
+    font-size: 12px;
+    min-width: 120px;
+  }
+
+`;

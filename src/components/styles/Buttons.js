@@ -59,6 +59,17 @@ export const ShortButton = styled.button`
   }
 `;
 
+export const NavButtonContainer = styled.div`
+  height: 27px;
+  min-width: 160px;
+  position: relative;
+
+  @media (max-width: 910px) {
+    font-size: 12px;
+    min-width: 120px;
+  }
+`;
+
 export const NavButton = styled.button`
   background: ${Colors.MinerverseYellow};
   font-family: "GothamMedium";
@@ -69,6 +80,8 @@ export const NavButton = styled.button`
   user-select: none;
   height: 27px;
   min-width: 160px;
+  visibility: ${props => props.visible ? "visible" : "hidden" };
+  position: absolute;
 
   :hover {
     background: ${Colors.Black};

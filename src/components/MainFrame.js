@@ -14,9 +14,13 @@ import SoFiDashboard from '../pages/SoFiDashboard';
 
 import { MinerverseLogo } from './styles/BusinessLogos';
 import MenuDrawer from './MenuDrawer';
+import { NavButtonContainer } from './styles/Buttons';
 import { NavButton } from './styles/Buttons';
+import { AddressBox } from './styles/StyledValueBox';
 
 import { Colors } from "../constants/Colors.ts";
+
+import { connect } from '../utils/wallet';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -46,9 +50,25 @@ const DrawerOpenedIcon = styled(ChevronLeftIcon)({
 
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
+  const [connected, setConnected] = React.useState(false);
+  const [address, setAddress] = React.useState('');
 
   const toggleDrawer = () => {
     setOpen(!open);
+  }
+
+  const handleConnect = () => {
+    let walletAddress;
+    (async () => {
+      walletAddress = await connect();
+      if (walletAddress) {
+        setConnected(true);
+        let addressLength = walletAddress.length;
+        console.log(walletAddress);
+        walletAddress = walletAddress.toString();
+        setAddress(walletAddress.substring(0, 5) + "..." + walletAddress.substring(addressLength - 5, addressLength));
+      }
+    })()
   }
 
   const BoxStyle = {
@@ -80,7 +100,10 @@ export default function MainFrame() {
           <Link to="/" style={{ ...LinkStyle() }} >
             <MinerverseLogo />
           </Link>
-          <NavButton>Connect Wallet</NavButton>
+          <NavButtonContainer>
+            <NavButton visible={!connected} onClick={handleConnect} >Connect Wallet</NavButton>
+            <AddressBox visible={connected}>{address}</AddressBox>
+          </NavButtonContainer>
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen}/>
