@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/minerverse-dapp-demo/static/css/main.5ddb9773.chunk.css",
-    "main.js": "/minerverse-dapp-demo/static/js/main.9230394c.chunk.js",
-    "main.js.map": "/minerverse-dapp-demo/static/js/main.9230394c.chunk.js.map",
+    "main.css": "/minerverse-dapp-demo/static/css/main.921f8263.chunk.css",
+    "main.js": "/minerverse-dapp-demo/static/js/main.9b292a0e.chunk.js",
+    "main.js.map": "/minerverse-dapp-demo/static/js/main.9b292a0e.chunk.js.map",
     "runtime-main.js": "/minerverse-dapp-demo/static/js/runtime-main.a68788ab.js",
     "runtime-main.js.map": "/minerverse-dapp-demo/static/js/runtime-main.a68788ab.js.map",
-    "static/js/2.b45a6ff8.chunk.js": "/minerverse-dapp-demo/static/js/2.b45a6ff8.chunk.js",
-    "static/js/2.b45a6ff8.chunk.js.map": "/minerverse-dapp-demo/static/js/2.b45a6ff8.chunk.js.map",
+    "static/js/2.5390b98a.chunk.js": "/minerverse-dapp-demo/static/js/2.5390b98a.chunk.js",
+    "static/js/2.5390b98a.chunk.js.map": "/minerverse-dapp-demo/static/js/2.5390b98a.chunk.js.map",
     "static/js/3.e14338c2.chunk.js": "/minerverse-dapp-demo/static/js/3.e14338c2.chunk.js",
     "static/js/3.e14338c2.chunk.js.map": "/minerverse-dapp-demo/static/js/3.e14338c2.chunk.js.map",
     "index.html": "/minerverse-dapp-demo/index.html",
-    "static/css/main.5ddb9773.chunk.css.map": "/minerverse-dapp-demo/static/css/main.5ddb9773.chunk.css.map",
-    "static/js/2.b45a6ff8.chunk.js.LICENSE.txt": "/minerverse-dapp-demo/static/js/2.b45a6ff8.chunk.js.LICENSE.txt",
+    "static/css/main.921f8263.chunk.css.map": "/minerverse-dapp-demo/static/css/main.921f8263.chunk.css.map",
+    "static/js/2.5390b98a.chunk.js.LICENSE.txt": "/minerverse-dapp-demo/static/js/2.5390b98a.chunk.js.LICENSE.txt",
     "static/media/index.css": "/minerverse-dapp-demo/static/media/Gotham-Medium.37c01647.otf",
     "static/media/NFT.7035b9cc.svg": "/minerverse-dapp-demo/static/media/NFT.7035b9cc.svg",
     "static/media/Sofi.a7661876.svg": "/minerverse-dapp-demo/static/media/Sofi.a7661876.svg",
@@ -37,8 +37,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.a68788ab.js",
-    "static/js/2.b45a6ff8.chunk.js",
-    "static/css/main.5ddb9773.chunk.css",
-    "static/js/main.9230394c.chunk.js"
+    "static/js/2.5390b98a.chunk.js",
+    "static/css/main.921f8263.chunk.css",
+    "static/js/main.9b292a0e.chunk.js"
   ]
 }
