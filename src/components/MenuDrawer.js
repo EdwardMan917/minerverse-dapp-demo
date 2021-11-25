@@ -82,7 +82,7 @@ function MenuDrawer(props) {
   }
 
   return (
-    <Drawer variant={ width < 550 ? "temporary" : "permanent" } open={open}>
+    <Drawer variant={ width < 670 ? "temporary" : "permanent" } open={open}>
       <Divider />
       <List style={{ ...MenuListStyle }} >
         {MenuItems.map((item)  => (
