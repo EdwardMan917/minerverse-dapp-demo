@@ -19,20 +19,23 @@ export const StyledButtonContainer = styled.div`
   }
 `;
 
-export const LongButton = styled.button`
+const Button = styled.button`
   background: ${Colors.MinerverseYellow};
   font-family: "GothamBold";
   color: ${Colors.Black};
-  font-size: 24px;
   border-width: 0px;
   border-radius: 16px;
   user-select: none;
-  width: 45%;
 
   :active {
     opacity: 0.98;
     transform: translateY(2px);
   }
+`;
+
+export const LongButton = styled(Button)`
+  font-size: 24px;
+  width: 45%;
 
   @media (max-width: 910px) {
     width: 80%;
@@ -41,22 +44,18 @@ export const LongButton = styled.button`
   }
 `;
 
-export const ShortButton = styled.button`
-  background: ${Colors.MinerverseYellow};
-  font-family: "GothamBold";
-  color: ${Colors.Black};
-  font-size: 24px;
-  border-width: 0px;
-  border-radius: 16px;
-  user-select: none;
+export const ShortButton = styled(Button)`
   padding: 0 20px 0 20px;
   min-width: 100px;
   height: 60px;
-  
-  :active {
-    opacity: 0.98;
-    transform: translateY(2px);
-  }
+`;
+
+export const FormButton = styled(Button)`
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  margin-top: 10px;
+  border-radius: 5px;
 `;
 
 export const NavButtonContainer = styled.div`
