@@ -1,23 +1,24 @@
 {
   "files": {
-    "main.css": "/minerverse-dapp-demo/static/css/main.921f8263.chunk.css",
-    "main.js": "/minerverse-dapp-demo/static/js/main.6c9c1fc1.chunk.js",
-    "main.js.map": "/minerverse-dapp-demo/static/js/main.6c9c1fc1.chunk.js.map",
-    "runtime-main.js": "/minerverse-dapp-demo/static/js/runtime-main.1972724d.js",
-    "runtime-main.js.map": "/minerverse-dapp-demo/static/js/runtime-main.1972724d.js.map",
-    "static/js/2.4ad21232.chunk.js": "/minerverse-dapp-demo/static/js/2.4ad21232.chunk.js",
-    "static/js/2.4ad21232.chunk.js.map": "/minerverse-dapp-demo/static/js/2.4ad21232.chunk.js.map",
-    "static/js/3.0ff4e665.chunk.js": "/minerverse-dapp-demo/static/js/3.0ff4e665.chunk.js",
-    "static/js/3.0ff4e665.chunk.js.map": "/minerverse-dapp-demo/static/js/3.0ff4e665.chunk.js.map",
+    "main.css": "/minerverse-dapp-demo/static/css/main.1d68299c.chunk.css",
+    "main.js": "/minerverse-dapp-demo/static/js/main.d957292b.chunk.js",
+    "main.js.map": "/minerverse-dapp-demo/static/js/main.d957292b.chunk.js.map",
+    "runtime-main.js": "/minerverse-dapp-demo/static/js/runtime-main.d518f572.js",
+    "runtime-main.js.map": "/minerverse-dapp-demo/static/js/runtime-main.d518f572.js.map",
+    "static/js/2.4304b4ec.chunk.js": "/minerverse-dapp-demo/static/js/2.4304b4ec.chunk.js",
+    "static/js/2.4304b4ec.chunk.js.map": "/minerverse-dapp-demo/static/js/2.4304b4ec.chunk.js.map",
+    "static/js/3.583ca378.chunk.js": "/minerverse-dapp-demo/static/js/3.583ca378.chunk.js",
+    "static/js/3.583ca378.chunk.js.map": "/minerverse-dapp-demo/static/js/3.583ca378.chunk.js.map",
     "index.html": "/minerverse-dapp-demo/index.html",
-    "static/css/main.921f8263.chunk.css.map": "/minerverse-dapp-demo/static/css/main.921f8263.chunk.css.map",
-    "static/js/2.4ad21232.chunk.js.LICENSE.txt": "/minerverse-dapp-demo/static/js/2.4ad21232.chunk.js.LICENSE.txt",
+    "static/css/main.1d68299c.chunk.css.map": "/minerverse-dapp-demo/static/css/main.1d68299c.chunk.css.map",
+    "static/js/2.4304b4ec.chunk.js.LICENSE.txt": "/minerverse-dapp-demo/static/js/2.4304b4ec.chunk.js.LICENSE.txt",
     "static/media/index.css": "/minerverse-dapp-demo/static/media/Gotham-Medium.37c01647.otf",
     "static/media/NFT.7035b9cc.svg": "/minerverse-dapp-demo/static/media/NFT.7035b9cc.svg",
     "static/media/Sofi.a7661876.svg": "/minerverse-dapp-demo/static/media/Sofi.a7661876.svg",
     "static/media/comingsoon-dashboard.635c2caf.png": "/minerverse-dapp-demo/static/media/comingsoon-dashboard.635c2caf.png",
     "static/media/convert.56e4b546.svg": "/minerverse-dapp-demo/static/media/convert.56e4b546.svg",
     "static/media/discord.b9c99f4f.svg": "/minerverse-dapp-demo/static/media/discord.b9c99f4f.svg",
+    "static/media/down-arrow.b5eec572.svg": "/minerverse-dapp-demo/static/media/down-arrow.b5eec572.svg",
     "static/media/farms.a0f41e67.svg": "/minerverse-dapp-demo/static/media/farms.a0f41e67.svg",
     "static/media/gameFi.14c2710b.svg": "/minerverse-dapp-demo/static/media/gameFi.14c2710b.svg",
     "static/media/home.bda8fd7c.svg": "/minerverse-dapp-demo/static/media/home.bda8fd7c.svg",
@@ -33,12 +34,13 @@
     "static/media/telegram.d399559b.svg": "/minerverse-dapp-demo/static/media/telegram.d399559b.svg",
     "static/media/toolBox.ecfeccf7.svg": "/minerverse-dapp-demo/static/media/toolBox.ecfeccf7.svg",
     "static/media/twitter.e2e179fb.svg": "/minerverse-dapp-demo/static/media/twitter.e2e179fb.svg",
+    "static/media/wallet.ce8677a5.svg": "/minerverse-dapp-demo/static/media/wallet.ce8677a5.svg",
     "static/media/win.e46e5f87.svg": "/minerverse-dapp-demo/static/media/win.e46e5f87.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.1972724d.js",
-    "static/js/2.4ad21232.chunk.js",
-    "static/css/main.921f8263.chunk.css",
-    "static/js/main.6c9c1fc1.chunk.js"
+    "static/js/runtime-main.d518f572.js",
+    "static/js/2.4304b4ec.chunk.js",
+    "static/css/main.1d68299c.chunk.css",
+    "static/js/main.d957292b.chunk.js"
   ]
 }
