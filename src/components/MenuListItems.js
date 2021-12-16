@@ -10,6 +10,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from '@mui/material/styles';
 import { Colors } from "../constants/Colors.ts";
+import { Link } from "react-router-dom";
 
 
 const StyledListItem = styled(ListItem)({
@@ -56,12 +57,14 @@ export const SingleListItem = (item, setDrawerOpen) => {
   }
 
   return(
-    <StyledListItem button key={item.title} onClick={handleClick} >
-      <StyledListIcon>
-        {item.icon}
-      </StyledListIcon>
-      <StyledListItemText primary={item.title} selected={selected} />
-    </StyledListItem>
+    <Link key={item.title} to={item.path}>
+      <StyledListItem button key={item.title} onClick={handleClick} >
+          <StyledListIcon>
+            {item.icon}
+          </StyledListIcon>
+          <StyledListItemText primary={item.title} selected={selected} />
+      </StyledListItem>
+    </Link>
   );
 }
 

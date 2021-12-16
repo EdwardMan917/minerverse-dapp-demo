@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Colors } from "../../constants/Colors.ts";
+import { ReactComponent as WalletSvg } from "../../assets/svg/wallet.svg";
 
 export const ValueBox = styled.div`
   box-sizing: border-box;
@@ -42,20 +43,33 @@ export const BoxValue = styled.div`
   }
 `;
 
+export const WalletIcon = styled(WalletSvg)`
+  transform: scale(0.6) translateY(-2px);
+`;
+
+export const WalletIconBox = styled.div`
+  position: absolute;
+  background: ${Colors.Black};
+  border: 2px ${Colors.AddressBoxGrey} solid;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  z-index: 1;
+`;
 
 export const AddressBox = styled.div`
-  background: ${Colors.Black};
+  padding-top: 3px;
+  padding-left: 20px;
+  background: ${Colors.AddressBoxGrey};
   font-family: "GothamMedium";
   color: ${Colors.White};
-  font-size: 14px;
-  border: 2px ${Colors.White} solid;
+  font-size: 15px;
   border-radius: 20px;
   user-select: none;
+  line-height: 27px;
   height: 27px;
   min-width: 160px;
-  visibility: ${props => props.visible ? "visible" : "hidden" };
   display: flex;
-  text-align: center;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -67,3 +81,11 @@ export const AddressBox = styled.div`
   }
 
 `;
+
+export const AddressContainer = styled.div`
+  visibility: ${props => props.visible ? "visible" : "hidden" };
+  height: 27px;
+  width: 130px;
+  display: flex;
+  align-items: center;
+`
