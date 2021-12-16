@@ -1,7 +1,8 @@
+import { MenuFooterProps } from "src/interfaces/AppInterfaces";
 import styled from "styled-components";
-import { Colors } from "../../constants/Colors.ts";
+import { Colors } from "../../constants/Colors";
 
-export const StyledMenuFooter = styled.div`
+export const StyledMenuFooter = styled.div<MenuFooterProps>`
   visibility: ${props => props.visible ? "visible" : "hidden"};
   border-top: 0.6px ${Colors.NavBorderGrey} solid;
   width: 200px;

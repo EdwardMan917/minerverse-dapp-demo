@@ -19,14 +19,14 @@ import { NavButtonContainer } from './styles/Buttons';
 import { NavButton } from './styles/Buttons';
 import { WalletIcon, AddressBox, WalletIconBox, AddressContainer } from './styles/StyledValueBox';
 
-import { Colors } from "../constants/Colors.ts";
+import { Colors } from "../constants/Colors";
 
-import { getConnectedAccount, connectWallet, getConversionRate, getContractBalance } from '../utils/wallet';
-
+import { getConnectedAccount, connectWallet, getContractBalance } from '../utils/wallet';
+import { AppBarProps } from 'src/interfaces/AppInterfaces';
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme }) => ({
+})<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   paddingRight: "0px !important"
 }));
@@ -50,8 +50,7 @@ const DrawerOpenedIcon = styled(ChevronLeftIcon)({
 });
 
 
-const maskAddress = (address) => {
-  console.log(address)
+const maskAddress = (address: string) => {
   let addressLength = address.length;
   return address.substring(0, 3) + "..." + address.substring(addressLength - 5, addressLength);
 }
@@ -89,10 +88,10 @@ export default function MainFrame() {
       console.log(g);
     })();
 
-    window.ethereum.on('accountsChanged', (accounts) => {
+    window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
       if (accounts.length > 0) {
         setAddress(maskAddress(accounts[0]));
-      } else if (accounts.length == 0) {
+      } else if (accounts.length === 0) {
         setConnected(false);
         setAddress('');
       }

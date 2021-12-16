@@ -4,7 +4,7 @@ import { I18NIcon } from "./styles/MenuIcons";
 import * as Social from "./styles/SocialIcons";
 import { MVXIcon } from "./styles/Tokens";
 
-function MenuFooter(props) {
+function MenuFooter(props: { visible: boolean; }) {
 
   const [visible, setVisible] = useState(props.visible);
 

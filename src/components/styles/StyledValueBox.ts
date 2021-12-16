@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { Colors } from "../../constants/Colors.ts";
+import { Colors } from "../../constants/Colors";
 import { ReactComponent as WalletSvg } from "../../assets/svg/wallet.svg";
+import { AddressContainerProps } from "src/interfaces/AppInterfaces";
 
 export const ValueBox = styled.div`
   box-sizing: border-box;
@@ -82,7 +83,7 @@ export const AddressBox = styled.div`
 
 `;
 
-export const AddressContainer = styled.div`
+export const AddressContainer = styled.div<AddressContainerProps>`
   visibility: ${props => props.visible ? "visible" : "hidden" };
   height: 27px;
   width: 130px;

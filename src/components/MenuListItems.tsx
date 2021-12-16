@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import List from "@mui/material/List";
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from "@mui/material/Collapse";
@@ -9,11 +8,13 @@ import MenuItem from "@mui/material/MenuItem";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from '@mui/material/styles';
-import { Colors } from "../constants/Colors.ts";
+import { Colors } from "../constants/Colors";
 import { Link } from "react-router-dom";
+import { ListItemTextProps } from "src/interfaces/AppInterfaces";
+import { ListItemButton } from "@mui/material";
 
 
-const StyledListItem = styled(ListItem)({
+const StyledListItem = styled(ListItemButton)({
   padding: '0px',
   margin: '5px 0 5px 0'
 })
@@ -23,12 +24,12 @@ const StyledListIcon = styled(ListItemIcon)({
   color: `${Colors.MinerverseYellow}`
 })
 
-const StyledListItemText = styled(ListItemText)(({ selected }) => ({
+const StyledListItemText = styled(ListItemText)<ListItemTextProps>(( props: {selected: boolean}) => ({
   ...({
     '& .MuiTypography-root': {
       fontFamily: 'GothamMedium',
       fontSize: '14px',
-      color: selected ? `${Colors.MinerverseYellow}` : `${Colors.White}`
+      color: props.selected ? `${Colors.MinerverseYellow}` : `${Colors.White}`
     }
   })
 }));
@@ -47,7 +48,10 @@ const CollapseIcon = styled(ExpandLessIcon)({
   color: `${Colors.White}`
 })
 
-export const SingleListItem = (item, setDrawerOpen) => {
+export const SingleListItem = (
+    item: any, 
+    setDrawerOpen: Function
+  ) => {
 
   const [selected, setSelected] = useState(false);
 
@@ -58,7 +62,7 @@ export const SingleListItem = (item, setDrawerOpen) => {
 
   return(
     <Link key={item.title} to={item.path}>
-      <StyledListItem button key={item.title} onClick={handleClick} >
+      <StyledListItem key={item.title} onClick={handleClick} >
           <StyledListIcon>
             {item.icon}
           </StyledListIcon>
@@ -69,17 +73,23 @@ export const SingleListItem = (item, setDrawerOpen) => {
 }
 
 
-export const MultiLevelListItem = (item, drawerOpened, setDrawerOpen) => {
+export const MultiLevelListItem = (
+    item: any,
+    drawerOpened: boolean, 
+    setDrawerOpen: Function
+  ) => {
   let children = item.children;
 
   const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(false);
  
   const handleClick = () => {
+    setSelected(true);
     setDrawerOpen(true);
     setOpen((prev) => !prev);
   };
 
-  const handleCollapse = (drawerOpened) => {
+  const handleCollapse = (drawerOpened: any) => {
     if(!drawerOpened){
       setOpen(false);
     }
@@ -91,16 +101,16 @@ export const MultiLevelListItem = (item, drawerOpened, setDrawerOpen) => {
 
   return (
     <React.Fragment key={item.title} >
-      <StyledListItem button key={item.title} onClick={handleClick}>
+      <StyledListItem key={item.title} onClick={handleClick}>
         <StyledListIcon>
           {item.icon}
         </StyledListIcon>
-        <StyledListItemText primary={item.title} />
+        <StyledListItemText primary={item.title} selected={selected} />
         {open ? <CollapseIcon /> : <ExpandIcon />}
       </StyledListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {children.map((child) => (
+          {children.map((child: { index: React.Key; title: string; path: string;}) => (
             <StyledMenuItem key={child.index} >{child.title}</StyledMenuItem> // TODO: add link
           ))}
         </List>

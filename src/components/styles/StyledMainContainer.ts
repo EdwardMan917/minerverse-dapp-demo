@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import Stars from "../../assets/images/common/stars.png";
-import { Colors } from "../../constants/Colors.ts";
+import { Colors } from "../../constants/Colors";
 
 
 export const StyledMainContainer = styled.div`

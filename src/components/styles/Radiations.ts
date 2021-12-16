@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colors } from "../../constants/Colors.ts";
+import { Colors } from "../../constants/Colors";
 
 const BaseRadiation =  styled.div`
   border-width: 2px;

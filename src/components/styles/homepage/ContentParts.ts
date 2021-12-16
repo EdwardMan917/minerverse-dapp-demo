@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colors } from "../../../constants/Colors.ts";
+import { Colors } from "../../../constants/Colors";
 import { DrawerSpecs } from "../../../constants/Menu";
 
 

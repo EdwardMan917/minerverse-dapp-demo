@@ -11,19 +11,19 @@ function Content() {
   let marketCap = 634634773;
   const counts = 100;
 
-  const getStaticNumberPart = (endNumber) => {
+  const getStaticNumberPart = (endNumber: number) => {
     let endNumberStr = endNumber.toLocaleString();
     return endNumberStr.substring(0, endNumberStr.length - 3);
   }
 
-  const getStartNumber = (endNumber) => {
+  const getStartNumber = (endNumber: number) => {
     let startNumberStr = (endNumber - counts).toLocaleString();
-    return startNumberStr.substring(startNumberStr.length - 3, startNumberStr.length);
+    return parseInt(startNumberStr.substring(startNumberStr.length - 3, startNumberStr.length));
   }
 
-  const getFinalNumber = (endNumber) => {
+  const getFinalNumber = (endNumber: number) => {
     let endNumberStr = endNumber.toLocaleString();
-    return endNumberStr.substring(endNumberStr.length - 3, endNumberStr.length);
+    return parseInt(endNumberStr.substring(endNumberStr.length - 3, endNumberStr.length));
   }
 
   return (
