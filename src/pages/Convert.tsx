@@ -12,12 +12,12 @@ import Select from '@mui/material/Select';
 
 import { USDTIcon } from '../components/styles/Tokens';
 
-import { convert, getTotalSupply, allowance, buy } from '../utils/wallet';
+import { getTotalSupply, allowance, buy } from '../utils/wallet';
 
 function TokenSelect() {
   const [age, setAge] = React.useState('');
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setAge(event.target.value);
   };
 

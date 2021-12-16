@@ -2,7 +2,7 @@ import styled from "styled-components";
 import GameFiSvg from "../../assets/svg/page-home/gameFi.svg";
 import ToolBoxSvg from "../../assets/svg/page-home/toolBox.svg";
 import HomeSvg from "../../assets/svg/page-home/home.svg";
-import { Colors } from "../../constants/Colors.ts";
+import { Colors } from "../../constants/Colors";
 
 const Svg = styled.div`
   background-repeat: no-repeat;

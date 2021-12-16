@@ -10,7 +10,6 @@ export const DrawerSpecs = {
 }
 
 export const MenuItems = [
-  // { title: 'Farms & Pool', icon: <MenuIcons.FarmsIcon />, hasChild: false, path: '/farmsnpool' },
   { title: 'Farms & Pool', icon: <Farms width={'20px'} height={'20px'} />, hasChild: false, path: '/minerverse-dapp-demo/farmsnpool' },
   { title: 'Convert', icon: <MenuIcons.ConvertIcon />, hasChild: false, path: '/minerverse-dapp-demo/convert' },
   {

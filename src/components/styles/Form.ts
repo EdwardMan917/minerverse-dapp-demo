@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Colors } from "../../constants/Colors";
 import DownArrowSvg from "../../assets/svg/down-arrow.svg";
+import { FieldDisplayProps, FieldLabelProps, FormRowProps } from "src/interfaces/AppInterfaces";
 
 export const Form = styled.div`
   background: ${Colors.Black};
@@ -23,7 +24,7 @@ export const Form = styled.div`
   max-width: 500px;
 `
 
-export const FormRow = styled.div`
+export const FormRow = styled.div<FormRowProps>`
   width: 85%;
   min-width: 200px;
   height: 60px;
@@ -36,7 +37,7 @@ export const FormRow = styled.div`
   border:  ${props => props.border? props.border : "none"};
 `
 
-export const FieldLabel = styled.label`
+export const FieldLabel = styled.label<FieldLabelProps>`
   font-family: "GothamBold";
   font-size: 18px;
   width: ${props => props.width? props.width : "100%" };
@@ -45,7 +46,7 @@ export const FieldLabel = styled.label`
   justify-content: left;
 `
 
-export const FieldDisplay = styled.div`
+export const FieldDisplay = styled.div<FieldDisplayProps>`
   font-family: "GothamMedium";
   font-size: 15px;
   width: ${props => props.width? props.width : "100%" };

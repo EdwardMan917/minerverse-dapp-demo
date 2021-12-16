@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Colors } from "../../constants/Colors.ts";
-
+import { Colors } from "../../constants/Colors";
+import { ButtonProps } from "src/interfaces/AppInterfaces";
 
 export const StyledButtonContainer = styled.div`
   width: 100%;
@@ -69,7 +69,7 @@ export const NavButtonContainer = styled.div`
   }
 `;
 
-export const NavButton = styled.button`
+export const NavButton = styled.button<ButtonProps>`
   background: ${Colors.MinerverseYellow};
   font-family: "GothamMedium";
   color: ${Colors.Black};

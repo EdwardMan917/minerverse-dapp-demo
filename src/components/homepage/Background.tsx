@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledBackground, Mountain } from "../styles/homepage/StyledBackground";
 import * as Radiations from "../styles/Radiations";
 import { TopUFO, MidUFO, BottomUFO } from "../styles/UFOs";

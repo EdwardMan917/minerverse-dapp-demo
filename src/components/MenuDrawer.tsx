@@ -1,70 +1,69 @@
-import { useEffect, useState } from 'react';
-import { styled } from '@mui/material/styles';
+import { useEffect, useState, CSSProperties } from 'react';
+import { styled, Theme } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import { MultiLevelListItem, SingleListItem } from './MenuListItems';
 import MenuFooter from './MenuFooter';
 
-import { Colors } from "../constants/Colors.ts";
+import { Colors } from "../constants/Colors";
 import { MenuItems, DrawerSpecs } from '../constants/Menu';
 
 
-const openedMixin = (theme) => ({
+const openedMixin = (theme?: Theme) => ({
   width: `${DrawerSpecs.OpenedWidth}`,
-  transition: theme.transitions.create('width', {
+  transition: theme? theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
-  }),
+  }) : "none",
   overflowX: 'hidden'
-});
+} as CSSProperties);
 
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
+const closedMixin = (theme?: Theme) => ({
+    transition: theme? theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+  }) : "none",
   overflowX: 'hidden',
   width: `${DrawerSpecs.ClosedWidth}`
-});
+} as CSSProperties);
 
 const DrawerStyle = () => ({
-  background: `${Colors.Black}`,
-  borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
-  top: `${DrawerSpecs.headerHeight}`,
-  position: 'fixed',
-  height: `calc(100vh - ${DrawerSpecs.headerHeight})`,
-  "@media (max-width:600px)": {
-    top: `${DrawerSpecs.mobileHeaderHeight}`,
-    height: `calc(100vh - ${DrawerSpecs.mobileHeaderHeight})`
+    background: `${Colors.Black}`,
+    borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
+    top: `${DrawerSpecs.headerHeight}`,
+    position: 'fixed',
+    height: `calc(100vh - ${DrawerSpecs.headerHeight})`,
+    "@media (max-width:600px)": {
+      top: `${DrawerSpecs.mobileHeaderHeight}`,
+      height: `calc(100vh - ${DrawerSpecs.mobileHeaderHeight})`
   }
 });
 
 
-const Drawer = styled(MuiDrawer)(
-  ({ theme, open }) => ({
+const Drawer = styled(MuiDrawer)(( props: {theme?: Theme; open: boolean;} ) => ({
     width: `${DrawerSpecs.OpenedWidth}`,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
-    ...(open && {
-      ...openedMixin(theme),
+    ...(props.open && {
+      ...openedMixin(props.theme),
       '& .MuiDrawer-paper': {
         ...DrawerStyle(),
-        ...openedMixin(theme)
+        ...openedMixin(props.theme)
       }
     }),
-    ...(!open && {
-      ...closedMixin(theme),
+    ...(!props.open && {
+      ...closedMixin(props.theme),
       '& .MuiDrawer-paper': {
         ...DrawerStyle(),
-        ...closedMixin(theme)
+        ...closedMixin(props.theme)
       }
     }),
   }),
 );
 
-function MenuDrawer(props) {
+function MenuDrawer(props: { open: boolean; setDrawerOpen: Function; }) {
 
   const [open, setOpen] = useState(props.open);
   const [width, setWidth] = useState(window.innerWidth);
