@@ -10,22 +10,23 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import Homepage from '../pages/Homepage';
+import Convert from '../pages/Convert';
 import SoFiDashboard from '../pages/SoFiDashboard';
 
 import { MinerverseLogo } from './styles/BusinessLogos';
 import MenuDrawer from './MenuDrawer';
 import { NavButtonContainer } from './styles/Buttons';
 import { NavButton } from './styles/Buttons';
-import { AddressBox } from './styles/StyledValueBox';
+import { WalletIcon, AddressBox, WalletIconBox, AddressContainer } from './styles/StyledValueBox';
 
 import { Colors } from "../constants/Colors.ts";
 
-import { connect } from '../utils/wallet';
+import { getConnectedAccount, connectWallet, getConversionRate, getContractBalance } from '../utils/wallet';
 
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})( ({ theme }) => ({
+})(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   paddingRight: "0px !important"
 }));
@@ -48,6 +49,13 @@ const DrawerOpenedIcon = styled(ChevronLeftIcon)({
   ...IconStyle()
 });
 
+
+const maskAddress = (address) => {
+  console.log(address)
+  let addressLength = address.length;
+  return address.substring(0, 3) + "..." + address.substring(addressLength - 5, addressLength);
+}
+
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
@@ -60,16 +68,37 @@ export default function MainFrame() {
   const handleConnect = () => {
     let walletAddress;
     (async () => {
-      walletAddress = await connect();
+      walletAddress = await connectWallet();
       if (walletAddress) {
         setConnected(true);
-        let addressLength = walletAddress.length;
-        console.log(walletAddress);
-        walletAddress = walletAddress.toString();
-        setAddress(walletAddress.substring(0, 5) + "..." + walletAddress.substring(addressLength - 5, addressLength));
+        setAddress(maskAddress(walletAddress));
       }
     })()
   }
+
+  React.useEffect(() => {
+    window.addEventListener('load', async () => {
+      if (await window.ethereum.isConnected()) {
+        setAddress(maskAddress(await getConnectedAccount()));
+        setConnected(true);
+      }
+    });
+
+    (async () => {
+      let g = await getContractBalance();
+      console.log(g);
+    })();
+
+    window.ethereum.on('accountsChanged', (accounts) => {
+      if (accounts.length > 0) {
+        setAddress(maskAddress(accounts[0]));
+      } else if (accounts.length == 0) {
+        setConnected(false);
+        setAddress('');
+      }
+    });
+
+  });
 
   const BoxStyle = {
     background: `${Colors.Black}`
@@ -102,13 +131,21 @@ export default function MainFrame() {
           </Link>
           <NavButtonContainer>
             <NavButton visible={!connected} onClick={handleConnect} >Connect Wallet</NavButton>
-            <AddressBox visible={connected}>{address}</AddressBox>
+            <AddressContainer visible={connected}>
+              <WalletIconBox>
+                <WalletIcon />
+              </WalletIconBox>
+              <AddressBox>
+                {address}
+              </AddressBox>
+            </AddressContainer>
           </NavButtonContainer>
         </Toolbar>
       </AppBar>
-      <MenuDrawer open={open} setDrawerOpen={setOpen}/>
+      <MenuDrawer open={open} setDrawerOpen={setOpen} />
       <Routes>
         <Route path="/minerverse-dapp-demo/" element={<Homepage />} />
+        <Route path="/minerverse-dapp-demo/convert" element={<Convert />} />
         <Route path="/minerverse-dapp-demo/sofi-dashboard" element={<SoFiDashboard />} />
       </Routes>
     </Box>
