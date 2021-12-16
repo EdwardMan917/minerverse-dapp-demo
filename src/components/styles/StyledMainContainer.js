@@ -6,10 +6,11 @@ import { Colors } from "../../constants/Colors.ts";
 
 export const StyledMainContainer = styled.div`
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   overflow: hidden;
 `;
 
