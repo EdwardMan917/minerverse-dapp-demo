@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FooterRow, FooterTextBox, StyledMenuFooter } from "./styles/StyledMenuFooter";
 import { I18NIcon } from "./styles/MenuIcons";
 import * as Social from "./styles/SocialIcons";

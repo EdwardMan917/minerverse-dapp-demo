@@ -10,9 +10,6 @@ export interface AddressContainerProps {
   visible: boolean;
 }
 
-export interface MuiDrawerProps {
-}
-
 export interface ListItemTextProps {
   selected: boolean;
 }
