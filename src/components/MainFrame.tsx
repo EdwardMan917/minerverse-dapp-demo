@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -149,11 +149,6 @@ export default function MainFrame() {
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen} />
-      <Routes>
-        <Route path={Paths.homepage} element={<Homepage />} />
-        <Route path={Paths.convert} element={<Convert />} />
-        <Route path={Paths.sofiDashboard} element={<SoFiDashboard />} />
-      </Routes>
     </Box>
   );
 }
