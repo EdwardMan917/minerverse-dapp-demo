@@ -11,7 +11,7 @@ import { MenuItems, DrawerSpecs } from '../constants/Menu';
 
 
 const openedMixin = (theme?: Theme) => ({
-  width: `${DrawerSpecs.OpenedWidth}`,
+  width: `${DrawerSpecs.openedWidth}`,
   transition: theme? theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -25,7 +25,7 @@ const closedMixin = (theme?: Theme) => ({
       duration: theme.transitions.duration.leavingScreen,
   }) : "none",
   overflowX: 'hidden',
-  width: `${DrawerSpecs.ClosedWidth}`
+  width: `${DrawerSpecs.closedWidth}`
 } as CSSProperties);
 
 const DrawerStyle = () => ({
@@ -42,7 +42,7 @@ const DrawerStyle = () => ({
 
 
 const Drawer = styled(MuiDrawer)(( props: {theme?: Theme; open: boolean;} ) => ({
-    width: `${DrawerSpecs.OpenedWidth}`,
+    width: `${DrawerSpecs.openedWidth}`,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -68,6 +68,10 @@ function MenuDrawer(props: { open: boolean; setDrawerOpen: Function; }) {
   const [open, setOpen] = useState(props.open);
   const [width, setWidth] = useState(window.innerWidth);
 
+  const handleClose = () => {
+    props.setDrawerOpen(!open);
+  }
+
   useEffect(() => {
     setOpen(props.open);
     window.addEventListener("resize", () => {
@@ -80,12 +84,15 @@ function MenuDrawer(props: { open: boolean; setDrawerOpen: Function; }) {
     paddingLeft: '10px'
   }
 
+  // onClose required for drawer close when clicking overlay
   return (
-    <Drawer variant={ width < 670 ? "temporary" : "permanent" } open={open}>
+    <Drawer ModalProps={{
+      keepMounted: true, // Better open performance on mobile.
+    }} variant={ width < 670 ? "temporary" : "permanent" } open={open} onClose={handleClose} >
       <Divider />
       <List style={{ ...MenuListStyle }} >
         {MenuItems.map((item)  => (
-          item.hasChild ? MultiLevelListItem(item, open, props.setDrawerOpen) : SingleListItem(item, props.setDrawerOpen)
+          item.children ? MultiLevelListItem(item, open, props.setDrawerOpen) : SingleListItem(item, props.setDrawerOpen)
         ))}
       </List>
       <Divider />

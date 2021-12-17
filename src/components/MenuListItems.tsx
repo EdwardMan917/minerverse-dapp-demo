@@ -34,11 +34,11 @@ const StyledListItemText = styled(ListItemText)<ListItemTextProps>(( props: {sel
   })
 }));
 
-const StyledMenuItem = styled(MenuItem)({
+const StyledMenuItem = styled(MenuItem)((props: {selected: boolean}) => ({
   fontFamily: 'GothamMedium',
   fontSize: '14px',
-  color: `${Colors.White}`
-})
+  color: props.selected ? `${Colors.MinerverseYellow}` : `${Colors.White}`
+}));
 
 const ExpandIcon = styled(ExpandMoreIcon)({
   color: `${Colors.White}`
@@ -84,10 +84,14 @@ export const MultiLevelListItem = (
   const [selected, setSelected] = useState(false);
  
   const handleClick = () => {
-    setSelected(true);
     setDrawerOpen(true);
     setOpen((prev) => !prev);
   };
+
+  const handleChildClick = (e: any) => {
+    console.log(e);
+    setSelected(true);
+  }
 
   const handleCollapse = (drawerOpened: any) => {
     if(!drawerOpened){
@@ -111,7 +115,9 @@ export const MultiLevelListItem = (
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {children.map((child: { index: React.Key; title: string; path: string;}) => (
-            <StyledMenuItem key={child.index} >{child.title}</StyledMenuItem> // TODO: add link
+            <Link key={child.index} to={child.path} onClick={(e) => {handleChildClick(e)}}>
+              <StyledMenuItem selected={selected} key={child.index} >{child.title}</StyledMenuItem>
+            </Link>
           ))}
         </List>
       </Collapse>
