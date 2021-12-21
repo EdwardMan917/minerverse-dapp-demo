@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import List from "@mui/material/List";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -12,16 +12,18 @@ import { Colors } from "../constants/Colors";
 import { Link } from "react-router-dom";
 import { ListItemTextProps } from "src/interfaces/AppInterfaces";
 import { ListItemButton } from "@mui/material";
+import useState from 'react-usestateref';
+import { ContextPath } from "src/constants/Menu";
 
-
-const StyledListItem = styled(ListItemButton)({
-  padding: '0px',
-  margin: '5px 0 5px 0'
-})
+const StyledListItem = styled(ListItemButton)(( props: { selected: boolean }) => ({
+  padding: '0px 0px 0px 8px',
+  margin: '5px 0 5px 0',
+  height: '35px',
+  borderLeft: props.selected? `4px solid ${Colors.MinerverseYellow}` : '4px solid transparent'
+}));
 
 const StyledListIcon = styled(ListItemIcon)({
-  minWidth: '30px',
-  color: `${Colors.MinerverseYellow}`
+  minWidth: '30px'
 })
 
 const StyledListItemText = styled(ListItemText)<ListItemTextProps>(( props: {selected: boolean}) => ({
@@ -37,6 +39,7 @@ const StyledListItemText = styled(ListItemText)<ListItemTextProps>(( props: {sel
 const StyledMenuItem = styled(MenuItem)((props: {selected: boolean}) => ({
   fontFamily: 'GothamMedium',
   fontSize: '14px',
+  backgroundColor: `${Colors.SubmenuGrey}`,
   color: props.selected ? `${Colors.MinerverseYellow}` : `${Colors.White}`
 }));
 
@@ -49,22 +52,26 @@ const CollapseIcon = styled(ExpandLessIcon)({
 })
 
 export const SingleListItem = (
-    item: any, 
-    setDrawerOpen: Function
-  ) => {
+  item: any, 
+  setDrawerOpen: Function,
+  location: any
+) => {
 
   const [selected, setSelected] = useState(false);
 
   const handleClick = () => {
-    setSelected(true);
     setDrawerOpen(true);
   }
 
+  useEffect(() => {
+    setSelected(location.pathname === item.path)
+  }, [item, location]);
+
   return(
     <Link key={item.title} to={item.path}>
-      <StyledListItem key={item.title} onClick={handleClick} >
+      <StyledListItem selected={selected} key={item.title} onClick={handleClick} >
           <StyledListIcon>
-            {item.icon}
+            {item.icon(selected)}
           </StyledListIcon>
           <StyledListItemText primary={item.title} selected={selected} />
       </StyledListItem>
@@ -76,47 +83,55 @@ export const SingleListItem = (
 export const MultiLevelListItem = (
     item: any,
     drawerOpened: boolean, 
-    setDrawerOpen: Function
+    setDrawerOpen: Function,
+    location: any
   ) => {
   let children = item.children;
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(false);
- 
+  const [selected, setSelected, selectedRef] = useState(false);
+  const [currentPath, setCurrentPath, currentPathRef] = useState('');
+  const [targetPath, setTargetPath, targetPathRef] = useState('');
+
   const handleClick = () => {
     setDrawerOpen(true);
     setOpen((prev) => !prev);
   };
 
-  const handleChildClick = (e: any) => {
-    console.log(e);
-    setSelected(true);
+  const handleChildClick = (childPath: string) => {
+    setTargetPath(childPath);
   }
 
-  const handleCollapse = (drawerOpened: any) => {
+  const handleCollapse = (drawerOpened: boolean) => {
     if(!drawerOpened){
       setOpen(false);
     }
   }
 
   useEffect(() => {
+    setCurrentPath(location.pathname);
+    if(targetPathRef.current === ''){
+      setSelected(currentPathRef.current.replace(ContextPath, '').startsWith(item.title.toLowerCase()));
+    } else {
+      setSelected(currentPathRef.current === targetPathRef.current);
+    }
     handleCollapse(drawerOpened);
-  }, [drawerOpened])
+  }, [drawerOpened, location])
 
   return (
     <React.Fragment key={item.title} >
-      <StyledListItem key={item.title} onClick={handleClick}>
-        <StyledListIcon>
-          {item.icon}
+      <StyledListItem selected={selected} key={item.title} onClick={handleClick}>
+        <StyledListIcon >
+          {item.icon(selected)}
         </StyledListIcon>
-        <StyledListItemText primary={item.title} selected={selected} />
+        <StyledListItemText primary={item.title} selected={selectedRef.current} />
         {open ? <CollapseIcon /> : <ExpandIcon />}
       </StyledListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {children.map((child: { index: React.Key; title: string; path: string;}) => (
-            <Link key={child.index} to={child.path} onClick={(e) => {handleChildClick(e)}}>
-              <StyledMenuItem selected={selected} key={child.index} >{child.title}</StyledMenuItem>
+          {children.map((child: { index: React.Key; title: string; path: string; }) => (
+            <Link key={child.index} to={child.path}>
+              <StyledMenuItem selected={currentPathRef.current === child.path} key={child.index} onClick={() => {handleChildClick(child.path)}} >{child.title}</StyledMenuItem>
             </Link>
           ))}
         </List>

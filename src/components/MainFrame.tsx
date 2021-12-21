@@ -9,10 +9,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import Homepage from '../pages/Homepage';
-import Convert from '../pages/Convert';
-import SoFiDashboard from '../pages/SoFiDashboard';
-
 import { MinerverseLogo } from './styles/BusinessLogos';
 import MenuDrawer from './MenuDrawer';
 import { NavButtonContainer } from './styles/Buttons';
@@ -94,7 +90,7 @@ export default function MainFrame() {
     if (!window.ethereum) { return; }
 
     window.addEventListener('load', async () => {
-      if (await window.ethereum.isConnected()) {
+      if (await window.ethereum.isConnected() && await getConnectedAccount()) {
         setAddress(maskAddress(await getConnectedAccount()));
         setConnected(true);
       }
