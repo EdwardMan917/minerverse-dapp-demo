@@ -1,4 +1,3 @@
-import React from "react";
 import { LongButton, ShortButton, StyledButtonContainer } from "../styles/Buttons";
 import { IntroContainer, IntroTitle, IntroSlogan, PhraseContainer, MarketingPhrase, ContentWrapper } from "../styles/homepage/ContentParts";
 import { BoxTitle, BoxValue, ValueBox } from "../styles/StyledValueBox";

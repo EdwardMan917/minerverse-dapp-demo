@@ -1,4 +1,3 @@
-import React from "react";
 import { StyledMainValueContainer } from "../styles/StyledMainContainer";
 import Background from "./Background";
 import Content from "./Content";

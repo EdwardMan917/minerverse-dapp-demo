@@ -8,10 +8,11 @@ import MenuFooter from './MenuFooter';
 
 import { Colors } from "../constants/Colors";
 import { MenuItems, DrawerSpecs } from '../constants/Menu';
+import { useLocation } from 'react-router';
 
 
 const openedMixin = (theme?: Theme) => ({
-  width: `${DrawerSpecs.OpenedWidth}`,
+  width: `${DrawerSpecs.openedWidth}`,
   transition: theme? theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -25,24 +26,24 @@ const closedMixin = (theme?: Theme) => ({
       duration: theme.transitions.duration.leavingScreen,
   }) : "none",
   overflowX: 'hidden',
-  width: `${DrawerSpecs.ClosedWidth}`
+  width: `${DrawerSpecs.closedWidth}`
 } as CSSProperties);
 
 const DrawerStyle = () => ({
-    background: `${Colors.Black}`,
-    borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
-    top: `${DrawerSpecs.headerHeight}`,
-    position: 'fixed',
-    height: `calc(100vh - ${DrawerSpecs.headerHeight})`,
-    "@media (max-width:600px)": {
-      top: `${DrawerSpecs.mobileHeaderHeight}`,
-      height: `calc(100vh - ${DrawerSpecs.mobileHeaderHeight})`
+  background: `${Colors.Black}`,
+  borderRight: `0.6px ${Colors.NavBorderGrey} solid`,
+  top: `${DrawerSpecs.headerHeight}`,
+  position: 'fixed',
+  height: `calc(100vh - ${DrawerSpecs.headerHeight})`,
+  "@media (max-width:600px)": {
+    top: `${DrawerSpecs.mobileHeaderHeight}`,
+    height: `calc(100vh - ${DrawerSpecs.mobileHeaderHeight})`
   }
 });
 
 
 const Drawer = styled(MuiDrawer)(( props: {theme?: Theme; open: boolean;} ) => ({
-    width: `${DrawerSpecs.OpenedWidth}`,
+    width: `${DrawerSpecs.openedWidth}`,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
@@ -65,8 +66,14 @@ const Drawer = styled(MuiDrawer)(( props: {theme?: Theme; open: boolean;} ) => (
 
 function MenuDrawer(props: { open: boolean; setDrawerOpen: Function; }) {
 
+  const location = useLocation();
+
   const [open, setOpen] = useState(props.open);
   const [width, setWidth] = useState(window.innerWidth);
+
+  const handleClose = () => {
+    props.setDrawerOpen(!open);
+  }
 
   useEffect(() => {
     setOpen(props.open);
@@ -76,16 +83,18 @@ function MenuDrawer(props: { open: boolean; setDrawerOpen: Function; }) {
   }, [props.open]);
 
   const MenuListStyle = {
-    background: `${Colors.Black}`,
-    paddingLeft: '10px'
+    background: `${Colors.Black}`
   }
 
+  // onClose required for drawer close when clicking overlay
   return (
-    <Drawer variant={ width < 670 ? "temporary" : "permanent" } open={open}>
+    <Drawer ModalProps={{
+      keepMounted: true, // Better open performance on mobile.
+    }} variant={ width < 670 ? "temporary" : "permanent" } open={open} onClose={handleClose} >
       <Divider />
       <List style={{ ...MenuListStyle }} >
         {MenuItems.map((item)  => (
-          item.hasChild ? MultiLevelListItem(item, open, props.setDrawerOpen) : SingleListItem(item, props.setDrawerOpen)
+          item.children ? MultiLevelListItem(item, open, props.setDrawerOpen, location) : SingleListItem(item, props.setDrawerOpen, location)
         ))}
       </List>
       <Divider />

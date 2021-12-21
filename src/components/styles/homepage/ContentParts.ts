@@ -11,7 +11,7 @@ export const ContentWrapper = styled.div`
   justify-content: center;
 
   @media (max-width: 910px) {
-    width: calc(85% - ${DrawerSpecs.OpenedWidth});
+    width: calc(85% - ${DrawerSpecs.openedWidth});
   }
 
   @media (max-width: 670px) {

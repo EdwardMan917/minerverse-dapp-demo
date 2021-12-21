@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
@@ -8,10 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
-import Homepage from '../pages/Homepage';
-import Convert from '../pages/Convert';
-import SoFiDashboard from '../pages/SoFiDashboard';
 
 import { MinerverseLogo } from './styles/BusinessLogos';
 import MenuDrawer from './MenuDrawer';
@@ -23,6 +19,8 @@ import { Colors } from "../constants/Colors";
 
 import { getConnectedAccount, connectWallet, getContractBalance } from '../utils/wallet';
 import { AppBarProps } from 'src/interfaces/AppInterfaces';
+import { Paths } from 'src/constants/Menu';
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -65,19 +63,34 @@ export default function MainFrame() {
   }
 
   const handleConnect = () => {
+    if (!window.ethereum) { return; }
     let walletAddress;
     (async () => {
       walletAddress = await connectWallet();
       if (walletAddress) {
         setConnected(true);
         setAddress(maskAddress(walletAddress));
+        handleAccountChange();
       }
     })()
   }
 
+  const handleAccountChange = () => {
+    window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
+      if (accounts.length > 0) {
+        setAddress(maskAddress(accounts[0]));
+      } else if (accounts.length === 0) {
+        setConnected(false);
+        setAddress('');
+      }
+    });
+  }
+
   React.useEffect(() => {
+    if (!window.ethereum) { return; }
+
     window.addEventListener('load', async () => {
-      if (await window.ethereum.isConnected()) {
+      if (await window.ethereum.isConnected() && await getConnectedAccount()) {
         setAddress(maskAddress(await getConnectedAccount()));
         setConnected(true);
       }
@@ -87,16 +100,6 @@ export default function MainFrame() {
       let g = await getContractBalance();
       console.log(g);
     })();
-
-    window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
-      if (accounts.length > 0) {
-        setAddress(maskAddress(accounts[0]));
-      } else if (accounts.length === 0) {
-        setConnected(false);
-        setAddress('');
-      }
-    });
-
   });
 
   const BoxStyle = {
@@ -107,7 +110,7 @@ export default function MainFrame() {
     background: `${Colors.Black}`,
     borderBottom: `0.6px ${Colors.NavBorderGrey} solid`
   }
-
+  
   return (
     <Box sx={{ display: 'flex' }} style={{ ...BoxStyle }} >
       <CssBaseline />
@@ -125,7 +128,7 @@ export default function MainFrame() {
           >
             {open ? <DrawerOpenedIcon /> : <HamburgerIcon />}
           </IconButton>
-          <Link to="/minerverse-dapp-demo/" style={{ ...LinkStyle() }} >
+          <Link to={Paths.homepage} style={{ ...LinkStyle() }} >
             <MinerverseLogo />
           </Link>
           <NavButtonContainer>
@@ -142,11 +145,6 @@ export default function MainFrame() {
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen} />
-      <Routes>
-        <Route path="/minerverse-dapp-demo/" element={<Homepage />} />
-        <Route path="/minerverse-dapp-demo/convert" element={<Convert />} />
-        <Route path="/minerverse-dapp-demo/sofi-dashboard" element={<SoFiDashboard />} />
-      </Routes>
     </Box>
   );
 }
