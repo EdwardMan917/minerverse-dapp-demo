@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FooterRow, FooterTextBox, StyledMenuFooter } from "./styles/StyledMenuFooter";
 import { I18NIcon } from "./styles/MenuIcons";
 import * as Social from "./styles/SocialIcons";
-import { MVXIcon } from "./styles/Tokens";
+import { MVXIcon } from "./styles/TokensIcons";
 
 function MenuFooter(props: { visible: boolean; }) {
 

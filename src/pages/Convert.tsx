@@ -1,109 +1,67 @@
 import * as React from 'react';
 import { FormButton } from "../components/styles/Buttons";
-import { FormRow, FieldDisplay, FieldLabel, FieldSelect, FieldTextBox, Form, DownArrow } from "../components/styles/Form";
+import { FormRow, FieldDisplay, FieldLabel, FieldTextBox, Form, DownArrow, FormContainer } from "../components/styles/convert/Form";
 import { StyledMainContainer } from "../components/styles/StyledMainContainer";
-import { Colors } from "../constants/Colors";
+import Select from 'src/components/Select';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
-import { USDTIcon } from '../components/styles/Tokens';
-
-import { getTotalSupply, allowance, buy } from '../utils/wallet';
-
-function TokenSelect() {
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setAge(event.target.value);
-  };
-
-  return (
-    <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={"USDT"}><USDTIcon marginLeft={"5px"} />USDT</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>With label + helper text</FormHelperText>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <Select
-          value={age}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        <FormHelperText>Without label</FormHelperText>
-      </FormControl>
-    </div>
-  );
-}
+import { getBalance } from '../utils/wallet';
+import TokenConfig from 'src/constants/Tokens';
 
 
 function Convert() {
   const LableWidth = "25%";
   const DisplayWidth = "75%";
-  const RowPadding = "0 15px";
-  const RowBorder = `1px ${Colors.FormBorderGrey} solid`;
+
+  const [fromBalance, setFromBalance] = React.useState('0');
+  const [fromToken, setFromToken] = React.useState('');
+  const [toBalance, setToBalance] = React.useState('0');
+  const [toToken, setToToken] = React.useState('');
 
   const handleConvert = () => {
-    (async () => {
-      await getTotalSupply();
-    })();
-    (async () => {
-      await allowance();
-    })();
-    (async () => {
-      await buy();
-    })();
+    
   }
 
+  const updateBalance = async (token: string, setBalance: Function) => {
+    try{
+      if(!token){ return; }
+      let tokenData = TokenConfig[token];
+      const result = await getBalance(tokenData.type, tokenData.address);
+      if(!result){ return; }
+      setBalance(result);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  React.useEffect(() => {
+    (async () => {
+      await updateBalance(fromToken, setFromBalance);
+      await updateBalance(toToken, setToBalance);
+    })()
+  }, [fromToken, toToken])
+  
   return (
     <StyledMainContainer>
-      <Form>
-        <FormRow>
-          <FieldLabel width={LableWidth} >From</FieldLabel>
-          <FieldDisplay width={DisplayWidth} >Available: 0</FieldDisplay>
-        </FormRow>
-        <FormRow padding={RowPadding} border={RowBorder} >
-          <TokenSelect />
-        </FormRow>
-        <FieldTextBox pattern={"[0-9]+[.]?[0-9]*"}/>
-        <DownArrow />
-        <FormRow>
-          <FieldLabel width={LableWidth} >To</FieldLabel>
-          <FieldDisplay width={DisplayWidth} >Available: 0</FieldDisplay>
-        </FormRow>
-        <FormRow padding={RowPadding} border={RowBorder} >
-          <FieldSelect></FieldSelect>
-        </FormRow>
-        <FieldTextBox />
-        <FormRow>
-          <FormButton onClick={handleConvert} >Convert</FormButton>
-        </FormRow>
-      </Form>
+      <FormContainer>
+        <Form>
+          <FormRow height={"0px"}>
+            <FieldLabel width={LableWidth} >From</FieldLabel>
+            <FieldDisplay width={DisplayWidth} >Available: {fromBalance}</FieldDisplay>
+          </FormRow>
+          {Select(TokenConfig, setFromToken)}
+          <FieldTextBox onChange={(e: any) => {}} />
+          <DownArrow />
+          <FormRow>
+            <FieldLabel width={LableWidth} >To</FieldLabel>
+            <FieldDisplay width={DisplayWidth} >Available: {toBalance}</FieldDisplay>
+          </FormRow>
+          {Select(TokenConfig, setToToken)}
+          <FieldTextBox />
+          <FormRow>
+            <FormButton onClick={handleConvert} >Convert</FormButton>
+          </FormRow>
+        </Form>
+      </FormContainer>
     </StyledMainContainer>
   )
 }
