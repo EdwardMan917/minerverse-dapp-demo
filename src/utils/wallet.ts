@@ -1,7 +1,12 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 import FundMe from "../artifacts/contracts/FundMe.sol/FundMe.json";
 import TUSDT from "../artifacts/contracts/TUSDT.sol/TUSDT.json";
+import ERC20 from "src/abi/ERC20.json";
+import ZapBSC from "src/abi/ZapBSC.json";
+
+import { NativeToken, Token, LPToken } from "src/constants/Tokens";
+import Contracts from "src/constants/Contracts";
 
 let networkData = [
   {
@@ -57,46 +62,46 @@ export async function requestAccount() {
 }
 
 // call the smart contract, read the current greeting value
-export async function getConversionRate(ethAmount) {
-  // if (typeof window.ethereum !== 'undefined') {
-  //   const provider = new ethers.providers.Web3Provider(window.ethereum)
-  //   const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", FundMe.abi, provider)
-  //   console.log(contract);
-  //   try {
-  //     const data = await contract.test();
-  //     console.log('data: ', data)
-  //   } catch (err) {
-  //     console.log("Error: ", err)
-  //   }
-  // }
+// export async function getConversionRate(ethAmount) {
+//   // if (typeof window.ethereum !== 'undefined') {
+//   //   const provider = new ethers.providers.Web3Provider(window.ethereum)
+//   //   const contract = new ethers.Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", FundMe.abi, provider)
+//   //   console.log(contract);
+//   //   try {
+//   //     const data = await contract.test();
+//   //     console.log('data: ', data)
+//   //   } catch (err) {
+//   //     console.log("Error: ", err)
+//   //   }
+//   // }
 
-  if (typeof window.ethereum !== 'undefined') {
-    await requestAccount()
-    // get provider
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+//   if (typeof window.ethereum !== 'undefined') {
+//     await requestAccount()
+//     // get provider
+//     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
-    // get address
-    let addresses = await provider.listAccounts();
-    let address = await addresses[0];
-    console.log("Address : " + await address);
+//     // get address
+//     let addresses = await provider.listAccounts();
+//     let address = await addresses[0];
+//     console.log("Address : " + await address);
 
-    // get balance
-    let balance = await provider.getBalance(await address);
-    console.log("Account balance : " + ethers.utils.formatEther(await balance));
+//     // get balance
+//     let balance = await provider.getBalance(await address);
+//     console.log("Account balance : " + ethers.utils.formatEther(await balance));
 
-    // get signer, required for transactions
-    const signer = provider.getSigner()
+//     // get signer, required for transactions
+//     const signer = provider.getSigner()
 
-    // init contract instance
-    const contract = new ethers.Contract("0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9", FundMe.abi, signer)
+//     // init contract instance
+//     const contract = new ethers.Contract("0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9", FundMe.abi, signer)
 
-    // interact with contract functions
-    const transaction = await contract.fund({ value: ethers.utils.parseEther("20") });
+//     // interact with contract functions
+//     const transaction = await contract.fund({ value: ethers.utils.parseEther("20") });
 
-    // await transaction to finish
-    await transaction.wait()
-  }
-}
+//     // await transaction to finish
+//     await transaction.wait()
+//   }
+// }
 
 
 const TUSDTContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
@@ -152,14 +157,34 @@ export async function buy() {
   }    
 }
 
-// call the smart contract, send an update
+
+export async function getBalance(tokenType: string, tokenAddress: string) {
+  if (typeof window.ethereum !== 'undefined') {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const address = await provider.listAccounts();
+    let result;
+    switch (tokenType) {
+      case NativeToken:
+        result = await provider.getBalance(address[0]);
+        break;
+      case Token:
+        const contract = new ethers.Contract(tokenAddress, ERC20, provider);
+        result = await contract.balanceOf(address[0]);
+        break
+      default:
+        result = "000000000";
+    }
+    return parseFloat(ethers.utils.formatEther(result.toString())).toFixed(4);
+  }    
+}
+
+
 export async function convert() {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
-    const contract = new ethers.Contract(TUSDTContractAddress, TUSDT.abi, signer)
+    const contract = new ethers.Contract(Contracts.zapBSC, ZapBSC, signer)
     const transaction =  await contract.transferFrom("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", await signer.getAddress(), 20)
     await transaction.wait()
   }    
 }
-

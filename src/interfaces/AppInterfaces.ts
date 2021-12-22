@@ -19,10 +19,11 @@ export interface MenuFooterProps {
 }
 
 export interface TokenIconProps {
-  marginLeft: string;
+  marginRight?: string;
 }
 
 export interface FormRowProps {
+  height?: string;
   padding?: string;
   border?: string;
 }
@@ -33,4 +34,13 @@ export interface FieldDisplayProps {
 
 export interface FieldLabelProps {
   width: string;
+}
+
+export interface ITokenConfig {
+  [title: string] : {
+    address: string,
+    icon: JSX.Element,
+    type: string,
+    value: string
+  }
 }

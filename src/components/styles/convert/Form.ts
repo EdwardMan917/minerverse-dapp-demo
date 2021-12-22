@@ -1,10 +1,18 @@
 import styled from "styled-components";
-import { Colors } from "../../constants/Colors";
-import DownArrowSvg from "../../assets/svg/down-arrow.svg";
+import { Colors } from "../../../constants/Colors";
+import DownArrowSvg from "../../../assets/svg/down-arrow.svg";
 import { FieldDisplayProps, FieldLabelProps, FormRowProps } from "src/interfaces/AppInterfaces";
 
+export const FormContainer = styled.div`
+  padding-top: 100px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`
+
 export const Form = styled.div`
-  background: ${Colors.Black};
+  background: ${Colors.ConvertFormGrey};
   color: ${Colors.White};
   border-radius: 20px;
   border-color: ${Colors.FormBorderGrey};
@@ -14,24 +22,18 @@ export const Form = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
-  min-height: 300px;
-  height: 60%;
-  min-height: 450px;
-  
-  min-width: 300px;
-  width: 80%;
-  max-width: 500px;
+  height: 450px;
+  width: 400px;
 `
 
 export const FormRow = styled.div<FormRowProps>`
   width: 85%;
   min-width: 200px;
-  height: 60px;
+  height: ${props => props.height? props.height : "40px"};
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 10px 0;
+  margin: 3px 0;
   box-sizing: border-box;
   padding: ${props => props.padding? props.padding : "0px"};
   border:  ${props => props.border? props.border : "none"};
@@ -78,9 +80,9 @@ export const FieldSelect = styled.select`
 `
 
 export const FieldTextBox = styled.input`
-  background: ${Colors.Black};
+  background: ${Colors.ConvertFormGrey};
   font-family: "GothamMedium";
-  height: 50px;
+  height: 40px;
   font-size: 18px;
   width: 85%;
   min-width: 200px;
