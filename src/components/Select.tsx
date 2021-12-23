@@ -40,8 +40,8 @@ function Item(key: number, title: string, data: {value: string; icon: JSX.Elemen
   return <MenuItem key={key} value={data.value}>{data.icon}{title}</MenuItem>;
 }
 
-function Select(items: ITokenConfig, setToken: Function) {
-  const [value, setValue] = React.useState('');
+function Select(items: ITokenConfig, setToken: Function, presetToken: string) {
+  const [value, setValue] = React.useState(presetToken);
   const handleChange = (e: any) => {
     let token = e.target.value;
     setToken(token)

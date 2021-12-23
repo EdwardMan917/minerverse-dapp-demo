@@ -5,8 +5,8 @@ import { StyledMainContainer } from "../components/styles/StyledMainContainer";
 import Select from 'src/components/Select';
 
 import { validateDecimal } from 'src/utils/validator';
-import { getBalance } from '../utils/wallet';
-import TokenConfig from 'src/constants/Tokens';
+import { getBalance, getConversionRate } from '../utils/wallet';
+import { BNB, MVX, TokenConfig } from 'src/constants/Tokens';
 import Popup from 'src/components/Popup';
 import { PopupContents } from 'src/constants/PopupContents';
 
@@ -16,15 +16,17 @@ function Convert() {
   const DisplayWidth = "75%";
 
   const [fromBalance, setFromBalance] = React.useState('-');
-  const [fromToken, setFromToken] = React.useState('');
+  const [fromToken, setFromToken] = React.useState('BNB');
   const [toBalance, setToBalance] = React.useState('-');
-  const [toToken, setToToken] = React.useState('');
+  const [toToken, setToToken] = React.useState('MVX');
 
-  const [fromAmount, setFromAmount] = React.useState('');
-  const [toAmount, setToAmount] = React.useState('');
+  const [fromAmount, setFromAmount] = React.useState('0');
+  const [toAmount, setToAmount] = React.useState('0');
 
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [popupContent, setPopupContent] = React.useState(PopupContents.succeeded);
+
+  const [rate, setRate] = React.useState('0');
 
   const handleConvert = () => {
     if(!fromToken || !toToken){
@@ -39,10 +41,12 @@ function Convert() {
     }
     setPopupContent(PopupContents.succeeded);
     setPopupOpen(true);
-    
   }
 
   const handleInput = (e: { target: {value: string}}, setAmount: Function) => {
+    (async () => {
+      
+    })()
     let amount = e.target.value;
     setAmount(amount);
   }
@@ -63,6 +67,23 @@ function Convert() {
     (async () => {
       await updateBalance(fromToken, setFromBalance);
       await updateBalance(toToken, setToBalance);
+      if (fromToken && toToken){
+        const conversionRate = await getConversionRate(
+          {
+            from: {
+              address: TokenConfig[fromToken].address,
+              type: TokenConfig[fromToken].type
+            },
+            to: {
+              address: TokenConfig[toToken].address,
+              type: TokenConfig[toToken].type
+            }
+          }
+        );
+        if(conversionRate){
+          setRate(conversionRate);
+        }
+      }
     })()
   }, [fromToken, toToken])
   
@@ -74,15 +95,19 @@ function Convert() {
             <FieldLabel width={LableWidth} >From</FieldLabel>
             <FieldDisplay width={DisplayWidth} >Available: {fromBalance}</FieldDisplay>
           </FormRow>
-          {Select(TokenConfig, setFromToken)}
-          <FieldTextBox onChange={(e: any) => {handleInput(e, setFromAmount)}} />
+          {Select(TokenConfig, setFromToken, BNB)}
+          <FieldTextBox defaultValue="0" onChange={(e: any) => {handleInput(e, setFromAmount)}} />
           <DownArrow />
           <FormRow>
             <FieldLabel width={LableWidth} >To</FieldLabel>
             <FieldDisplay width={DisplayWidth} >Available: {toBalance}</FieldDisplay>
           </FormRow>
-          {Select(TokenConfig, setToToken)}
-          <FieldTextBox onChange={(e: any) => {handleInput(e, setToAmount)}} />
+          {Select(TokenConfig, setToToken, MVX)}
+          <FieldTextBox defaultValue="0" onChange={(e: any) => {handleInput(e, setToAmount)}} />
+          <FormRow>
+            <FieldLabel width={LableWidth}>Rate</FieldLabel>
+            <FieldDisplay width={DisplayWidth}> 1 {fromToken} = {rate} {toToken} </FieldDisplay>
+          </FormRow>
           <FormRow>
             <FormButton onClick={handleConvert} >Convert</FormButton>
           </FormRow>

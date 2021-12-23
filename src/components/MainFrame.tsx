@@ -87,19 +87,14 @@ export default function MainFrame() {
   }
 
   React.useEffect(() => {
-    if (!window.ethereum) { return; }
-
     window.addEventListener('load', async () => {
-      if (await window.ethereum.isConnected() && await getConnectedAccount()) {
+      if (!window.ethereum) { return; }
+      let account = await getConnectedAccount();
+      if (account) {
         setAddress(maskAddress(await getConnectedAccount()));
         setConnected(true);
-      }
+      } 
     });
-
-    (async () => {
-      let g = await getContractBalance();
-      console.log(g);
-    })();
   });
 
   const BoxStyle = {
