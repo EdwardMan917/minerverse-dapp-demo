@@ -44,3 +44,11 @@ export interface ITokenConfig {
     value: string
   }
 }
+
+export interface IPopupContent {
+  [type: string] : {
+    title: string,
+    content: string,
+    buttonName: string
+  }
+}

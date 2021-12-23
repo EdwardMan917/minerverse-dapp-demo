@@ -33,6 +33,15 @@ const Button = styled.button`
   }
 `;
 
+export const PopupButton = styled(Button)`
+  border-radius: 5px;
+  font-size: 20px;
+  width: auto;
+  height: 30px;
+  box-sizing: unset;
+  padding: 7px 10px;
+`
+
 export const LongButton = styled(Button)`
   font-size: 24px;
   width: 45%;
