@@ -227,7 +227,7 @@ export async function getConversionRate(tokenPair: { from: { address: string, ty
       fromTokenPrice = formatEther(await contract.priceOfBNB());
       toTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.to.address]))[0]);
     } else if (tokenPair.to.type === NativeToken) {
-      fromTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.to.address]))[0]);
+      fromTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.from.address]))[0]);
       toTokenPrice = formatEther(await contract.priceOfBNB());
     } else {
       let prices: BigNumber[] = await contract.pricesInUSD([tokenPair.from.address, tokenPair.to.address]);
