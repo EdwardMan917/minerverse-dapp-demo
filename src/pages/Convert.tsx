@@ -4,21 +4,47 @@ import { FormRow, FieldDisplay, FieldLabel, FieldTextBox, Form, DownArrow, FormC
 import { StyledMainContainer } from "../components/styles/StyledMainContainer";
 import Select from 'src/components/Select';
 
+import { validateDecimal } from 'src/utils/validator';
 import { getBalance } from '../utils/wallet';
 import TokenConfig from 'src/constants/Tokens';
+import Popup from 'src/components/Popup';
+import { PopupContents } from 'src/constants/PopupContents';
 
 
 function Convert() {
   const LableWidth = "25%";
   const DisplayWidth = "75%";
 
-  const [fromBalance, setFromBalance] = React.useState('0');
+  const [fromBalance, setFromBalance] = React.useState('-');
   const [fromToken, setFromToken] = React.useState('');
-  const [toBalance, setToBalance] = React.useState('0');
+  const [toBalance, setToBalance] = React.useState('-');
   const [toToken, setToToken] = React.useState('');
 
+  const [fromAmount, setFromAmount] = React.useState('');
+  const [toAmount, setToAmount] = React.useState('');
+
+  const [popupOpen, setPopupOpen] = React.useState(false);
+  const [popupContent, setPopupContent] = React.useState(PopupContents.succeeded);
+
   const handleConvert = () => {
+    if(!fromToken || !toToken){
+      setPopupContent(PopupContents.emptyToken);
+      setPopupOpen(true);
+      return;
+    }
+    if(!validateDecimal(fromAmount) || !validateDecimal(toAmount)){
+      setPopupContent(PopupContents.incorrectAmount);
+      setPopupOpen(true);
+      return;
+    }
+    setPopupContent(PopupContents.succeeded);
+    setPopupOpen(true);
     
+  }
+
+  const handleInput = (e: { target: {value: string}}, setAmount: Function) => {
+    let amount = e.target.value;
+    setAmount(amount);
   }
 
   const updateBalance = async (token: string, setBalance: Function) => {
@@ -49,19 +75,20 @@ function Convert() {
             <FieldDisplay width={DisplayWidth} >Available: {fromBalance}</FieldDisplay>
           </FormRow>
           {Select(TokenConfig, setFromToken)}
-          <FieldTextBox onChange={(e: any) => {}} />
+          <FieldTextBox onChange={(e: any) => {handleInput(e, setFromAmount)}} />
           <DownArrow />
           <FormRow>
             <FieldLabel width={LableWidth} >To</FieldLabel>
             <FieldDisplay width={DisplayWidth} >Available: {toBalance}</FieldDisplay>
           </FormRow>
           {Select(TokenConfig, setToToken)}
-          <FieldTextBox />
+          <FieldTextBox onChange={(e: any) => {handleInput(e, setToAmount)}} />
           <FormRow>
             <FormButton onClick={handleConvert} >Convert</FormButton>
           </FormRow>
         </Form>
       </FormContainer>
+      {Popup(setPopupOpen, popupOpen, popupContent)}
     </StyledMainContainer>
   )
 }
