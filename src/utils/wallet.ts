@@ -9,6 +9,7 @@ import PriceCalculatorBSC from "src/abi/PriceCalculatorBSC.json";
 
 import { NativeToken, Token } from "src/constants/Tokens";
 import Contracts from "src/constants/Contracts";
+import { ITokenPair } from "src/interfaces/AppInterfaces";
 
 
 let networkData = [
@@ -215,7 +216,8 @@ export async function convert() {
 }
 
 
-export async function getConversionRate(tokenPair: { from: { address: string, type: string }, to: { address: string, type: string }}) {
+export async function getConversionRate(tokenPair: ITokenPair) {
+  console.log(tokenPair);
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const contract = new ethers.Contract(Contracts.priceCalculatorBSC, PriceCalculatorBSC, provider);
@@ -235,6 +237,33 @@ export async function getConversionRate(tokenPair: { from: { address: string, ty
       toTokenPrice = formatEther(prices[1]);
     }
     
-    return (parseFloat(fromTokenPrice) / parseFloat(toTokenPrice)).toFixed(5);
+    let rate = (parseFloat(fromTokenPrice) / parseFloat(toTokenPrice)).toFixed(5);
+    return rate === "Infinity" ? "0.00000" : rate;
   }    
+}
+
+
+export async function doSwap(tokenPair: ITokenPair) {
+  try {
+    if (typeof window.ethereum !== 'undefined') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(Contracts.zapBSC, ZapBSC, signer);
+      let fromAmount = ethers.utils.parseEther(tokenPair.from.amount);
+      let transaction;
+      if (tokenPair.from.type === NativeToken) { // native token to token
+        transaction = await contract.zapIn(tokenPair.to.address, { value: fromAmount });
+      } else if (tokenPair.to.type === NativeToken) { // token to native token
+        transaction = await contract.zapOut(tokenPair.from.address, fromAmount);
+      } else { // token to token
+        transaction =  await contract.zapInToken(tokenPair.from.address, fromAmount, tokenPair.to.address);
+      }
+      await transaction.wait(); 
+      return "success";
+    }
+  } catch (e) {
+    console.log(e);
+    return "fail";
+  }
+  
 }

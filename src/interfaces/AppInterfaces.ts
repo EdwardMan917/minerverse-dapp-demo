@@ -37,12 +37,25 @@ export interface FieldLabelProps {
 }
 
 export interface ITokenConfig {
-  [title: string] : {
-    address: string,
-    icon: JSX.Element,
-    type: string,
-    value: string
-  }
+  [title: string] : ITokenInfo
+}
+
+export interface ITokenPair {
+  from: ITokenParam,
+  to: ITokenParam
+}
+
+export interface ITokenParam {
+  address: string,
+  amount: string,
+  type: string
+}
+
+export interface ITokenInfo {
+  address: string,
+  icon: JSX.Element,
+  type: string,
+  value: string
 }
 
 export interface IPopupContent {
