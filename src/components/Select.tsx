@@ -40,13 +40,18 @@ function Item(key: number, title: string, data: {value: string; icon: JSX.Elemen
   return <MenuItem key={key} value={data.value}>{data.icon}{title}</MenuItem>;
 }
 
-function Select(items: ITokenConfig, setToken: Function) {
-  const [value, setValue] = React.useState('');
+function Select(items: ITokenConfig, setToken: Function, parentToken: string | undefined) {
+  const [value, setValue] = React.useState(parentToken);
   const handleChange = (e: any) => {
     let token = e.target.value;
     setToken(token)
     setValue(token);
   };
+
+  React.useEffect(() => {
+    setValue(parentToken);
+  }, [parentToken])
+
   return (
     <FormControl sx={{ m: 1, width: '85%' }} variant="standard">
       <StyledSelect
@@ -55,7 +60,7 @@ function Select(items: ITokenConfig, setToken: Function) {
         input={<BootstrapInput />}
       > 
         {Object.keys(items).map((title: string, index: number) => (
-          Item(index, title, items[title])
+          Item(index, title, items[title]? items[title] : {value:"", icon: <div />})
         ))}
       </StyledSelect>
     </FormControl>

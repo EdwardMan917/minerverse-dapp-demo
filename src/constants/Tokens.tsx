@@ -16,7 +16,7 @@ export const NativeToken = "native";
 export const Token = "token";
 export const LPToken = "lp";
 
-const TokenConfig: ITokenConfig = {
+export const TokenConfig: ITokenConfig = {
   BNB: {
     address: "",
     value: BNB,
@@ -72,5 +72,3 @@ const TokenConfig: ITokenConfig = {
     icon: <TokenIcons.BTCBIcon marginRight={"10px"} /> 
   }
 }
-
-export default TokenConfig;

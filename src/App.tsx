@@ -21,7 +21,7 @@ function App() {
         <Route path={Paths.sofiDashboard} element={<SoFiDashboard />} />
         <Route path={Paths.sofiMarket} element={<ComingSoon />} />
         <Route path={Paths.sofiPortfolio} element={<ComingSoon />} />
-        <Route path={Paths.sofiPortfolio} element={<ComingSoon />} />
+        <Route path={Paths.sofiFollowing} element={<ComingSoon />} />
         <Route path={Paths.nft} element={<ComingSoon />} />
         <Route path={Paths.win} element={<ComingSoon />} />
         <Route path={Paths.info} element={<ComingSoon />} />

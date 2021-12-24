@@ -1,12 +1,16 @@
 import { BigNumber, ethers } from "ethers";
+import { formatEther } from "@ethersproject/units";
 
 import FundMe from "../artifacts/contracts/FundMe.sol/FundMe.json";
 import TUSDT from "../artifacts/contracts/TUSDT.sol/TUSDT.json";
 import ERC20 from "src/abi/ERC20.json";
 import ZapBSC from "src/abi/ZapBSC.json";
+import PriceCalculatorBSC from "src/abi/PriceCalculatorBSC.json";
 
-import { NativeToken, Token, LPToken } from "src/constants/Tokens";
+import { NativeToken, Token } from "src/constants/Tokens";
 import Contracts from "src/constants/Contracts";
+import { ITokenPair } from "src/interfaces/AppInterfaces";
+
 
 let networkData = [
   {
@@ -22,9 +26,7 @@ let networkData = [
   },
 ];
 
-export async function getConnectedAccount() {
-  return await window.ethereum.selectedAddress;
-}
+
 
 
 export async function connectWallet() {
@@ -158,6 +160,22 @@ export async function buy() {
 }
 
 
+export async function getConnectedAccount() {
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const address = await provider.listAccounts();
+  return address.length > 0 ? address[0] : "";
+}
+
+
+/**
+ * @summary Get token balance of connected account
+ * 
+ * @description Request to balanceOf function of ERC20 standard tokens.
+ * 
+ * @param string tokenType    type of token: native token, token, LP token
+ * @param string tokenAddress token contract address
+ *
+ */
 export async function getBalance(tokenType: string, tokenAddress: string) {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -172,13 +190,21 @@ export async function getBalance(tokenType: string, tokenAddress: string) {
         result = await contract.balanceOf(address[0]);
         break
       default:
-        result = "000000000";
+        return "-";
     }
-    return parseFloat(ethers.utils.formatEther(result.toString())).toFixed(4);
+    return parseFloat(formatEther(result.toString())).toFixed(4);
   }    
 }
 
-
+/**
+ * @summary Convert tokens with Zap contract.
+ * 
+ * @description 
+ * 
+ * @param string tokenType    type of token: native token, token, LP token
+ * @param string tokenAddress token contract address
+ *
+ */
 export async function convert() {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -187,4 +213,57 @@ export async function convert() {
     const transaction =  await contract.transferFrom("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", await signer.getAddress(), 20)
     await transaction.wait()
   }    
+}
+
+
+export async function getConversionRate(tokenPair: ITokenPair) {
+  console.log(tokenPair);
+  if (typeof window.ethereum !== 'undefined') {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const contract = new ethers.Contract(Contracts.priceCalculatorBSC, PriceCalculatorBSC, provider);
+    
+    let fromTokenPrice;
+    let toTokenPrice;
+
+    if (tokenPair.from.type === NativeToken) {
+      fromTokenPrice = formatEther(await contract.priceOfBNB());
+      toTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.to.address]))[0]);
+    } else if (tokenPair.to.type === NativeToken) {
+      fromTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.from.address]))[0]);
+      toTokenPrice = formatEther(await contract.priceOfBNB());
+    } else {
+      let prices: BigNumber[] = await contract.pricesInUSD([tokenPair.from.address, tokenPair.to.address]);
+      fromTokenPrice = formatEther(prices[0]);
+      toTokenPrice = formatEther(prices[1]);
+    }
+    
+    let rate = (parseFloat(fromTokenPrice) / parseFloat(toTokenPrice)).toFixed(5);
+    return rate === "Infinity" ? "0.00000" : rate;
+  }    
+}
+
+
+export async function doSwap(tokenPair: ITokenPair) {
+  try {
+    if (typeof window.ethereum !== 'undefined') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(Contracts.zapBSC, ZapBSC, signer);
+      let fromAmount = ethers.utils.parseEther(tokenPair.from.amount);
+      let transaction;
+      if (tokenPair.from.type === NativeToken) { // native token to token
+        transaction = await contract.zapIn(tokenPair.to.address, { value: fromAmount });
+      } else if (tokenPair.to.type === NativeToken) { // token to native token
+        transaction = await contract.zapOut(tokenPair.from.address, fromAmount);
+      } else { // token to token
+        transaction =  await contract.zapInToken(tokenPair.from.address, fromAmount, tokenPair.to.address);
+      }
+      await transaction.wait(); 
+      return "success";
+    }
+  } catch (e) {
+    console.log(e);
+    return "fail";
+  }
+  
 }
