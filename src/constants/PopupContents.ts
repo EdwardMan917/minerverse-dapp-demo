@@ -1,9 +1,9 @@
 import { IPopupContent } from "src/interfaces/AppInterfaces";
 
 export const PopupContents: IPopupContent = {
-  sameToken: {
+  connectWallet: {
     title: "Oops!",
-    content: "Cannot swap with same token.",
+    content: "Please connect a wallet.",
     buttonName: "Continue"
   },
   incorrectAmount: {

@@ -1,20 +1,24 @@
 import * as React from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 import { FormButton } from "../components/styles/Buttons";
 import { FormRow, FieldDisplay, FieldLabel, FieldTextBox, Form, DownArrow, FormContainer } from "../components/styles/convert/Form";
 import { StyledMainContainer } from "../components/styles/StyledMainContainer";
 import Select from 'src/components/Select';
 
 import { validateDecimal } from 'src/utils/validator';
-import { getBalance, getConversionRate, doSwap } from '../utils/wallet';
+import { getConnectedAccount, getBalance, getConversionRate, doSwap } from '../utils/wallet';
 import { BNB, MVX, TokenConfig } from 'src/constants/Tokens';
 import Popup from 'src/components/Popup';
 import { PopupContents } from 'src/constants/PopupContents';
 import usePrevious from 'src/hooks/usePrevious';
+import { Colors } from 'src/constants/Colors';
 
 
 function Convert() {
   const LableWidth = "25%";
   const DisplayWidth = "75%";
+
+  const [isConverting, setIsConverting] = React.useState(false);
 
   const [fromToken, setFromToken] = React.useState(BNB);
   const [fromBalance, setFromBalance] = React.useState('-');
@@ -72,11 +76,18 @@ function Convert() {
   }
 
   const handleConvert = async () => {
+    let account = await getConnectedAccount();
+    if(!account) {
+      setPopupContent(PopupContents.connectWallet);
+      setPopupOpen(true);
+      return;
+    }
     if(!validateDecimal(fromAmount) || !validateDecimal(toAmount)){
       setPopupContent(PopupContents.incorrectAmount);
       setPopupOpen(true);
       return;
     }
+    setIsConverting(true);
     let swapResult = await doSwap(
       {
         from: {
@@ -97,6 +108,7 @@ function Convert() {
       setPopupContent(PopupContents.failed);
     }
     setPopupOpen(true);
+    setIsConverting(false);
     await refreshFormData();
     
   }
@@ -159,7 +171,13 @@ function Convert() {
             <FieldDisplay width={DisplayWidth}> 1 {fromToken} = {rate} {toToken} </FieldDisplay>
           </FormRow>
           <FormRow>
-            <FormButton onClick={handleConvert} >Convert</FormButton>
+            <FormButton 
+              background={isConverting? Colors.Black : Colors.MinerverseYellow} 
+              color={isConverting? Colors.ConvertFormGrey : Colors.Black} 
+              onClick={handleConvert}
+            > 
+              { isConverting ? <CircularProgress color="success" /> : <></> } { isConverting? "Pending" : "Convert" }
+            </FormButton>
           </FormRow>
         </Form>
       </FormContainer>

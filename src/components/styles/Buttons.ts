@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Colors } from "../../constants/Colors";
-import { ButtonProps } from "src/interfaces/AppInterfaces";
+import { ButtonProps, FormButtonProps } from "src/interfaces/AppInterfaces";
 
 export const StyledButtonContainer = styled.div`
   width: 100%;
@@ -59,12 +59,18 @@ export const ShortButton = styled(Button)`
   height: 60px;
 `;
 
-export const FormButton = styled(Button)`
+export const FormButton = styled(Button)<FormButtonProps>`
   width: 100%;
   height: 50px;
   font-size: 20px;
   margin-top: 10px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.color};
+  background: ${props => props.background};
 `;
 
 export const NavButtonContainer = styled.div`
