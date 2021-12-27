@@ -97,17 +97,14 @@ export default function MainFrame() {
     });
   });
 
-  const BoxStyle = {
-    background: `${Colors.Black}`
-  }
-
+  
   const AppBarStyle = {
     background: `${Colors.Black}`,
     borderBottom: `0.6px ${Colors.NavBorderGrey} solid`
   }
   
   return (
-    <Box sx={{ display: 'flex' }} style={{ ...BoxStyle }} >
+    <>
       <CssBaseline />
       <AppBar style={{ ...AppBarStyle }} open={open}>
         <Toolbar >
@@ -140,6 +137,6 @@ export default function MainFrame() {
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen} />
-    </Box>
+    </>
   );
 }

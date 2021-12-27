@@ -9,11 +9,19 @@ import ComingSoon from './pages/ComingSoon';
 import NotFound from './pages/NotFound';
 
 import { Paths } from 'src/constants/Menu';
+import { Colors } from './constants/Colors';
+import { Box } from '@mui/material';
+
+
+const BoxStyle = {
+  background: `${Colors.Black}`
+}
 
 
 function App() {
   return (
-    <>
+    <Box sx={{ display: 'flex' }} style={{ ...BoxStyle }} >
+      <MainFrame />
       <Routes>
         <Route path={Paths.homepage} element={<Homepage />} />
         <Route path={Paths.farmsAndPool} element={<ComingSoon />} />
@@ -29,8 +37,7 @@ function App() {
         <Route path={Paths.docs} element={<ComingSoon />} />
         <Route path="*" element={<NotFound />} /> 
       </Routes>
-      <MainFrame />
-    </>
+    </Box>
   );
 }
 
