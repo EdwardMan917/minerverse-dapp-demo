@@ -217,8 +217,7 @@ export async function convert() {
 
 
 export async function getConversionRate(tokenPair: ITokenPair) {
-  console.log(tokenPair);
-  if (typeof window.ethereum !== 'undefined') {
+  if (typeof window.ethereum !== 'undefined' && await getConnectedAccount() !== "") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const contract = new ethers.Contract(Contracts.priceCalculatorBSC, PriceCalculatorBSC, provider);
     

@@ -6,6 +6,12 @@ export interface ButtonProps {
   visible: boolean;
 }
 
+export interface FormButtonProps {
+  background: string;
+  color: string;
+  border?: string;
+}
+
 export interface AddressContainerProps {
   visible: boolean;
 }
