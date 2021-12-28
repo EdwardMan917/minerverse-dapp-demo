@@ -76,6 +76,7 @@ function Convert() {
   }
 
   const handleConvert = async () => {
+    if(isConverting) { return; }
     let account = await getConnectedAccount();
     if(!account) {
       setPopupContent(PopupContents.connectWallet);
@@ -172,15 +173,16 @@ function Convert() {
           </FormRow>
           <FormRow>
             <FormButton 
-              background={isConverting? Colors.Black : Colors.MinerverseYellow} 
-              color={isConverting? Colors.ConvertFormGrey : Colors.Black} 
+              background={isConverting? Colors.ConvertFormGrey : Colors.MinerverseYellow} 
+              color={isConverting? Colors.PendingGrey : Colors.Black}
+              border={isConverting? `1px ${Colors.PendingGrey} solid` : "None"}
               onClick={handleConvert}
             > 
-              { isConverting ? <CircularProgress color="success" /> : <></> } { isConverting? "Pending" : "Convert" }
+              { isConverting ? <CircularProgress sx={{ color: `${Colors.PendingGrey}`, padding: "5px", marginRight: "15px" }} /> : <></> } { isConverting? "Pending" : "Convert" }
             </FormButton>
           </FormRow>
         </Form>
-      </FormContainer>
+      </FormContainer>c
       {Popup(setPopupOpen, popupOpen, popupContent)}
     </StyledMainContainer>
   )

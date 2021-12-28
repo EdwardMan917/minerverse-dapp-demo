@@ -71,6 +71,7 @@ export const FormButton = styled(Button)<FormButtonProps>`
   justify-content: center;
   color: ${props => props.color};
   background: ${props => props.background};
+  border: ${props => props.border};
 `;
 
 export const NavButtonContainer = styled.div`
