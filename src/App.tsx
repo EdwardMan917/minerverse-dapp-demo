@@ -3,6 +3,7 @@ import MainFrame from './components/MainFrame';
 import { Routes, Route } from "react-router-dom";
 
 import Homepage from './pages/Homepage';
+import FarmAndPool from './pages/FarmAndPool';
 import Convert from './pages/Convert';
 import SoFiDashboard from './pages/SoFiDashboard';
 import ComingSoon from './pages/ComingSoon';
@@ -24,7 +25,7 @@ function App() {
       <MainFrame />
       <Routes>
         <Route path={Paths.homepage} element={<Homepage />} />
-        <Route path={Paths.farmsAndPool} element={<ComingSoon />} />
+        <Route path={Paths.farmsAndPool} element={<FarmAndPool />} />
         <Route path={Paths.convert} element={<Convert />} />
         <Route path={Paths.sofiDashboard} element={<SoFiDashboard />} />
         <Route path={Paths.sofiMarket} element={<ComingSoon />} />

@@ -8,5 +8,7 @@ export enum Colors {
   SubmenuGrey = "#0f0f0f",
   RadiationGrey = "#535353",
   FormBorderGrey = "#3d3d3d",
-  AddressBoxGrey = "#232323"
+  AddressBoxGrey = "#232323",
+  AccordionText = "#ccc",
+  AccordionPanelText = "#959698"
 }

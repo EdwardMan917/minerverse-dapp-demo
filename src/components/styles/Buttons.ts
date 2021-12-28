@@ -74,6 +74,12 @@ export const FormButton = styled(Button)<FormButtonProps>`
   border: ${props => props.border};
 `;
 
+export const ApproveButton = styled(Button)`
+  width: 110px;
+  height: 32px;
+  border-radius: 6px;
+`
+
 export const NavButtonContainer = styled.div`
   height: 27px;
   min-width: 160px;
