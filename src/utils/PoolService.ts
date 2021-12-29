@@ -1,5 +1,6 @@
-import { BigNumber, ethers, FixedNumber } from "ethers";
-import { formatUnits } from "@ethersproject/units";
+import { ethers, FixedNumber } from "ethers";
+import { formatEther, parseEther } from "@ethersproject/units";
+import { BigNumber } from "bignumber.js";
 import { getConnectedAccount } from "./wallet";
 import Chef from "src/abi/Chef.json";
 import Pool from "src/abi/Pool.json";
@@ -14,7 +15,7 @@ import { toFloat } from "./UtilFunctions";
 export async function getAPY(pool: IPoolConfig){
   if (typeof window.ethereum !== 'undefined' && await getConnectedAccount() !== "") {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    let apy = "0.00";
+    let apy: any = "0.00";
     if(pool.type === PoolTypes.MinerverseMax || pool.type === PoolTypes.MinerverseBNB) {
       let chefContract = new ethers.Contract(Contracts.chef, Chef, provider);
       let poolContract = new ethers.Contract(pool.address, Pool, provider);
@@ -40,20 +41,21 @@ export async function getAPY(pool: IPoolConfig){
       
       let pancakePairContract = new ethers.Contract(stakingToken, IPancakePair, provider);
       
-      let cakePerBlockResult = await masterChefContract.cakePerBlock();
+      let cakePerBlockResult = new BigNumber(toFloat(await masterChefContract.cakePerBlock()));
       let allocPointResult = await masterChefContract.poolInfo(pool.pancakeId);
-      let totalAllocResult = await masterChefContract.totalAllocPoint();
-      let lpTotalSupplyResult = await pancakePairContract.totalSupply();
+      let totalAllocResult = new BigNumber(toFloat(await masterChefContract.totalAllocPoint()));
+      let lpTotalSupplyResult = new BigNumber(toFloat(await pancakePairContract.totalSupply()));
       
-      let lpInterest = cakePerBlockResult.mul(10512000).mul(allocPointResult.allocPoint).div(totalAllocResult);
-      console.log(toFloat(lpInterest));
-      let lpAPR = (lpInterest.div(lpTotalSupplyResult)).mul(100);
-      console.log(toFloat(lpAPR));
-      let tempAPY = ((lpAPR.div(4380).add(1)).pow(4380)).sub(1);
-      console.log(toFloat(tempAPY));
-      apy = ((tempAPY.mul(70).div(100)) + (tempAPY.mul(30).div(100).div(FixedNumber.from("1.2"))));
-      console.log((tempAPY * 70 / 100), " + ", (tempAPY * 30 / 100 * 1.2));
+      console.log(cakePerBlockResult.toFixed(5));
 
+      let lpInterest = cakePerBlockResult.times(10512000).times(new BigNumber(toFloat(allocPointResult.allocPoint))).dividedBy(totalAllocResult);
+      console.log(lpInterest.toFixed(5), lpTotalSupplyResult.toFixed(5));
+      let lpAPR = lpInterest.dividedBy(lpTotalSupplyResult).times(100);
+      console.log(lpAPR.toFixed(5));
+      let tempAPY = ((lpAPR.dividedBy(4380).plus(1)).pow(4380)).minus(1);
+      console.log(tempAPY.toFixed(5));
+      apy = ((tempAPY.times(70).dividedBy(100)).plus(tempAPY.times(30).dividedBy(100).dividedBy(1.2))).toFixed(2);
+      console.log(apy)
     }
     return apy;
   }    

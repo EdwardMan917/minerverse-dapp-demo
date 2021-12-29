@@ -25,7 +25,7 @@ class PoolInfoStore {
         this.PoolInfo[pool.id] = await getAPY(pool);
       });
       console.log(this.PoolInfo);
-    }, 5000);
+    }, 2000);
   }
 }
 
