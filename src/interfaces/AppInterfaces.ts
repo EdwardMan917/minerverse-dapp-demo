@@ -44,7 +44,13 @@ export interface FieldLabelProps {
   width: string;
 }
 
+export interface AccordionProps {
+  borderRadius: string;
+}
+
 export interface AccordionPanelProps {
+  borderBottom: string;
+  borderRadius: string;
   maxHeight: string;
 }
 
@@ -86,7 +92,9 @@ export interface IPoolConfig {
   address: string,
   autoCompound: boolean,
   icon: JSX.Element,
+  id: number,
   name: string,
+  pancakeId: number,
   reward: string[],
   type: string
 }

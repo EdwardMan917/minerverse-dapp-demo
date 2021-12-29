@@ -11,4 +11,5 @@ export const PoolsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: calc(100px + 64px);
 `

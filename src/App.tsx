@@ -12,7 +12,8 @@ import NotFound from './pages/NotFound';
 import { Paths } from 'src/constants/Menu';
 import { Colors } from './constants/Colors';
 import { Box } from '@mui/material';
-
+import { useEffect } from 'react';
+import { poolInfoStore } from './utils/DataRefresh';
 
 const BoxStyle = {
   background: `${Colors.Black}`
@@ -20,6 +21,11 @@ const BoxStyle = {
 
 
 function App() {
+
+  useEffect(() => {
+    poolInfoStore.startUpdate();
+  });
+
   return (
     <Box sx={{ display: 'flex' }} style={{ ...BoxStyle }} >
       <MainFrame />

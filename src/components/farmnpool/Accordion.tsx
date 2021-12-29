@@ -1,10 +1,12 @@
 import * as React from "react";
+import useState from "react-usestateref";
 import styled from "styled-components";
 import { Colors } from "src/constants/Colors";
-import { AccordionPanelProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
+import { AccordionPanelProps, AccordionProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
 import { ApproveButton } from "../styles/Buttons";
+import { getAPY } from "src/utils/PoolService";
 
-const Accordion = styled.button`
+const Accordion = styled.button<AccordionProps>`
   font-family: "GothamBold";
   background-color: ${Colors.ConvertFormGrey};
   color: ${Colors.AccordionText};
@@ -18,6 +20,7 @@ const Accordion = styled.button`
   transition: 0.4s;
   display: flex;
   flex-direction: row;
+  border-radius: ${props => props.borderRadius};
 `
 
 const Icon = styled.div`
@@ -81,6 +84,8 @@ const AccordionPanel = styled.div<AccordionPanelProps>`
   align-items: center;
   border-left: 1px ${Colors.FormBorderGrey} solid;
   border-right: 1px ${Colors.FormBorderGrey} solid;
+  border-bottom: ${props => props.borderBottom};
+  border-radius: ${props => props.borderRadius};
 `
 
 const LinksSection = styled.div`
@@ -120,17 +125,36 @@ const StakeSection = styled.div`
   justify-content: center;
 `
 
-export function PoolAccordion(pool: IPoolConfig) {
+export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boolean) {
+  const [expand, setExpand, expandRef] = useState(false);
+ 
+  const BorderRadius = "15px";
+  const AccordionBorderRadius = () => {
+    if(isFirst){
+      return `${BorderRadius} ${BorderRadius} 0 0`;
+    } 
+    if (isLast) {
+      return `0 0 ${BorderRadius} ${BorderRadius}`;
+    }
+    return "0";
+  }
 
-  const [expand, setExpand] = React.useState(false);
+  const [accordionBorderRadius, setAccordionBorderRadius] = React.useState(AccordionBorderRadius());
+  const [panelBorderRadius, setPanelBorderRadius] = React.useState("0");
+  const [panelBorderBottom, setPanelBorderBottom] = React.useState("0");
 
   const handleExpand = () => {
     setExpand(!expand);
+    if(isLast){
+      setAccordionBorderRadius(expandRef.current ? "0" : `0 0 ${BorderRadius} ${BorderRadius}`);
+      setPanelBorderRadius(expandRef.current ? `0 0 ${BorderRadius} ${BorderRadius}` : "0");
+      setPanelBorderBottom(expandRef.current ? `1px ${Colors.FormBorderGrey} solid` : "0");
+    }
   }
 
   return (
-    <>
-      <Accordion onClick={handleExpand}>
+    <React.Fragment key={pool.id}>
+      <Accordion onClick={handleExpand} borderRadius={accordionBorderRadius}>
         <Icon>
           {pool.icon}
         </Icon>
@@ -153,7 +177,11 @@ export function PoolAccordion(pool: IPoolConfig) {
         </StakedInfo>
         <ExpandIcon content={expand? "⌃" : "⌄"}/>
       </Accordion>
-      <AccordionPanel maxHeight={expand? "150px": "0px"}>
+      <AccordionPanel 
+        maxHeight={expand? "130px": "0px"} 
+        borderBottom={panelBorderBottom}
+        borderRadius={panelBorderRadius} 
+      >
         <LinksSection>
           Get {pool.name}
           <br/>
@@ -178,6 +206,6 @@ export function PoolAccordion(pool: IPoolConfig) {
           <ApproveButton>Approve</ApproveButton>
         </StakeSection>
       </AccordionPanel>
-    </>
+    </React.Fragment>
   )
 }

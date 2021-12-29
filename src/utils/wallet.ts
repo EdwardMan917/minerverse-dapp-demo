@@ -207,11 +207,11 @@ export async function getBalance(tokenType: string, tokenAddress: string) {
  */
 export async function convert() {
   if (typeof window.ethereum !== 'undefined') {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    const contract = new ethers.Contract(Contracts.zapBSC, ZapBSC, signer)
-    const transaction =  await contract.transferFrom("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", await signer.getAddress(), 20)
-    await transaction.wait()
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(Contracts.zapBSC, ZapBSC, signer);
+    const transaction =  await contract.transferFrom("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", await signer.getAddress(), 20);
+    await transaction.wait();
   }    
 }
 
