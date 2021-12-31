@@ -1,17 +1,10 @@
 import { StyledMainContainer } from "src/components/styles/StyledMainContainer";
 import { FarmMountain, BannerTextContainer, BannerTitle, BannerSlogan } from "src/components/farmnpool/Banner";
-import { PoolsContainer } from "src/components/farmnpool/PoolsContainer";
+import { PoolsContainer, ToolbarContainer } from "src/components/farmnpool/PoolsContainer";
 import { PoolAccordion } from "src/components/farmnpool/Accordion";
 import { Pools } from "src/constants/Pools";
-import { poolInfoStore } from "src/utils/DataRefresh";
-import { useEffect } from "react";
 
 function FarmAndPool() {
-
-  useEffect(() => {
-    console.log("updated");
-  }, [poolInfoStore.PoolInfo])
-
   return (
     <StyledMainContainer>
       <FarmMountain>
@@ -25,6 +18,7 @@ function FarmAndPool() {
         </BannerTextContainer>
       </FarmMountain>
       <PoolsContainer>
+        <ToolbarContainer />
         {Pools.map((pool) => {
           return PoolAccordion(pool, Pools.indexOf(pool) === 0, Pools.indexOf(pool) === (Pools.length - 1));
         })}

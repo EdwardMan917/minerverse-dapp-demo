@@ -80,6 +80,21 @@ export const ApproveButton = styled(Button)`
   border-radius: 6px;
 `
 
+export const ClaimButton = styled(Button)<FormButtonProps>`
+  width: 25%;
+  height: 25px;
+  font-size: 12px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.color};
+  background: ${props => props.background};
+  border: ${props => props.border};
+`
+
 export const NavButtonContainer = styled.div`
   height: 27px;
   min-width: 160px;

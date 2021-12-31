@@ -1,10 +1,12 @@
 import * as React from "react";
 import useState from "react-usestateref";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 import { Colors } from "src/constants/Colors";
 import { AccordionPanelProps, AccordionProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
-import { ApproveButton } from "../styles/Buttons";
-import { getAPY } from "src/utils/PoolService";
+import { ApproveButton, ClaimButton } from "../styles/Buttons";
+
+const MobileViewWidth = 650;
 
 const Accordion = styled.button<AccordionProps>`
   font-family: "GothamBold";
@@ -21,6 +23,10 @@ const Accordion = styled.button<AccordionProps>`
   display: flex;
   flex-direction: row;
   border-radius: ${props => props.borderRadius};
+
+  @media (max-width: 946px) {
+    width: 100%;
+  }
 `
 
 const Icon = styled.div`
@@ -44,11 +50,22 @@ const APY = styled.div`
   width: 30%;
   height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: left;
   font-size: 35px;
   font-family: "GothamMedium";
   color: ${Colors.MinerverseYellow};
+`
+
+const AutoCompound = styled.div`
+  margin: 5px;
+  padding: 5px 15px;
+  width: 194px;
+  height: auto;
+  background: ${Colors.Black};
+  font-family: "GothamBold";
+  color: ${Colors.AccordionText};
+  font-size: 14px;
 `
 
 const StakedInfo = styled.div`
@@ -58,16 +75,25 @@ const StakedInfo = styled.div`
   align-items: center;
   justify-content: right;
   text-align: right;
-  font-family: "GothamLight";
+  font-family: "GothamMedium";
   line-height: 1.2rem;
+
+  @media (max-width: ${MobileViewWidth}px) {
+    visibility: hidden;
+  }
 `
 
 const ExpandIcon = styled.span<ExpandIconProps>`
+  color: ${Colors.MinerverseYellow};
   display: flex;
   align-items: center;
   justify-content: center;
   width: 10%;
   height: 100%;
+
+  &:after {
+    content: ${props => props.content};
+  }
 `
 
 const AccordionPanel = styled.div<AccordionPanelProps>`
@@ -106,15 +132,17 @@ const RewardSection = styled.div`
   display: flex;
   flex-direction: column;
   font-family: "GothamLight";
-  padding: 25px 0 0 20px;
+  font-size: 12px;
+  padding: 2px 0 0 20px;
   border-right: 1px ${Colors.FormBorderGrey} solid;
 `
 
 const RewardPair = styled.div`
   width: 100%;
-  height: 30px;
+  height: 20px;
   font-family: "GothamBold";
-  margin-top: 8px;
+  display: flex;
+  align-items: center;
 `
 
 const StakeSection = styled.div`
@@ -126,8 +154,16 @@ const StakeSection = styled.div`
 `
 
 export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boolean) {
+  const IconDiameterPC = "38px";
+  const IconDiameterMobile = "20px";
+  const [width, setWidth] = React.useState(window.innerWidth);
+
   const [expand, setExpand, expandRef] = useState(false);
- 
+
+  const apyData = useSelector((state: {apy: {[poolId: number]: any}}) => state.apy);
+  
+  const [apy, setAPY] = React.useState("0.00");
+
   const BorderRadius = "15px";
   const AccordionBorderRadius = () => {
     if(isFirst){
@@ -152,11 +188,22 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
     }
   }
 
+  React.useEffect(() => {
+    setAPY(apyData[pool.id] ? apyData[pool.id]: "0.00");
+  }, [apyData])
+
+  React.useEffect(() => {
+    window.addEventListener("resize", () => {
+      setWidth(window.innerWidth);
+    });
+  });
+  
+  
   return (
     <React.Fragment key={pool.id}>
       <Accordion onClick={handleExpand} borderRadius={accordionBorderRadius}>
         <Icon>
-          {pool.icon}
+          {pool.icon(pool.name, width < MobileViewWidth ? IconDiameterMobile : IconDiameterPC)}
         </Icon>
         <Brief>
           {pool.name}
@@ -165,7 +212,10 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
           <br/>
           TVL: $0
         </Brief>
-        <APY>0.00%</APY>
+        <APY>
+          {apy}%
+          {pool.autoCompound ? <AutoCompound>AUTO-COMPOUNDING</AutoCompound> : null}
+        </APY>
         <StakedInfo>
           Staked
           <br/>
@@ -175,7 +225,7 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
           <br/>
           0
         </StakedInfo>
-        <ExpandIcon content={expand? "⌃" : "⌄"}/>
+        <ExpandIcon content={expand? "\"▲\"" : "\"▼\""}/>
       </Accordion>
       <AccordionPanel 
         maxHeight={expand? "130px": "0px"} 
@@ -201,6 +251,11 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
             }
           </RewardPair>
           - $ 0
+          <ClaimButton 
+            background={Colors.ConvertFormGrey} 
+            color={Colors.PendingGrey}
+            border={`1px ${Colors.PendingGrey} solid`}
+          >Claim</ClaimButton>
         </RewardSection>
         <StakeSection>
           <ApproveButton>Approve</ApproveButton>

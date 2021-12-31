@@ -23,7 +23,9 @@ const BoxStyle = {
 function App() {
 
   useEffect(() => {
-    poolInfoStore.startUpdate();
+    (async () => {
+      await poolInfoStore.startUpdate();
+    })();
   });
 
   return (

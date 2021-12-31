@@ -1,15 +1,10 @@
-import { useState } from "react";
-import { getAPY } from "./PoolService";
-import { Pools } from "src/constants/Pools";
+import { getAllAPY, getAPY } from "./PoolService";
 
 class PoolInfoStore {
 
   static instance: PoolInfoStore;
-  public PoolInfo: { [PoolId: number] : any } = {};
-  // public [PoolInfo: any, setPoolInfo: Function] = useState({});
 
   private constructor() {
-    console.log("constructor called!");
   }
 
   public static getInstance(): PoolInfoStore {
@@ -19,13 +14,11 @@ class PoolInfoStore {
     return PoolInfoStore.instance;
   }
 
-  public startUpdate() {
-    window.setInterval( async () => {
-      Pools.map(async (pool) => {
-        this.PoolInfo[pool.id] = await getAPY(pool);
-      });
-      console.log(this.PoolInfo);
-    }, 2000);
+  public startUpdate = async () => {
+    await getAllAPY();
+    window.setInterval(async () => {
+      await getAllAPY();
+    }, 120000);
   }
 }
 

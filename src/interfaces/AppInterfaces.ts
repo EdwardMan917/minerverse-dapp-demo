@@ -91,7 +91,7 @@ export interface IPopupContent {
 export interface IPoolConfig {
   address: string,
   autoCompound: boolean,
-  icon: JSX.Element,
+  icon: Function,
   id: number,
   name: string,
   pancakeId: number,
