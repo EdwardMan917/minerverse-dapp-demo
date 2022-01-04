@@ -112,6 +112,10 @@ const AccordionPanel = styled.div<AccordionPanelProps>`
   border-right: 1px ${Colors.FormBorderGrey} solid;
   border-bottom: ${props => props.borderBottom};
   border-radius: ${props => props.borderRadius};
+
+  @media (max-width: 946px) {
+    width: 100%;
+  }
 `
 
 const LinksSection = styled.div`

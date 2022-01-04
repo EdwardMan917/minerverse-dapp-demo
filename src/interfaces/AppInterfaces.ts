@@ -58,6 +58,22 @@ export interface ExpandIconProps {
   content: string;
 }
 
+export interface SwitchProps {
+  width: string;
+  height: string;
+  backgroundColor: string;
+}
+
+export interface SliderProps {
+  backgroundColor: string;
+  position: {[side: string]: string}
+}
+
+export interface SwitchOverlayProps {
+  fontSize: string;
+  color: string;
+}
+
 export interface ITokenConfig {
   [title: string] : ITokenInfo
 }

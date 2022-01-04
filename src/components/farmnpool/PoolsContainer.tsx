@@ -16,6 +16,7 @@ export const PoolsContainer = styled.div`
 
   @media (max-width: 946px) {
     padding: 0 20px;
+    margin-bottom: 200px;
   }
 
 `

@@ -10,5 +10,6 @@ export enum Colors {
   FormBorderGrey = "#3d3d3d",
   AddressBoxGrey = "#232323",
   AccordionText = "#ccc",
-  AccordionPanelText = "#959698"
+  AccordionPanelText = "#959698",
+  ToggleSwitchGrey = "#3f3f3f"
 }
