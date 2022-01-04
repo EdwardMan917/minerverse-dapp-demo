@@ -15,7 +15,7 @@ function MenuFooter(props: { visible: boolean; }) {
   return (
     <StyledMenuFooter visible={visible} >
       <FooterRow>
-        <MVXIcon />
+        <MVXIcon diameter="25px" />
         <FooterTextBox>$ 0</FooterTextBox>
       </FooterRow>
       <FooterRow>

@@ -26,6 +26,8 @@ export interface MenuFooterProps {
 
 export interface TokenIconProps {
   marginRight?: string;
+  diameter: string;
+  transform?: string;
 }
 
 export interface FormRowProps {
@@ -40,6 +42,20 @@ export interface FieldDisplayProps {
 
 export interface FieldLabelProps {
   width: string;
+}
+
+export interface AccordionProps {
+  borderRadius: string;
+}
+
+export interface AccordionPanelProps {
+  borderBottom: string;
+  borderRadius: string;
+  maxHeight: string;
+}
+
+export interface ExpandIconProps {
+  content: string;
 }
 
 export interface ITokenConfig {
@@ -70,4 +86,15 @@ export interface IPopupContent {
     content: string,
     buttonName: string
   }
+}
+
+export interface IPoolConfig {
+  address: string,
+  autoCompound: boolean,
+  icon: Function,
+  id: number,
+  name: string,
+  pancakeId: number,
+  reward: string[],
+  type: string
 }

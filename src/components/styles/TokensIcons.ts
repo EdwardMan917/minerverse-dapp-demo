@@ -12,11 +12,12 @@ import ETHPng from "../../assets/tokens/img/ETH.png";
 import BTCBPng from "../../assets/tokens/img/BTCB.png";
 
 const TokenIcon = styled.div<TokenIconProps>`
-  width: 20px;
-  height: 20px;
+  width: ${props => props.diameter};
+  height: ${props => props.diameter};
   background-repeat: no-repeat;
   background-size: contain;
   margin-right: ${props => props.marginRight? props.marginRight : "0px"};
+  transform: ${props => props.transform? props.transform : "none" };
 `
 export const BNBIcon = styled(TokenIcon)`
   background-image: url(${BNBPng});
