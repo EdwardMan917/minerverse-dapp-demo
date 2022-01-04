@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Colors } from "src/constants/Colors";
 import { SliderProps, SwitchOverlayProps, SwitchProps } from "src/interfaces/AppInterfaces";
 import styled, { keyframes } from "styled-components";
@@ -10,7 +9,7 @@ export const Switch = styled.label<SwitchProps>`
   width: ${props => props.width};
   height: ${props => props.height};
   background-color: ${props => props.backgroundColor};
-  margin: 30px;
+  user-select: None;
 `
 
 export const Overlay = styled.div<SwitchOverlayProps>`
@@ -26,21 +25,21 @@ export const Overlay = styled.div<SwitchOverlayProps>`
 `
 
 export const LabelContainer = styled.div`
-  position: absolute;
+  position: relative;
   display: flex;
   align-items: center;
   height: 100%;
   width: 100%;
+`
 
-  & span{
-    position: absolute;
-    display: flex;
-    height: 100%;
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+export const Label = styled.label`
+  display: flex;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${Colors.White};
 `
 
 const Slide = keyframes`
@@ -60,33 +59,19 @@ const UFO = styled.div`
 `;
 
 export const Slider = styled.div<SliderProps>`
-  animation-name: ${Slide}; 
-  position: relative;
-  margin: 2px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: ${props => props.position.left};
+  right: ${props => props.position.right};
   border-radius: 20px;
   width: 48%;
-  height: 100%;
+  height: calc(100% - 6px);
   background-color: ${props => props.backgroundColor};
   -webkit-transition: .4s;
   transition: .4s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px;
 `
-
-function ToggleSwitch(backgroundColor: Colors, paramToggled: boolean, setParamToggled: Function) {
-
-  const toggleClick = () => {
-    setParamToggled(!paramToggled);
-  }
-
-  return (
-    <Switch 
-      width="50px"
-      height="20px"
-      backgroundColor={Colors.ToggleSwitchGrey}
-      color={Colors.Black}
-    >
-      
-    </Switch>
-  )
-}
-
-export default ToggleSwitch;

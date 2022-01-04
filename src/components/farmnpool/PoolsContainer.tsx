@@ -23,6 +23,19 @@ export const PoolsContainer = styled.div`
 
 export const ToolbarContainer = styled.div`
   background: ${Colors.Black};
-  width: 100%;
+  width: 886px;
   height: 100px;
+  display: flex;
+  align-items: center;
+`
+
+export const StakedToggleContainer = styled.div`
+  background-color: transparent;
+  color: ${Colors.White};
+  font-family: "GothamLight";
+  font-size: 14px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  width: auto;
 `
