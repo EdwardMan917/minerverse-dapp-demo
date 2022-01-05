@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Colors } from "src/constants/Colors";
 import { AccordionPanelProps, AccordionProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
 import { ApproveButton, ClaimButton } from "../styles/Buttons";
+import { approvePool } from "src/utils/PoolService";
 
 const MobileViewWidth = 650;
 
@@ -192,6 +193,10 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
     }
   }
 
+  const handleApprove = async () => {
+    await approvePool(props.pool.address);
+  }
+
   React.useEffect(() => {
     setAPY(apyData[props.pool.id] ? apyData[props.pool.id]: "0.00");
   }, [apyData])
@@ -262,7 +267,7 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
           >Claim</ClaimButton>
         </RewardSection>
         <StakeSection>
-          <ApproveButton>Approve</ApproveButton>
+          <ApproveButton onClick={handleApprove}>Approve</ApproveButton>
         </StakeSection>
       </AccordionPanel>
     </React.Fragment>
