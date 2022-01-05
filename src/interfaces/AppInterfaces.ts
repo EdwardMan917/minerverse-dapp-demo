@@ -62,6 +62,7 @@ export interface SwitchProps {
   width: string;
   height: string;
   backgroundColor: string;
+  margin?: string;
 }
 
 export interface SliderProps {
@@ -72,6 +73,10 @@ export interface SliderProps {
 export interface SwitchOverlayProps {
   fontSize: string;
   color: string;
+}
+
+export interface ToolbarSubContainerProps {
+  justifyContent: string;
 }
 
 export interface ITokenConfig {

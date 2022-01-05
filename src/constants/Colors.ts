@@ -11,5 +11,6 @@ export enum Colors {
   AddressBoxGrey = "#232323",
   AccordionText = "#ccc",
   AccordionPanelText = "#959698",
-  ToggleSwitchGrey = "#3f3f3f"
+  ToggleSwitchGrey = "#3f3f3f",
+  SearchBoxTextGrey = "#efefef"
 }

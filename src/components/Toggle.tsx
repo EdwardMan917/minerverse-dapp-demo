@@ -9,7 +9,8 @@ export const Switch = styled.label<SwitchProps>`
   width: ${props => props.width};
   height: ${props => props.height};
   background-color: ${props => props.backgroundColor};
-  user-select: None;
+  user-select: none;
+  margin: ${props => props.margin? props.margin : "none"};
 `
 
 export const Overlay = styled.div<SwitchOverlayProps>`

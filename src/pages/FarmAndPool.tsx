@@ -1,19 +1,27 @@
 import { StyledMainContainer } from "src/components/styles/StyledMainContainer";
 import { FarmMountain, BannerTextContainer, BannerTitle, BannerSlogan } from "src/components/farmnpool/Banner";
-import { PoolsContainer, StakedToggleContainer, ToolbarContainer } from "src/components/farmnpool/PoolsContainer";
+import { PoolsContainer, StakedToggleContainer, ToolbarContainer, ToolbarSubContainer } from "src/components/farmnpool/PoolsContainer";
 import { PoolAccordion } from "src/components/farmnpool/Accordion";
 import { Pools } from "src/constants/Pools";
 import { Label, LabelContainer, Overlay, Slider, Switch } from "src/components/Toggle";
 import { Colors } from "src/constants/Colors";
-import { useState } from "react";
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { SearchBox, SearchIcon, SearchInput } from "src/components/Search";
+import * as React from "react";
+import { SelectChangeEvent } from '@mui/material/Select';
+import { SearchBox, SearchIcon, SearchInput, StyledSelect } from "src/components/Search";
+import useStateRef from "react-usestateref";
+import { CatchingPokemonSharp } from "@mui/icons-material";
 
 function FarmAndPool() {
+  let filteredPools: any[] = Pools;
 
-  const [age, setAge] = useState<string | number>('');
-  const [open, setOpen] = useState(false);
+  const [pools, setPools, poolsRef] = useStateRef(Pools);
+  const [search, setSearch] = React.useState("");
+  const [age, setAge] = React.useState<string | number>('');
+  const [open, setOpen] = React.useState(false);
+
+  const handleSearch = (event: any) => {
+    setSearch(event.target.value.toLowerCase());
+  }
 
   const handleChange = (event: SelectChangeEvent<typeof age>) => {
     setAge(event.target.value);
@@ -27,8 +35,8 @@ function FarmAndPool() {
     setOpen(true);
   };
 
-  const [activeToggled, setActiveToggled] = useState(false);
-  const [stakedToggled, setStakedToggled] = useState(false);
+  const [activeToggled, setActiveToggled] = React.useState(false);
+  const [stakedToggled, setStakedToggled] = React.useState(false);
 
   const activeClick = () => {
     setActiveToggled(!activeToggled);
@@ -37,6 +45,20 @@ function FarmAndPool() {
   const stakedClick = () => {
     setStakedToggled(!stakedToggled);
   }
+
+  React.useEffect(() => {
+    if(!search) {
+      setPools(Pools);
+      return;
+    }
+    filteredPools = [];
+    for(let i = 0; i < Pools.length; ++i){
+      if(Pools[i].name.toLowerCase().includes(search)){
+        filteredPools.push(Pools[i]);
+      }
+    }
+    setPools(filteredPools);
+  }, [search])
 
   return (
     <StyledMainContainer>
@@ -52,69 +74,63 @@ function FarmAndPool() {
       </FarmMountain>
       <PoolsContainer>
         <ToolbarContainer>
-          <Switch
-            width="140px"
-            height="28px"
-            backgroundColor={Colors.ToggleSwitchGrey}
-          >
-            <Overlay fontSize="12px" color={Colors.Black} onClick={activeClick}>
-              <LabelContainer>
-                <Label>Active</Label>
-                <Label>Ended</Label>
-              </LabelContainer>
-              <Slider 
-                backgroundColor={Colors.MinerverseYellow}
-                position={activeToggled? {
-                  left: "0px", right: "none"
-                } : {
-                  left: "none", right: "0px"
-                }}
-              >
-                {activeToggled? "Active" : "Ended"}
-              </Slider>
-            </Overlay>
-          </Switch>
-          <StakedToggleContainer>
+          <ToolbarSubContainer justifyContent="flex-start">
             <Switch
-              width="40px"
-              height="25px"
+              width="140px"
+              height="28px"
               backgroundColor={Colors.ToggleSwitchGrey}
-              onClick={stakedClick}
             >
-              <Slider 
-                backgroundColor={stakedToggled? Colors.MinerverseYellow : Colors.Black}
-                position={stakedToggled? {
-                  left: "None", right: "0px"
-                } : {
-                  left: "0px", right: "None"
-                }}
-              />
+              <Overlay fontSize="12px" color={Colors.Black} onClick={activeClick}>
+                <LabelContainer>
+                  <Label>Active</Label>
+                  <Label>Ended</Label>
+                </LabelContainer>
+                <Slider 
+                  backgroundColor={Colors.MinerverseYellow}
+                  position={activeToggled? {
+                    left: "0px", right: "none"
+                  } : {
+                    left: "none", right: "0px"
+                  }}
+                >
+                  {activeToggled? "Active" : "Ended"}
+                </Slider>
+              </Overlay>
             </Switch>
-            Staked Only
-          </StakedToggleContainer>
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={open}
-            onClose={handleClose}
-            onOpen={handleOpen}
-            value={age}
-            onChange={handleChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-          <SearchBox>
-            <SearchIcon />
-            <SearchInput />
-          </SearchBox>
+            <StakedToggleContainer>
+              <Switch
+                width="40px"
+                height="23px"
+                backgroundColor={Colors.ToggleSwitchGrey}
+                margin="0 10px 0 0"
+                onClick={stakedClick}
+              >
+                <Slider 
+                  backgroundColor={stakedToggled? Colors.MinerverseYellow : Colors.Black}
+                  position={stakedToggled? {
+                    left: "None", right: "0px"
+                  } : {
+                    left: "0px", right: "None"
+                  }}
+                />
+              </Switch>
+              Staked Only
+            </StakedToggleContainer>
+          </ToolbarSubContainer>
+          <ToolbarSubContainer justifyContent="flex-end">
+            <StyledSelect>
+              <option value="hot"> HOT </option>
+              <option value="apr"> APR </option>
+              <option value="earned"> Earned </option>
+            </StyledSelect>
+            <SearchBox>
+              <SearchIcon />
+              <SearchInput placeholder="Search" onChange={(e) => {handleSearch(e)}} />
+            </SearchBox>
+          </ToolbarSubContainer>
         </ToolbarContainer>
-        {Pools.map((pool) => {
-          return PoolAccordion(pool, Pools.indexOf(pool) === 0, Pools.indexOf(pool) === (Pools.length - 1));
+        {poolsRef.current.map((pool) => {
+          return <PoolAccordion pool={pool} isFirst={poolsRef.current.indexOf(pool) === 0} isLast={poolsRef.current.indexOf(pool) === (poolsRef.current.length - 1)}/>
         })}
       </PoolsContainer>
     </StyledMainContainer>

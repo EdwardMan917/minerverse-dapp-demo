@@ -157,7 +157,7 @@ const StakeSection = styled.div`
   justify-content: center;
 `
 
-export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boolean) {
+export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLast: boolean}) {
   const IconDiameterPC = "38px";
   const IconDiameterMobile = "20px";
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -170,10 +170,10 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
 
   const BorderRadius = "15px";
   const AccordionBorderRadius = () => {
-    if(isFirst){
+    if(props.isFirst){
       return `${BorderRadius} ${BorderRadius} 0 0`;
     } 
-    if (isLast) {
+    if (props.isLast) {
       return `0 0 ${BorderRadius} ${BorderRadius}`;
     }
     return "0";
@@ -185,7 +185,7 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
 
   const handleExpand = () => {
     setExpand(!expand);
-    if(isLast){
+    if(props.isLast){
       setAccordionBorderRadius(expandRef.current ? "0" : `0 0 ${BorderRadius} ${BorderRadius}`);
       setPanelBorderRadius(expandRef.current ? `0 0 ${BorderRadius} ${BorderRadius}` : "0");
       setPanelBorderBottom(expandRef.current ? `1px ${Colors.FormBorderGrey} solid` : "0");
@@ -193,7 +193,7 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
   }
 
   React.useEffect(() => {
-    setAPY(apyData[pool.id] ? apyData[pool.id]: "0.00");
+    setAPY(apyData[props.pool.id] ? apyData[props.pool.id]: "0.00");
   }, [apyData])
 
   React.useEffect(() => {
@@ -204,21 +204,21 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
   
   
   return (
-    <React.Fragment key={pool.id}>
+    <React.Fragment key={props.pool.id}>
       <Accordion onClick={handleExpand} borderRadius={accordionBorderRadius}>
         <Icon>
-          {pool.icon(pool.name, width < MobileViewWidth ? IconDiameterMobile : IconDiameterPC)}
+          {props.pool.icon(props.pool.name, width < MobileViewWidth ? IconDiameterMobile : IconDiameterPC)}
         </Icon>
         <Brief>
-          {pool.name}
+          {props.pool.name}
           <br/>
-          Reward: {pool.reward.join(" + ")}
+          Reward: {props.pool.reward.join(" + ")}
           <br/>
           TVL: $0
         </Brief>
         <APY>
           {apy}%
-          {pool.autoCompound ? <AutoCompound>AUTO-COMPOUNDING</AutoCompound> : null}
+          {props.pool.autoCompound ? <AutoCompound>AUTO-COMPOUNDING</AutoCompound> : null}
         </APY>
         <StakedInfo>
           Staked
@@ -237,7 +237,7 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
         borderRadius={panelBorderRadius} 
       >
         <LinksSection>
-          Get {pool.name}
+          Get {props.pool.name}
           <br/>
           View Contract
         </LinksSection>
@@ -245,12 +245,12 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
           Reward
           <RewardPair>
             {
-              pool.reward.length === 2 ?  
+              props.pool.reward.length === 2 ?  
                 <>
-                  {" 0 " + pool.reward[0] + " 0 " + pool.reward[1]}
+                  {" 0 " + props.pool.reward[0] + " 0 " + props.pool.reward[1]}
                 </> : 
                 <>
-                  {" 0 " + pool.reward[0]}
+                  {" 0 " + props.pool.reward[0]}
                 </>
             }
           </RewardPair>

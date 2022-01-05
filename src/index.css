@@ -42,7 +42,7 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
-select {
+/* select {
   -webkit-appearance: none;
   -moz-appearance: none;
   background: transparent;
@@ -55,7 +55,7 @@ select {
   margin-right: 2rem;
   padding: 1rem;
   padding-right: 2rem;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
