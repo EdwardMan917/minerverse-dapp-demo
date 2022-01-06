@@ -7,7 +7,7 @@ import ERC20 from "src/abi/ERC20.json";
 import ZapBSC from "src/abi/ZapBSC.json";
 import PriceCalculatorBSC from "src/abi/PriceCalculatorBSC.json";
 
-import { NativeToken, Token } from "src/constants/Tokens";
+import { LPToken, NativeToken, Token } from "src/constants/Tokens";
 import Contracts from "src/constants/Contracts";
 import { ITokenPair } from "src/interfaces/AppInterfaces";
 
@@ -185,6 +185,7 @@ export async function getBalance(tokenType: string, tokenAddress: string) {
       case NativeToken:
         result = await provider.getBalance(address[0]);
         break;
+      case LPToken:
       case Token:
         const contract = new ethers.Contract(tokenAddress, ERC20, provider);
         result = await contract.balanceOf(address[0]);
