@@ -10,6 +10,7 @@ export interface FormButtonProps {
   background: string;
   color: string;
   border?: string;
+  visible?: boolean;
 }
 
 export interface AddressContainerProps {

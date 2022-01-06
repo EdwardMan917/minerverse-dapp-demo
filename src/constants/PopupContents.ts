@@ -20,5 +20,15 @@ export const PopupContents: IPopupContent = {
     title: "Oops!",
     content: "Transaction failed.",
     buttonName: "Please Try Again"
+  },
+  approveSucceeded: {
+    title: "Woohoo!",
+    content: "Approval succeeded.",
+    buttonName: "OK"
+  },
+  approveFailed: {
+    title: "Oops!",
+    content: "Approval failed.",
+    buttonName: "Please Try Again"
   }
 }

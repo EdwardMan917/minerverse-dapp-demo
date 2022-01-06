@@ -10,6 +10,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { SearchBox, SearchIcon, SearchInput, StyledSelect } from "src/components/Search";
 import useStateRef from "react-usestateref";
 import { CatchingPokemonSharp } from "@mui/icons-material";
+import { ReactReduxContext } from "react-redux";
 
 function FarmAndPool() {
   let filteredPools: any[] = Pools;
@@ -130,7 +131,11 @@ function FarmAndPool() {
           </ToolbarSubContainer>
         </ToolbarContainer>
         {poolsRef.current.map((pool) => {
-          return <PoolAccordion pool={pool} isFirst={poolsRef.current.indexOf(pool) === 0} isLast={poolsRef.current.indexOf(pool) === (poolsRef.current.length - 1)}/>
+          return (
+            <React.Fragment key={pool.id}>
+              <PoolAccordion pool={pool} isFirst={poolsRef.current.indexOf(pool) === 0} isLast={poolsRef.current.indexOf(pool) === (poolsRef.current.length - 1)}/>
+            </React.Fragment>
+          );
         })}
       </PoolsContainer>
     </StyledMainContainer>

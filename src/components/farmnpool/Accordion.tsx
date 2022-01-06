@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import { Colors } from "src/constants/Colors";
 import { AccordionPanelProps, AccordionProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
 import { ApproveButton, ClaimButton } from "../styles/Buttons";
-import { approvePool } from "src/utils/PoolService";
+import { approvePool, getAllowance } from "src/utils/PoolService";
+import CircularProgress from '@mui/material/CircularProgress';
+import { PopupContents } from "src/constants/PopupContents";
+import Popup from "../Popup";
 
 const MobileViewWidth = 650;
 
@@ -183,6 +186,11 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
   const [accordionBorderRadius, setAccordionBorderRadius] = React.useState(AccordionBorderRadius());
   const [panelBorderRadius, setPanelBorderRadius] = React.useState("0");
   const [panelBorderBottom, setPanelBorderBottom] = React.useState("0");
+  
+  const [approved, setApproved] = React.useState(false);
+  const [transacting, setTransacting] = React.useState(false);
+  const [popupOpen, setPopupOpen] = React.useState(false);
+  const [popupContent, setPopupContent] = React.useState(PopupContents.succeeded);
 
   const handleExpand = () => {
     setExpand(!expand);
@@ -194,7 +202,16 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
   }
 
   const handleApprove = async () => {
-    await approvePool(props.pool.address);
+    setTransacting(true);
+    let approveSucceeded = await approvePool(props.pool);
+    if (approveSucceeded ){
+      setPopupContent(PopupContents.approveSucceeded);
+      setApproved(true);
+    } else {
+      setPopupContent(PopupContents.approveFailed);
+    }
+    setPopupOpen(true);
+    setTransacting(false);
   }
 
   React.useEffect(() => {
@@ -205,6 +222,15 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
     window.addEventListener("resize", () => {
       setWidth(window.innerWidth);
     });
+  });
+
+  React.useEffect(() => {
+    (async () => {
+      let result = await getAllowance(props.pool);
+      if(result){
+        setApproved(true);
+      }
+    })();
   });
   
   
@@ -267,9 +293,18 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
           >Claim</ClaimButton>
         </RewardSection>
         <StakeSection>
-          <ApproveButton onClick={handleApprove}>Approve</ApproveButton>
+          <ApproveButton 
+            visible={!approved}
+            background={transacting? Colors.ConvertFormGrey : Colors.MinerverseYellow} 
+            color={transacting? Colors.PendingGrey : Colors.Black}
+            border={transacting? `1px ${Colors.PendingGrey} solid` : "None"}
+            onClick={handleApprove}
+          > 
+            { transacting ? <CircularProgress sx={{ color: `${Colors.PendingGrey}`, padding: "10px"}} /> : <></> } { transacting? "Pending" : "Approve" }
+          </ApproveButton>
         </StakeSection>
       </AccordionPanel>
+      {Popup(setPopupOpen, popupOpen, popupContent)}
     </React.Fragment>
   )
 }
