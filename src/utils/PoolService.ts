@@ -13,6 +13,7 @@ import { toFloat } from "./UtilFunctions";
 import { Pools } from "src/constants/Pools";
 import store from "src/redux/store";
 import { updateAPY } from "src/redux/action";
+import { TokenConfig } from "src/constants/Tokens";
 
 
 export async function getAPY(pool: IPoolConfig) {
@@ -182,5 +183,33 @@ export async function getAllAPY() {
           break;
       }
     })
+  }
+}
+
+export async function approvePool(pool: IPoolConfig) {
+  try {
+    if (typeof window.ethereum !== 'undefined' && await getConnectedAccount() !== "") {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const TokenContract = new ethers.Contract(TokenConfig[pool.name].address, BEP20, signer);
+      return await TokenContract.approve(pool.address, ethers.constants.MaxUint256);
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+export async function getAllowance(pool: IPoolConfig){
+  try {
+    if (typeof window.ethereum !== 'undefined' && await getConnectedAccount() !== "") {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const TokenContract = new ethers.Contract(TokenConfig[pool.name].address, BEP20, provider);
+      const ZeroBigNumber = ethers.BigNumber.from("0");
+      return (await TokenContract.allowance(await getConnectedAccount(), pool.address)).gt(ZeroBigNumber);
+    }
+  } catch (e) {
+    console.log(e);
+    return false;
   }
 }

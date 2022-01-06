@@ -83,7 +83,6 @@ const getIcon = (name: string, diameter: string) => {
               <TokenIcons.WBNBIcon diameter={diameter} transform="translateX(-5px)" />
             </>
   }
-  
 }
 
 export const Pools: IPoolConfig[] = [

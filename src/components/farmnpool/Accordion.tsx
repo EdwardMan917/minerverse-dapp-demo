@@ -5,6 +5,10 @@ import { useSelector } from "react-redux";
 import { Colors } from "src/constants/Colors";
 import { AccordionPanelProps, AccordionProps, ExpandIconProps, IPoolConfig } from "src/interfaces/AppInterfaces";
 import { ApproveButton, ClaimButton } from "../styles/Buttons";
+import { approvePool, getAllowance } from "src/utils/PoolService";
+import CircularProgress from '@mui/material/CircularProgress';
+import { PopupContents } from "src/constants/PopupContents";
+import Popup from "../Popup";
 
 const MobileViewWidth = 650;
 
@@ -112,6 +116,10 @@ const AccordionPanel = styled.div<AccordionPanelProps>`
   border-right: 1px ${Colors.FormBorderGrey} solid;
   border-bottom: ${props => props.borderBottom};
   border-radius: ${props => props.borderRadius};
+
+  @media (max-width: 946px) {
+    width: 100%;
+  }
 `
 
 const LinksSection = styled.div`
@@ -153,7 +161,7 @@ const StakeSection = styled.div`
   justify-content: center;
 `
 
-export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boolean) {
+export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLast: boolean}) {
   const IconDiameterPC = "38px";
   const IconDiameterMobile = "20px";
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -166,10 +174,10 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
 
   const BorderRadius = "15px";
   const AccordionBorderRadius = () => {
-    if(isFirst){
+    if(props.isFirst){
       return `${BorderRadius} ${BorderRadius} 0 0`;
     } 
-    if (isLast) {
+    if (props.isLast) {
       return `0 0 ${BorderRadius} ${BorderRadius}`;
     }
     return "0";
@@ -178,18 +186,36 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
   const [accordionBorderRadius, setAccordionBorderRadius] = React.useState(AccordionBorderRadius());
   const [panelBorderRadius, setPanelBorderRadius] = React.useState("0");
   const [panelBorderBottom, setPanelBorderBottom] = React.useState("0");
+  
+  const [approved, setApproved] = React.useState(false);
+  const [transacting, setTransacting] = React.useState(false);
+  const [popupOpen, setPopupOpen] = React.useState(false);
+  const [popupContent, setPopupContent] = React.useState(PopupContents.succeeded);
 
   const handleExpand = () => {
     setExpand(!expand);
-    if(isLast){
+    if(props.isLast){
       setAccordionBorderRadius(expandRef.current ? "0" : `0 0 ${BorderRadius} ${BorderRadius}`);
       setPanelBorderRadius(expandRef.current ? `0 0 ${BorderRadius} ${BorderRadius}` : "0");
       setPanelBorderBottom(expandRef.current ? `1px ${Colors.FormBorderGrey} solid` : "0");
     }
   }
 
+  const handleApprove = async () => {
+    setTransacting(true);
+    let approveSucceeded = await approvePool(props.pool);
+    if (approveSucceeded ){
+      setPopupContent(PopupContents.approveSucceeded);
+      setApproved(true);
+    } else {
+      setPopupContent(PopupContents.approveFailed);
+    }
+    setPopupOpen(true);
+    setTransacting(false);
+  }
+
   React.useEffect(() => {
-    setAPY(apyData[pool.id] ? apyData[pool.id]: "0.00");
+    setAPY(apyData[props.pool.id] ? apyData[props.pool.id]: "0.00");
   }, [apyData])
 
   React.useEffect(() => {
@@ -197,24 +223,33 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
       setWidth(window.innerWidth);
     });
   });
+
+  React.useEffect(() => {
+    (async () => {
+      let result = await getAllowance(props.pool);
+      if(result){
+        setApproved(true);
+      }
+    })();
+  });
   
   
   return (
-    <React.Fragment key={pool.id}>
+    <React.Fragment key={props.pool.id}>
       <Accordion onClick={handleExpand} borderRadius={accordionBorderRadius}>
         <Icon>
-          {pool.icon(pool.name, width < MobileViewWidth ? IconDiameterMobile : IconDiameterPC)}
+          {props.pool.icon(props.pool.name, width < MobileViewWidth ? IconDiameterMobile : IconDiameterPC)}
         </Icon>
         <Brief>
-          {pool.name}
+          {props.pool.name}
           <br/>
-          Reward: {pool.reward.join(" + ")}
+          Reward: {props.pool.reward.join(" + ")}
           <br/>
           TVL: $0
         </Brief>
         <APY>
           {apy}%
-          {pool.autoCompound ? <AutoCompound>AUTO-COMPOUNDING</AutoCompound> : null}
+          {props.pool.autoCompound ? <AutoCompound>AUTO-COMPOUNDING</AutoCompound> : null}
         </APY>
         <StakedInfo>
           Staked
@@ -233,7 +268,7 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
         borderRadius={panelBorderRadius} 
       >
         <LinksSection>
-          Get {pool.name}
+          Get {props.pool.name}
           <br/>
           View Contract
         </LinksSection>
@@ -241,12 +276,12 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
           Reward
           <RewardPair>
             {
-              pool.reward.length === 2 ?  
+              props.pool.reward.length === 2 ?  
                 <>
-                  {" 0 " + pool.reward[0] + " 0 " + pool.reward[1]}
+                  {" 0 " + props.pool.reward[0] + " 0 " + props.pool.reward[1]}
                 </> : 
                 <>
-                  {" 0 " + pool.reward[0]}
+                  {" 0 " + props.pool.reward[0]}
                 </>
             }
           </RewardPair>
@@ -258,9 +293,18 @@ export function PoolAccordion(pool: IPoolConfig, isFirst: boolean, isLast: boole
           >Claim</ClaimButton>
         </RewardSection>
         <StakeSection>
-          <ApproveButton>Approve</ApproveButton>
+          <ApproveButton 
+            visible={!approved}
+            background={transacting? Colors.ConvertFormGrey : Colors.MinerverseYellow} 
+            color={transacting? Colors.PendingGrey : Colors.Black}
+            border={transacting? `1px ${Colors.PendingGrey} solid` : "None"}
+            onClick={handleApprove}
+          > 
+            { transacting ? <CircularProgress sx={{ color: `${Colors.PendingGrey}`, padding: "10px"}} /> : <></> } { transacting? "Pending" : "Approve" }
+          </ApproveButton>
         </StakeSection>
       </AccordionPanel>
+      {Popup(setPopupOpen, popupOpen, popupContent)}
     </React.Fragment>
   )
 }

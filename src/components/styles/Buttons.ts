@@ -59,40 +59,35 @@ export const ShortButton = styled(Button)`
   height: 60px;
 `;
 
-export const FormButton = styled(Button)<FormButtonProps>`
+const StateButton = styled(Button)<FormButtonProps>`
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.color};
+  background: ${props => props.background};
+  border: ${props => props.border};
+  visibility: ${props => props.visible? "visible" : "hidden"};
+`
+
+export const FormButton = styled(StateButton)`
   width: 100%;
   height: 50px;
   font-size: 20px;
   margin-top: 10px;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: ${props => props.color};
-  background: ${props => props.background};
-  border: ${props => props.border};
 `;
 
-export const ApproveButton = styled(Button)`
+export const ApproveButton = styled(StateButton)`
   width: 110px;
   height: 32px;
-  border-radius: 6px;
-`
+`;
 
-export const ClaimButton = styled(Button)<FormButtonProps>`
+export const ClaimButton = styled(StateButton)`
   width: 25%;
   height: 25px;
   font-size: 12px;
   margin-top: 10px;
-  border-radius: 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  color: ${props => props.color};
-  background: ${props => props.background};
-  border: ${props => props.border};
 `
 
 export const NavButtonContainer = styled.div`

@@ -20,6 +20,10 @@ export const BannerTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 40px 150px;
+
+  @media (max-width: 946px) {
+    padding: 40px 0 40px 40px;
+  }
 `
 
 export const BannerTitle = styled.div`

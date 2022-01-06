@@ -7,6 +7,15 @@ import MuiSelect from '@mui/material/Select';
 
 import { InputBase, styled } from '@mui/material';
 import { ITokenConfig } from 'src/interfaces/AppInterfaces';
+import SCstyled from "styled-components";
+
+const IconBox = SCstyled.div`
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const StyledSelect = styled(MuiSelect)(() => ({
   '& .MuiSvgIcon-root': {
@@ -37,7 +46,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Item(key: number, title: string, data: {value: string; icon: JSX.Element}) {
-  return <MenuItem key={key} value={data.value}>{data.icon}{title}</MenuItem>;
+  return (
+    <MenuItem key={key} value={data.value}>
+      <IconBox>
+        {data.icon}
+      </IconBox>{title}
+    </MenuItem>);
 }
 
 function Select(items: ITokenConfig, setToken: Function, parentToken: string | undefined) {

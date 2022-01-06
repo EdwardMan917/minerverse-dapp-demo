@@ -10,6 +10,7 @@ export interface FormButtonProps {
   background: string;
   color: string;
   border?: string;
+  visible?: boolean;
 }
 
 export interface AddressContainerProps {
@@ -56,6 +57,27 @@ export interface AccordionPanelProps {
 
 export interface ExpandIconProps {
   content: string;
+}
+
+export interface SwitchProps {
+  width: string;
+  height: string;
+  backgroundColor: string;
+  margin?: string;
+}
+
+export interface SliderProps {
+  backgroundColor: string;
+  position: {[side: string]: string}
+}
+
+export interface SwitchOverlayProps {
+  fontSize: string;
+  color: string;
+}
+
+export interface ToolbarSubContainerProps {
+  justifyContent: string;
 }
 
 export interface ITokenConfig {
