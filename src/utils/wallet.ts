@@ -10,6 +10,8 @@ import PriceCalculatorBSC from "src/abi/PriceCalculatorBSC.json";
 import { LPToken, NativeToken, Token } from "src/constants/Tokens";
 import Contracts from "src/constants/Contracts";
 import { ITokenPair } from "src/interfaces/AppInterfaces";
+import store from "src/redux/store";
+import { updateAccount, updateProvider, updateSigner } from "src/redux/action";
 
 
 let networkData = [
@@ -30,33 +32,37 @@ let networkData = [
 
 
 export async function connectWallet() {
-  // const provider = new ethers.providers.getDefaultProvider();
+  let wallet = window.ethereum;
+  if(!wallet) return;
+  
   window.ethereum.request({
     method: "wallet_addEthereumChain",
     params: networkData,
   })
-  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  store.dispatch(updateProvider(provider));
 
   // Force page refreshes on network changes
-// {
-//   provider.on("network", (newNetwork, oldNetwork) => {
-//       // When a Provider makes its initial connection, it emits a "network"
-//       // event with a null oldNetwork along with the newNetwork. So, if the
-//       // oldNetwork exists, it represents a changing network
-//       if (oldNetwork) {
-//           window.location.reload();
-//       }
-//   });
-// }
+  {
+    provider.on("network", (newNetwork, oldNetwork) => {
+        // When a Provider makes its initial connection, it emits a "network"
+        // event with a null oldNetwork along with the newNetwork. So, if the
+        // oldNetwork exists, it represents a changing network
+        if (oldNetwork) {
+          window.location.reload();
+        }
+    });
+  }
 
   // Prompt user for account connections
   await provider.send("eth_requestAccounts", []);
-  let accounts = await provider.listAccounts();
-  console.log("accounts:", await accounts);
+  
   const signer = provider.getSigner();
-  let address = await signer.getAddress();
-  return await address;
+  let accounts = await provider.listAccounts();
+  store.dispatch(updateAccount(accounts[0]));
+  store.dispatch(updateSigner(signer));
+  return accounts[0];
 }
 
 export async function requestAccount() {
