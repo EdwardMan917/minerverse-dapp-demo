@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,6 +19,8 @@ import { Colors } from "../constants/Colors";
 import { getConnectedAccount, connectWallet, getContractBalance } from '../utils/wallet';
 import { AppBarProps } from 'src/interfaces/AppInterfaces';
 import { Paths } from 'src/constants/Menu';
+import store from 'src/redux/store';
+import { useSelector } from 'react-redux';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -50,13 +51,14 @@ const DrawerOpenedIcon = styled(ChevronLeftIcon)({
 
 const maskAddress = (address: string) => {
   let addressLength = address.length;
-  return address.substring(0, 3) + "..." + address.substring(addressLength - 5, addressLength);
+  return address.substring(0, 3) + "..." + address.substring(addressLength - 4, addressLength);
 }
 
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
   const [address, setAddress] = React.useState('');
+  const storedAccount = useSelector((state: {account: any}) => state.account);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -97,6 +99,16 @@ export default function MainFrame() {
     });
   });
 
+  React.useEffect(() => {
+    let newAddress = storedAccount.address
+    if(!newAddress){
+      setAddress("");
+      setConnected(false);
+      return;
+    }
+    if(newAddress == address) return;
+    setAddress(maskAddress(newAddress));
+  }, [storedAccount]);
   
   const AppBarStyle = {
     background: `${Colors.Black}`,

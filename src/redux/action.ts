@@ -25,3 +25,10 @@ export const updateSigner = (payload: any) => {
     payload
   };
 }
+
+export const disconnect = () => {
+  return {
+    type: "DISCONNECT", 
+    payload: {}
+  };
+}

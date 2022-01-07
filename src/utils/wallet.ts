@@ -11,7 +11,7 @@ import { LPToken, NativeToken, Token } from "src/constants/Tokens";
 import Contracts from "src/constants/Contracts";
 import { ITokenPair } from "src/interfaces/AppInterfaces";
 import store from "src/redux/store";
-import { updateAccount, updateProvider, updateSigner } from "src/redux/action";
+import { updateAccount, updateProvider, updateSigner, disconnect } from "src/redux/action";
 
 
 let networkData = [
@@ -29,8 +29,6 @@ let networkData = [
 ];
 
 
-
-
 export async function connectWallet() {
   let wallet = window.ethereum;
   if(!wallet) return;
@@ -44,16 +42,25 @@ export async function connectWallet() {
   store.dispatch(updateProvider(provider));
 
   // Force page refreshes on network changes
-  {
-    provider.on("network", (newNetwork, oldNetwork) => {
-        // When a Provider makes its initial connection, it emits a "network"
-        // event with a null oldNetwork along with the newNetwork. So, if the
-        // oldNetwork exists, it represents a changing network
-        if (oldNetwork) {
-          window.location.reload();
-        }
-    });
-  }
+  provider.on("network", (newNetwork, oldNetwork) => {
+      // When a Provider makes its initial connection, it emits a "network"
+      // event with a null oldNetwork along with the newNetwork. So, if the
+      // oldNetwork exists, it represents a changing network
+      if (oldNetwork) {
+        window.location.reload();
+      }
+  });
+
+  wallet.on('accountsChanged', async (accounts: string[]) => {
+    // Handle the new accounts, or lack thereof.
+    // "accounts" will always be an array, but it can be empty.
+    console.log("changed account", accounts);
+    store.dispatch(updateAccount(accounts[0]));
+  });
+
+  wallet.on('disconnect', (error: any) => {
+    store.dispatch(disconnect());
+  });
 
   // Prompt user for account connections
   await provider.send("eth_requestAccounts", []);

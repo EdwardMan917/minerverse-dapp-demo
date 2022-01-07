@@ -8,7 +8,6 @@ const rootReducers = combineReducers(
     apy: apyReducer,
     account: WalletAccountReducer
   }
-
 );
 
 export default rootReducers;
