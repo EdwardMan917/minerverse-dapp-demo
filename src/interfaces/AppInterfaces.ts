@@ -6,6 +6,10 @@ export interface ButtonProps {
   visible: boolean;
 }
 
+export interface DialogProps {
+  height: string;
+}
+
 export interface FormButtonProps {
   background: string;
   color: string;

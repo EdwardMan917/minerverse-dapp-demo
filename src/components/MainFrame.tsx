@@ -16,11 +16,11 @@ import { WalletIcon, AddressBox, WalletIconBox, AddressContainer } from './style
 
 import { Colors } from "../constants/Colors";
 
-import { getConnectedAccount, connectWallet, getContractBalance } from '../utils/wallet';
+import { getConnectedAccount, connectWallet } from '../utils/wallet';
 import { AppBarProps } from 'src/interfaces/AppInterfaces';
 import { Paths } from 'src/constants/Menu';
-import store from 'src/redux/store';
 import { useSelector } from 'react-redux';
+import WalletPopup from './WalletPopup';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -57,6 +57,7 @@ const maskAddress = (address: string) => {
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
+  const [walletModalOpen, setWalletModalOpen] = React.useState(false);
   const [address, setAddress] = React.useState('');
   const storedAccount = useSelector((state: {account: any}) => state.account);
 
@@ -65,16 +66,17 @@ export default function MainFrame() {
   }
 
   const handleConnect = () => {
-    if (!window.ethereum) { return; }
-    let walletAddress;
-    (async () => {
-      walletAddress = await connectWallet();
-      if (walletAddress) {
-        setConnected(true);
-        setAddress(maskAddress(walletAddress));
-        handleAccountChange();
-      }
-    })()
+    setWalletModalOpen(true);
+    // if (!window.ethereum) { return; }
+    // let walletAddress;
+    // (async () => {
+    //   walletAddress = await connectWallet();
+    //   if (walletAddress) {
+    //     setConnected(true);
+    //     setAddress(maskAddress(walletAddress));
+    //     handleAccountChange();
+    //   }
+    // })()
   }
 
   const handleAccountChange = () => {
@@ -149,6 +151,7 @@ export default function MainFrame() {
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen} />
+      {WalletPopup(setWalletModalOpen, walletModalOpen)}
     </>
   );
 }

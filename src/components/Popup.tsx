@@ -7,32 +7,33 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/material';
 import { Colors } from 'src/constants/Colors';
 import { PopupButton } from './styles/Buttons';
+import { DialogProps } from 'src/interfaces/AppInterfaces';
 
-const StyledDialog = styled(Dialog)(() => ({
+export const StyledDialog = styled(Dialog)<DialogProps>((props: { height: string }) => ({
   '& .MuiPaper-root': {
     background: `${Colors.Black}`,
     border: `2px ${Colors.FormBorderGrey} solid`,
     borderRadius: "5px",
     color: `${Colors.White}`,
     width: "350px",
-    height: "200px"
+    height: props.height
   }
 }))
 
-const StyledTitle = styled(DialogTitle)(() => ({
+export const StyledTitle = styled(DialogTitle)(() => ({
   color: `${Colors.White}`,
   fontFamily: "GothamBold",
   fontSize: "25px"
 }))
 
-const StyledText = styled(DialogContentText)(() => ({
+export const StyledText = styled(DialogContentText)(() => ({
   color: `${Colors.White}`,
   fontFamily: "GothamBold",
   fontSize: "16px",
   height: "auto"
 }))
 
-const StyledActions = styled(DialogActions)(() => ({
+export const StyledActions = styled(DialogActions)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -53,6 +54,7 @@ function Popup(setPopupSignal: Function, popupSignal: boolean, content: { title:
 
   return (
     <StyledDialog
+      height="200px"
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"

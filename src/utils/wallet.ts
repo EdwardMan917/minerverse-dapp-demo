@@ -30,6 +30,7 @@ let networkData = [
 
 
 export async function connectWallet() {
+  console.log("connecting");
   let wallet = window.ethereum;
   if(!wallet) return;
   
