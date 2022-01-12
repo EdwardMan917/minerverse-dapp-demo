@@ -1,0 +1,101 @@
+{
+    "menu": {
+      "home": "首页",
+      "marktplace": "交易市场",
+      "myTools": "我的工具",
+      "connect": "连接钱包"
+    },
+    "home": {
+        "infoBoxTitle": {
+            "1": "总价值锁定",
+            "2": "跨国公司市值"
+      },
+      "card": {
+        "1": {
+          "title": "神秘盒子 和 NFT挖矿",
+          "info": "从神秘盒子中获取收藏品！\n\n挖掘奖励，玩游戏并升级以赢取更多！"
+        },
+        "2": {
+          "title": "NFT 市场",
+          "info": "买卖你的矿工头像\n\n借出你的头像和工具来赚取额外的利息！"
+        },
+        "3": {
+          "title": "GameFi",
+          "info":
+            "An entire game-driven tokenomy\n\nOffer sustainable benefits to metaminers community."
+        }
+      },
+      "connect": "连接钱包",
+      "tokenSale": "代币预售",
+      "subTitle": "Metaminers 的产量农业\n最大化您的APY",
+      "earnNow": "现在赚"
+    },
+    "tools": {
+      "earning": "收益",
+      "miningRewards": "掘矿奖励",
+      "mining": "掘矿",
+      "apr": "年化",
+      "amount": "数量",
+      "claim": "领取",
+      "toolsInfo": "工具详情",
+      "rarity": "稀有度",
+      "price": "价值 (可返还)",
+      "empty": "暂无数据",
+      "empty1": "<p>你的工具箱没有工具,</p><p>所有的工具都已用来掘矿!</p>",
+      "empty2": "<p>你的工具箱没有工具,</p><p>购买NFT工具开始挖矿!</p>",
+      "buyNow": "立即购买",
+      "empty3": "<p>质押你的NFT工具</p><p>开始挖矿吧!</p>",
+      "empty4": "<p>购买NFT工具</p><p>开始挖矿吧!</p>",
+      "purchaseBlock": "区块",
+      "toolType": "类型",
+      "beRebated": "可返还 MNC",
+      "stake": "质押",
+      "unStake": "解押",
+      "rebatableAmount": "返还",
+      "rebate": "提取",
+      "rebateText": "尚沒有返还，购买NFT工具，60天后就可以返还喔！",
+      "stakingTime": "质押还没开始，请稍后回来",
+      "stakingTimeBtn": "查看开始时间",
+      "history": "历史活动"
+    },
+    "common": {
+      "Whac-A-Mole": "地鼠掘矿锤",
+      "Mjolnir": "雷神掘矿锤",
+      "Rocket Drill": "火箭掘矿炮",
+      "back": "返回"
+    },
+    "bridge": {
+      "bridge": "跨链桥",
+      "menu": {
+        "home": "首页",
+        "marktplace": "交易市场",
+        "myTools": "我的工具",
+        "connect": "连接钱包"
+      },
+      "balance": "余额",
+      "max": "最大",
+      "from": "从",
+      "to": "到",
+      "transfer": "转移",
+      "withdraw": "提取",
+      "amount": "数量",
+      "progress": "进度",
+      "checkingText": "正在检查 {1} 上的 {0} 数量",
+      "next": "下一步",
+      "transferAmount": "跨链数量",
+      "transactionFee": "手续费",
+      "confirm": "确认",
+      "approve": "批准",
+      "loading": "加载中",
+      "transferCompleted": "转移完成",
+      "transferringText": "正在将 {0} MNC 从 <b>{1}</b> 转移至 <b>{2}</b>",
+      "pleaseWait": "这个过程可能需要几分钟, 请耐心等待",
+      "transferedText": "已将 {0} MNC 从 {1} 转移至 {2}",
+      "dialogTitle": {
+        "1": "正在准备您的转移请求",
+        "2": "等待链上确认",
+        "3": "您的资产正在转移中",
+        "4": "正在完成您的转移"
+      }
+    }
+  }
