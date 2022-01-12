@@ -290,6 +290,7 @@ export function PoolAccordion(props: {pool: IPoolConfig, isFirst: boolean, isLas
             background={Colors.ConvertFormGrey} 
             color={Colors.PendingGrey}
             border={`1px ${Colors.PendingGrey} solid`}
+            visible={true}
           >Claim</ClaimButton>
         </RewardSection>
         <StakeSection>

@@ -9,8 +9,6 @@ import * as React from "react";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { SearchBox, SearchIcon, SearchInput, StyledSelect } from "src/components/Search";
 import useStateRef from "react-usestateref";
-import { CatchingPokemonSharp } from "@mui/icons-material";
-import { ReactReduxContext } from "react-redux";
 
 function FarmAndPool() {
   let filteredPools: any[] = Pools;

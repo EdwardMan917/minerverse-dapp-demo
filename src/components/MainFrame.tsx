@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,9 +16,10 @@ import { WalletIcon, AddressBox, WalletIconBox, AddressContainer } from './style
 
 import { Colors } from "../constants/Colors";
 
-import { getConnectedAccount, connectWallet, getContractBalance } from '../utils/wallet';
 import { AppBarProps } from 'src/interfaces/AppInterfaces';
 import { Paths } from 'src/constants/Menu';
+import { useSelector } from 'react-redux';
+import WalletPopup from './WalletPopup';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -50,53 +50,43 @@ const DrawerOpenedIcon = styled(ChevronLeftIcon)({
 
 const maskAddress = (address: string) => {
   let addressLength = address.length;
-  return address.substring(0, 3) + "..." + address.substring(addressLength - 5, addressLength);
+  return address.substring(0, 3) + "..." + address.substring(addressLength - 4, addressLength);
 }
 
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
+  const [walletModalOpen, setWalletModalOpen] = React.useState(false);
   const [address, setAddress] = React.useState('');
+  const storedAccount = useSelector((state: {account: any}) => state.account);
 
   const toggleDrawer = () => {
     setOpen(!open);
   }
 
   const handleConnect = () => {
-    if (!window.ethereum) { return; }
-    let walletAddress;
-    (async () => {
-      walletAddress = await connectWallet();
-      if (walletAddress) {
-        setConnected(true);
-        setAddress(maskAddress(walletAddress));
-        handleAccountChange();
-      }
-    })()
-  }
-
-  const handleAccountChange = () => {
-    window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
-      if (accounts.length > 0) {
-        setAddress(maskAddress(accounts[0]));
-      } else if (accounts.length === 0) {
-        setConnected(false);
-        setAddress('');
-      }
-    });
+    setWalletModalOpen(true);
   }
 
   React.useEffect(() => {
-    window.addEventListener('load', async () => {
-      if (!window.ethereum) { return; }
-      let account = await getConnectedAccount();
-      if (account) {
-        setAddress(maskAddress(await getConnectedAccount()));
-        setConnected(true);
-      } 
+    window.addEventListener('load', () => {
+      let walletAddress = storedAccount.address;
+      if (!walletAddress) { return; }
+      setAddress(maskAddress(walletAddress));
+      setConnected(true);
     });
   });
 
+  React.useEffect(() => {
+    let newAddress = storedAccount.address
+    if(!newAddress){
+      setAddress("");
+      setConnected(false);
+      return;
+    }
+    setAddress(maskAddress(newAddress));
+    setConnected(true);
+  }, [storedAccount]);
   
   const AppBarStyle = {
     background: `${Colors.Black}`,
@@ -137,6 +127,7 @@ export default function MainFrame() {
         </Toolbar>
       </AppBar>
       <MenuDrawer open={open} setDrawerOpen={setOpen} />
+      {WalletPopup(setWalletModalOpen, walletModalOpen)}
     </>
   );
 }

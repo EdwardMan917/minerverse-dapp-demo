@@ -6,12 +6,13 @@ import { StyledMainContainer } from "../components/styles/StyledMainContainer";
 import Select from 'src/components/Select';
 
 import { validateDecimal } from 'src/utils/validator';
-import { getConnectedAccount, getBalance, getConversionRate, doSwap } from '../utils/wallet';
+import { getBalance, getConversionRate, doSwap } from '../utils/wallet';
 import { BNB, MVX, TokenConfig } from 'src/constants/Tokens';
 import Popup from 'src/components/Popup';
 import { PopupContents } from 'src/constants/PopupContents';
 import usePrevious from 'src/hooks/usePrevious';
 import { Colors } from 'src/constants/Colors';
+import { useSelector } from 'react-redux';
 
 
 function Convert() {
@@ -33,6 +34,8 @@ function Convert() {
 
   const [popupOpen, setPopupOpen] = React.useState(false);
   const [popupContent, setPopupContent] = React.useState(PopupContents.succeeded);
+  
+  const storedAccount = useSelector((state: {account: any}) => state.account);
 
   const [rate, setRate] = React.useState('0');
   
@@ -77,8 +80,7 @@ function Convert() {
 
   const handleConvert = async () => {
     if(isConverting) { return; }
-    let account = await getConnectedAccount();
-    if(!account) {
+    if(!storedAccount.address) {
       setPopupContent(PopupContents.connectWallet);
       setPopupOpen(true);
       return;
@@ -149,6 +151,10 @@ function Convert() {
       })();
     }
   }, [toToken])
+
+  React.useEffect(() => {
+    refreshFormData();
+  }, [storedAccount]);
   
   return (
     <StyledMainContainer>
@@ -176,6 +182,7 @@ function Convert() {
               background={isConverting? Colors.ConvertFormGrey : Colors.MinerverseYellow} 
               color={isConverting? Colors.PendingGrey : Colors.Black}
               border={isConverting? `1px ${Colors.PendingGrey} solid` : "None"}
+              visible={true}
               onClick={handleConvert}
             > 
               { isConverting ? <CircularProgress sx={{ color: `${Colors.PendingGrey}`, padding: "5px", marginRight: "15px" }} /> : <></> } { isConverting? "Pending" : "Convert" }

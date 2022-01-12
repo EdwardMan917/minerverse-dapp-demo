@@ -13,7 +13,8 @@ import { Paths } from 'src/constants/Menu';
 import { Colors } from './constants/Colors';
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
-import { poolInfoStore } from './utils/DataRefresh';
+import { poolInfoManger } from './utils/PoolInfoManager';
+import { connectWallet } from './utils/wallet';
 
 const BoxStyle = {
   background: `${Colors.Black}`
@@ -24,7 +25,8 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await poolInfoStore.startUpdate();
+      connectWallet();
+      await poolInfoManger.startUpdate();
     })();
   });
 

@@ -6,6 +6,10 @@ export interface ButtonProps {
   visible: boolean;
 }
 
+export interface DialogProps {
+  height: string;
+}
+
 export interface FormButtonProps {
   background: string;
   color: string;
@@ -119,4 +123,9 @@ export interface IPoolConfig {
   pancakeId: number,
   reward: string[],
   type: string
+}
+
+export interface IWalletConfig {
+  name: string;
+  icon: JSX.Element;
 }
