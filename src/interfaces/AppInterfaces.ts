@@ -124,3 +124,8 @@ export interface IPoolConfig {
   reward: string[],
   type: string
 }
+
+export interface IWalletConfig {
+  name: string;
+  icon: JSX.Element;
+}

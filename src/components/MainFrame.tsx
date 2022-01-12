@@ -16,7 +16,6 @@ import { WalletIcon, AddressBox, WalletIconBox, AddressContainer } from './style
 
 import { Colors } from "../constants/Colors";
 
-import { getConnectedAccount, connectWallet } from '../utils/wallet';
 import { AppBarProps } from 'src/interfaces/AppInterfaces';
 import { Paths } from 'src/constants/Menu';
 import { useSelector } from 'react-redux';
@@ -67,37 +66,14 @@ export default function MainFrame() {
 
   const handleConnect = () => {
     setWalletModalOpen(true);
-    // if (!window.ethereum) { return; }
-    // let walletAddress;
-    // (async () => {
-    //   walletAddress = await connectWallet();
-    //   if (walletAddress) {
-    //     setConnected(true);
-    //     setAddress(maskAddress(walletAddress));
-    //     handleAccountChange();
-    //   }
-    // })()
-  }
-
-  const handleAccountChange = () => {
-    window.ethereum.on('accountsChanged', (accounts: Array<string>) => {
-      if (accounts.length > 0) {
-        setAddress(maskAddress(accounts[0]));
-      } else if (accounts.length === 0) {
-        setConnected(false);
-        setAddress('');
-      }
-    });
   }
 
   React.useEffect(() => {
-    window.addEventListener('load', async () => {
-      if (!window.ethereum) { return; }
-      let account = await getConnectedAccount();
-      if (account) {
-        setAddress(maskAddress(await getConnectedAccount()));
-        setConnected(true);
-      } 
+    window.addEventListener('load', () => {
+      let walletAddress = storedAccount.address;
+      if (!walletAddress) { return; }
+      setAddress(maskAddress(walletAddress));
+      setConnected(true);
     });
   });
 
@@ -108,8 +84,8 @@ export default function MainFrame() {
       setConnected(false);
       return;
     }
-    if(newAddress == address) return;
     setAddress(maskAddress(newAddress));
+    setConnected(true);
   }, [storedAccount]);
   
   const AppBarStyle = {
