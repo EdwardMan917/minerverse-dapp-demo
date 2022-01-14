@@ -46,23 +46,23 @@ const getMoreIcon = (selected: boolean) => {
 }
 
 export const MenuItems = [
-  { title: 'Farms & Pool', icon: getFarmsIcon, path: Paths.farmsAndPool, children: null},
-  { title: 'Convert', icon: getConvertIcon, path: Paths.convert, children: null },
+  { title: 'menu.farms', icon: getFarmsIcon, path: Paths.farmsAndPool, children: null},
+  { title: 'menu.convert', icon: getConvertIcon, path: Paths.convert, children: null },
   {
-    title: 'SoFi', icon: getSoFiIcon, path: null, children: [
-      { index: 1, title: 'Dashboard', path: Paths.sofiDashboard },
-      { index: 2, title: 'Market', path: Paths.sofiMarket },
-      { index: 3, title: 'My Portfolio', path: Paths.sofiPortfolio },
-      { index: 4, title: 'Following', path: Paths.sofiFollowing }
+    title: 'menu.sofi.title', icon: getSoFiIcon, path: null, children: [
+      { index: 1, title: 'menu.sofi.child.dashboard', path: Paths.sofiDashboard },
+      { index: 2, title: 'menu.sofi.child.market', path: Paths.sofiMarket },
+      { index: 3, title: 'menu.sofi.child.myPortfolio', path: Paths.sofiPortfolio },
+      { index: 4, title: 'menu.sofi.child.following', path: Paths.sofiFollowing }
     ]
   },
-  { title: 'NFT', icon: getNFTIcon, path: Paths.nft, children: null },
-  { title: 'Win', icon: getWinIcon, path: Paths.win, children: null },
+  { title: 'menu.nft', icon: getNFTIcon, path: Paths.nft, children: null },
+  { title: 'menu.win', icon: getWinIcon, path: Paths.win, children: null },
   {
-    title: 'More', icon: getMoreIcon, path: null, children: [
-      { index: 5, title: 'Info', path: Paths.info },
-      { index: 6, title: 'Voting', path: Paths.voting }, 
-      { index: 7, title: 'Docs', path: Paths.docs }
+    title: 'menu.more.title', icon: getMoreIcon, path: null, children: [
+      { index: 5, title: 'menu.more.child.info', path: Paths.info },
+      { index: 6, title: 'menu.more.child.voting', path: Paths.voting }, 
+      { index: 7, title: 'menu.more.child.docs', path: Paths.docs }
     ]
   }
 ]

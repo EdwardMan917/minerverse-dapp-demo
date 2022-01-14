@@ -1,0 +1,132 @@
+{
+    "menu": {
+      "farms": "Farms and Pool",
+      "convert": "Home",
+      "sofi": {
+        "title": "SoFi",
+        "child": {
+          "dashboard": "Dashboard",
+          "market": "Market",
+          "myPortfolio": "My Portfolio",
+          "following": "Following"
+        }
+      },
+      "nft": "NFT",
+      "win": "Win",
+      "more": {
+        "title": "More",
+        "child": {
+          "info": "Info",
+          "voting": "Voting",
+          "docs": "Docs"
+        }
+      }
+    },
+    "home": {
+      "connectWallet": "Connect Wallet",
+      "preSale": "Token Pre-Sales",
+      "totalValueLocked": "Total Value Locked",
+      "marketCapital": "MNC Market Cap",
+      "yieldFarmingSlogan": {
+        "1": "Yield Farming with Metaminers",
+        "2": "Maximize your APY"
+      },
+      "earnNow": "Earn now",
+      "card": {
+        "mysteryBox": {
+          "title": "Mystery Box & NFT mining",
+          "info":{
+            "1": "Get Collectibles from mystery box!",
+            "2": "Mine rewards,play games and level up to win more!"
+          }
+        },
+        "nftMarketplace": {
+          "title": "NFT Marketplace",
+          "info":
+          {
+            "1": "Buy & Sell your miner avatars",
+            "2": "Lend your avatars & tools to earn extra interest!"
+          }
+        },
+        "gameFi": {
+          "title": "GameFi",
+          "info":
+          {
+            "1": "An entire game-driven tokenomy",
+            "2": "Offer sustainable benefits to Metaminers community."
+          }
+        }
+      }
+    },
+    "tools": {
+      "earning": "EARNING",
+      "miningRewards": "Mining Rewards",
+      "mining": "Mining",
+      "apr": "APR",
+      "amount": "Amount",
+      "claim": "Claim",
+      "toolsInfo": "Tools Info",
+      "rarity": "Rarity",
+      "price": "Price (Rebatable)",
+      "empty": "No data",
+      "empty1":
+        "<p>Your tools box is empty,</p><p>all tools are used for mining!</p>",
+        "empty2":
+        "<p>Your tools box is empty,</p><p>buy NFT tools to start mining now!</p>",
+      "buyNow": "Buy Now",
+      "empty3": "<p>Stake your NFT tools</p><p>to start mining now!</p>",
+      "empty4": "<p>Buy NFT tools</p><p>to start mining now!</p>",
+      "purchaseBlock": "Block",
+      "toolType": "Type",
+      "beRebated": "Rebate",
+      "stake": "Stake",
+      "unStake": "UnStake",
+      "rebatableAmount": "Total Rebatable Amount",
+      "rebate": "Rebate",
+      "rebateText":
+        "Rebate is not available, buy NFT tools and get rebate after 60 days!",
+      "stakingTime": "Staking isn’t start yet, please come back later",
+      "stakingTimeBtn": "Check starting time",
+      "history": "Previous Events"
+    },
+    "common": {
+      "Whac-A-Mole": "Whac-A-Mole",
+      "Mjolnir": "Mjolnir",
+      "Rocket Drill": "Rocket Drill",
+      "back": "back"
+    },
+    "bridge": {
+      "bridge": "Bridge",
+      "menu": {
+        "home": "Home",
+        "marktplace": "Marktplace",
+        "myTools": "My Tools",
+        "connect": "Connect Wallet"
+      },
+      "balance": "Balance",
+      "max": "MAX",
+      "from": "From",
+      "to": "To",
+      "transfer": "TRANSFER",
+      "withdraw": "Withdraw",
+      "amount": "Amount",
+      "progress": "Progress",
+      "checkingText": "Checking the amount of {0} on {1}",
+      "next": "NEXT",
+      "transferAmount": "Transfer Amount",
+      "transactionFee": "Transaction fee",
+      "confirm": "Confirm",
+      "approve": "Approve",
+      "loading": "LOADING",
+      "transferCompleted": "Transfer Completed",
+      "transferringText": "Transferring {0} MNC from <b>{1}</b> to <b>{2}</b>",
+      "pleaseWait": "This may take few minutes, please wait",
+      "transferedText": "Transferred {0} MNC from {1} to {2}",
+      "dialogTitle": {
+        "1": "Preparing your transfer request",
+        "2": "Awaiting confirmations on chain",
+        "3": "Completing your transfer",
+        "4": "Finalizing your transfer"
+      }
+    }
+  }

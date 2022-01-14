@@ -14,6 +14,7 @@ import { ListItemTextProps } from "src/interfaces/AppInterfaces";
 import { ListItemButton } from "@mui/material";
 import useState from 'react-usestateref';
 import { ContextPath } from "src/constants/Menu";
+import { useTranslation } from 'react-i18next';
 
 const StyledListItem = styled(ListItemButton)(( props: { selected: boolean }) => ({
   padding: '0px 0px 0px 8px',
@@ -58,6 +59,7 @@ export const SingleListItem = (
 ) => {
 
   const [selected, setSelected] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const handleClick = () => {
     setDrawerOpen(true);
@@ -73,7 +75,7 @@ export const SingleListItem = (
           <StyledListIcon>
             {item.icon(selected)}
           </StyledListIcon>
-          <StyledListItemText primary={item.title} selected={selected} />
+          <StyledListItemText primary={t(item.title)} selected={selected} />
       </StyledListItem>
     </Link>
   );
@@ -92,6 +94,7 @@ export const MultiLevelListItem = (
   const [selected, setSelected, selectedRef] = useState(false);
   const [currentPath, setCurrentPath, currentPathRef] = useState('');
   const [targetPath, setTargetPath, targetPathRef] = useState('');
+  const { t, i18n } = useTranslation();
 
   const handleClick = () => {
     setDrawerOpen(true);
@@ -124,14 +127,14 @@ export const MultiLevelListItem = (
         <StyledListIcon >
           {item.icon(selected)}
         </StyledListIcon>
-        <StyledListItemText primary={item.title} selected={selectedRef.current} />
+        <StyledListItemText primary={t(item.title)} selected={selectedRef.current} />
         {open ? <CollapseIcon /> : <ExpandIcon />}
       </StyledListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {children.map((child: { index: React.Key; title: string; path: string; }) => (
             <Link key={child.index} to={child.path}>
-              <StyledMenuItem selected={currentPathRef.current === child.path} key={child.index} onClick={() => {handleChildClick(child.path)}} >{child.title}</StyledMenuItem>
+              <StyledMenuItem selected={currentPathRef.current === child.path} key={child.index} onClick={() => {handleChildClick(child.path)}} >{t(child.title)}</StyledMenuItem>
             </Link>
           ))}
         </List>

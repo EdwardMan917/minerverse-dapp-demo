@@ -39,7 +39,7 @@ export const SearchInput = styled.input`
 
 export const StyledSelect = styled.select`
   outline: none;
-  width: 80px;
+  width: 90px;
   height: 30px;
   border-radius: 20px;
   background: ${Colors.AddressBoxGrey};
