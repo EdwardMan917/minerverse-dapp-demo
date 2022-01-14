@@ -24,6 +24,8 @@
     },
     "home": {
       "connectWallet": "连接钱包",
+      "wallet": "钱包",
+      "disconnect": "断开",
       "preSale": "代币预售",
       "totalValueLocked": "已锁定总值",
       "marketCapital": "MNC总市值",

@@ -24,6 +24,8 @@
     },
     "home": {
       "connectWallet": "Connect Wallet",
+      "wallet": "Wallet",
+      "disconnect": "Disconnect",
       "preSale": "Token Pre-Sales",
       "totalValueLocked": "Total Value Locked",
       "marketCapital": "MNC Market Cap",

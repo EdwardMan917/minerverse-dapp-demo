@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
@@ -20,6 +21,8 @@ import { AppBarProps } from 'src/interfaces/AppInterfaces';
 import { Paths } from 'src/constants/Menu';
 import { useSelector } from 'react-redux';
 import WalletPopup from './WalletPopup';
+import { Dropdown, DropdownOption } from './Dropdown';
+import { disconnectWallet } from 'src/utils/wallet';
 
 
 const AppBar = styled(MuiAppBar, {
@@ -56,17 +59,36 @@ const maskAddress = (address: string) => {
 export default function MainFrame() {
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
+  const [walletDropdownOpen, setWalletDropdownOpen] = React.useState(false);
   const [walletModalOpen, setWalletModalOpen] = React.useState(false);
   const [address, setAddress] = React.useState('');
   const storedAccount = useSelector((state: {account: any}) => state.account);
+  const {t, i18n} = useTranslation();
 
   const toggleDrawer = () => {
     setOpen(!open);
   }
 
+  const handleWalletDropdownOpen = () => {
+    setWalletDropdownOpen(!walletDropdownOpen);
+  }
+
   const handleConnect = () => {
     setWalletModalOpen(true);
   }
+
+  const handleDisconnect = () => {
+    setWalletDropdownOpen(false);
+    disconnectWallet();
+  }
+
+  const dropdownElements = [
+    "addressContainer",
+    "walletIcon",
+    "address",
+    "wallet",
+    "disconnect"
+  ]
 
   React.useEffect(() => {
     window.addEventListener('load', () => {
@@ -75,6 +97,12 @@ export default function MainFrame() {
       setAddress(maskAddress(walletAddress));
       setConnected(true);
     });
+
+    window.addEventListener("click", (e: any) => {
+      if(!dropdownElements.includes(e.target.id)){
+        setWalletDropdownOpen(false);
+      }
+    })
   });
 
   React.useEffect(() => {
@@ -114,15 +142,34 @@ export default function MainFrame() {
             <MinerverseLogo />
           </Link>
           <NavButtonContainer>
-            <NavButton visible={!connected} onClick={handleConnect} >Connect Wallet</NavButton>
-            <AddressContainer visible={connected}>
-              <WalletIconBox>
+            <NavButton visible={!connected} onClick={handleConnect} >{t("home.connectWallet")}</NavButton>
+            <AddressContainer id="addressContainer" visible={connected} onClick={handleWalletDropdownOpen}>
+              <WalletIconBox id="walletIcon">
                 <WalletIcon />
               </WalletIconBox>
-              <AddressBox>
+              <AddressBox id="address">
                 {address}
               </AddressBox>
             </AddressContainer>
+            <Dropdown
+              visible={walletDropdownOpen}
+              width="120px"
+              transform="translateX(30px) translateY(-16px)"
+            >
+              <DropdownOption 
+                id="wallet"
+                borderRadius="14px 14px 0 0"
+              >
+                {t("home.wallet")}
+              </DropdownOption>
+              <DropdownOption 
+                id="disconnect"
+                borderRadius="0 0 14px 14px"
+                onClick={handleDisconnect}
+              >
+                {t("home.disconnect")}
+              </DropdownOption>
+            </Dropdown>
           </NavButtonContainer>
         </Toolbar>
       </AppBar>

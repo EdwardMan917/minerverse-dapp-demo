@@ -29,6 +29,16 @@ export interface MenuFooterProps {
   visible: boolean;
 }
 
+export interface DropdownProps {
+  visible: boolean;
+  width: string;
+  transform: string;
+}
+
+export interface OptionProps {
+  borderRadius: string;
+}
+
 export interface I18nDropdownProps {
   visible: boolean;
 }

@@ -66,8 +66,17 @@ export async function connectWallet() {
   }
 }
 
+export async function disconnectWallet() {
+  try{
+    store.dispatch(disconnect());
+  } catch (e){
+    console.log(e);
+  }
   
-async function updateAccountState(wallet: any, provider: any, isWalletConnect: boolean) {
+}
+
+  
+async function updateAccountState(wallet: any, provider: any, isWalletConnectProvider: boolean) {
   store.dispatch(updateProvider(provider));
 
   // Force page refreshes on network changes
@@ -90,7 +99,7 @@ async function updateAccountState(wallet: any, provider: any, isWalletConnect: b
     store.dispatch(disconnect());
   });
 
-  if(!isWalletConnect){
+  if(!isWalletConnectProvider){
     // Prompt user for account connections
     await provider.send("eth_requestAccounts", []);
   }
