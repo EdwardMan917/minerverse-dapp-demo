@@ -3,6 +3,7 @@ export enum Colors {
   NavBorderGrey = "#313131",
   Black = "#000",
   White = "#ffffff",
+  I18nOptionBackground = "#444",
   ConvertFormGrey = "#141414",
   PendingGrey = "#2c2c2c",
   SubmenuGrey = "#0f0f0f",

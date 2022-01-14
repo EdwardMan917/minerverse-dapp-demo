@@ -1,44 +1,47 @@
+import { useTranslation } from "react-i18next";
 import { Card, CardContainer, CardContent, CardIcon, CardTitle, GameFi, Home, ToolBox } from "../styles/Card";
 import { CertikLogo, CoinGeckoLogo, CoinMarketCapLogo, LogoContainer } from "../styles/BusinessLogos";
 import { StyledMainFooterContainer } from "../styles/StyledMainContainer";
 
 function Footer() {
+  const {t, i18n} = useTranslation();
+
   return (
     <StyledMainFooterContainer>
       <CardContainer>
         <Card>
-          <CardTitle>Mystery Box & NFT Mining</CardTitle>
+          <CardTitle>{t("home.card.mysteryBox.title")}</CardTitle>
           <CardIcon>
             <ToolBox />
           </CardIcon>
           <CardContent>
-            Get Collectibles from mystery box!
+            {t("home.card.mysteryBox.info.1")}
             <br/>
-            Mine rewards,play games and level up to win more!
+            {t("home.card.mysteryBox.info.2")}
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>NFT Marketplace</CardTitle>
+          <CardTitle>{t("home.card.nftMarketplace.title")}</CardTitle>
           <CardIcon>
             <Home />
           </CardIcon>
           <CardContent>
-            Buy & Sell your miner avatars
+            {t("home.card.nftMarketplace.info.1")}
             <br/>
-            Lend your avatars & tools to earn extra interest!
+            {t("home.card.nftMarketplace.info.2")}
           </CardContent>
         </Card>
 
         <Card>
-          <CardTitle>GameFi</CardTitle>
+          <CardTitle>{t("home.card.gameFi.title")}</CardTitle>
           <CardIcon>
             <GameFi />
           </CardIcon>
           <CardContent>
-            An entire game-driven tokenomy
+            {t("home.card.gameFi.info.1")}
             <br/>
-            Offer sustainable benefits to metaminers community.
+            {t("home.card.gameFi.info.2")}
           </CardContent>
         </Card>
       </CardContainer>

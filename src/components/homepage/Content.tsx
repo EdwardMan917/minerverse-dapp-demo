@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { LongButton, ShortButton, StyledButtonContainer } from "../styles/Buttons";
 import { IntroContainer, IntroTitle, IntroSlogan, PhraseContainer, MarketingPhrase, ContentWrapper } from "../styles/homepage/ContentParts";
 import { BoxTitle, BoxValue, ValueBox } from "../styles/StyledValueBox";
@@ -5,6 +6,7 @@ import CountUp from 'react-countup';
 
 
 function Content() {
+  const {t, i18n} = useTranslation();
 
   let valueLocked = 1234567890;
   let marketCap = 634634773;
@@ -32,7 +34,7 @@ function Content() {
         <IntroSlogan>Hold. Stake. Earn. NFT. GameFi.</IntroSlogan>
       </IntroContainer>
       <ValueBox>
-        <BoxTitle>Total Value Locked</BoxTitle>
+        <BoxTitle>{t("home.totalValueLocked")}</BoxTitle>
         <BoxValue>
           <CountUp start={getStartNumber(valueLocked)} end={getFinalNumber(valueLocked)} duration={1} delay={0} >
             {({ countUpRef }) => (
@@ -44,7 +46,7 @@ function Content() {
         </BoxValue>
       </ValueBox>
       <ValueBox>
-        <BoxTitle>MNC Market Cap</BoxTitle>
+        <BoxTitle>{t("home.marketCapital")}</BoxTitle>
         <BoxValue>
           <CountUp start={getStartNumber(marketCap)} end={getFinalNumber(marketCap)} duration={1} delay={0} >
             {({ countUpRef }) => (
@@ -56,15 +58,15 @@ function Content() {
         </BoxValue>
       </ValueBox>
       <StyledButtonContainer>
-        <LongButton>Connect Wallet</LongButton>
-        <LongButton>Token Pre-sales</LongButton>
+        <LongButton>{t("home.connectWallet")}</LongButton>
+        <LongButton>{t("home.preSale")}</LongButton>
       </StyledButtonContainer>
       <PhraseContainer>
-        <MarketingPhrase>Yield Farming with Metaminers</MarketingPhrase>  
-        <MarketingPhrase>Maximize your APY</MarketingPhrase>
+        <MarketingPhrase>{t("home.yieldFarmingSlogan.1")}</MarketingPhrase>  
+        <MarketingPhrase>{t("home.yieldFarmingSlogan.2")}</MarketingPhrase>
       </PhraseContainer>
       <StyledButtonContainer>
-        <ShortButton>Earn Now</ShortButton>
+        <ShortButton>{t("home.earnNow")}</ShortButton>
       </StyledButtonContainer>
     </ContentWrapper>
   );

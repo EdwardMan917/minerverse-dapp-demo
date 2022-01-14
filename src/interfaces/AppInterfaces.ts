@@ -29,6 +29,14 @@ export interface MenuFooterProps {
   visible: boolean;
 }
 
+export interface I18nDropdownProps {
+  visible: boolean;
+}
+
+export interface I18nOptionProps {
+  borderRadius: string;
+}
+
 export interface TokenIconProps {
   marginRight?: string;
   diameter: string;

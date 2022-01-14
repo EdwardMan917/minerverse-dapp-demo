@@ -1,36 +1,62 @@
 {
     "menu": {
-      "home": "Home",
-      "marktplace": "Marktplace",
-      "myTools": "My Tools",
-      "connect": "Connect Wallet"
-    },
-    "home": {
-        "infoBoxTitle": {
-            "1": "Total Value Locked",
-            "2": "MNC Market Cap"
-      },
-      "card": {
-        "1": {
-          "title": "Mystery Box & NFT mining",
-          "info":
-            "Get Collectibles from mystery box!\n\nMine rewards,play games and level up to win more!"
-        },
-        "2": {
-          "title": "NFT Marketplace",
-          "info":
-            "Buy & Sell your miner avatars\n\nLend your avatars & tools to earn extra interest!"
-        },
-        "3": {
-          "title": "GameFi",
-          "info":
-            "An entire game-driven tokenomy\n\nOffer sustainable benefits to metaminers community."
+      "farms": "Farms and Pool",
+      "convert": "Home",
+      "sofi": {
+        "title": "SoFi",
+        "child": {
+          "dashboard": "Dashboard",
+          "market": "Market",
+          "myPortfolio": "My Portfolio",
+          "following": "Following"
         }
       },
-      "connect": "Connect Wallet",
-      "tokenSale": "Token Pre-sales",
-      "subTitle": "Yield Farming with Metaminers\nMaximize your APY",
-      "earnNow": "Earn now"
+      "nft": "NFT",
+      "win": "Win",
+      "more": {
+        "title": "More",
+        "child": {
+          "info": "Info",
+          "voting": "Voting",
+          "docs": "Docs"
+        }
+      }
+    },
+    "home": {
+      "connectWallet": "Connect Wallet",
+      "preSale": "Token Pre-Sales",
+      "totalValueLocked": "Total Value Locked",
+      "marketCapital": "MNC Market Cap",
+      "yieldFarmingSlogan": {
+        "1": "Yield Farming with Metaminers",
+        "2": "Maximize your APY"
+      },
+      "earnNow": "Earn now",
+      "card": {
+        "mysteryBox": {
+          "title": "Mystery Box & NFT mining",
+          "info":{
+            "1": "Get Collectibles from mystery box!",
+            "2": "Mine rewards,play games and level up to win more!"
+          }
+        },
+        "nftMarketplace": {
+          "title": "NFT Marketplace",
+          "info":
+          {
+            "1": "Buy & Sell your miner avatars",
+            "2": "Lend your avatars & tools to earn extra interest!"
+          }
+        },
+        "gameFi": {
+          "title": "GameFi",
+          "info":
+          {
+            "1": "An entire game-driven tokenomy",
+            "2": "Offer sustainable benefits to Metaminers community."
+          }
+        }
+      }
     },
     "tools": {
       "earning": "EARNING",

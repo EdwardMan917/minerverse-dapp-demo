@@ -1,34 +1,60 @@
 {
     "menu": {
-      "home": "首页",
-      "marktplace": "交易市场",
-      "myTools": "我的工具",
-      "connect": "连接钱包"
-    },
-    "home": {
-        "infoBoxTitle": {
-            "1": "总价值锁定",
-            "2": "跨国公司市值"
-      },
-      "card": {
-        "1": {
-          "title": "神秘盒子 和 NFT挖矿",
-          "info": "从神秘盒子中获取收藏品！\n\n挖掘奖励，玩游戏并升级以赢取更多！"
-        },
-        "2": {
-          "title": "NFT 市场",
-          "info": "买卖你的矿工头像\n\n借出你的头像和工具来赚取额外的利息！"
-        },
-        "3": {
-          "title": "GameFi",
-          "info":
-            "An entire game-driven tokenomy\n\nOffer sustainable benefits to metaminers community."
+      "farms": "农场及流动性池",
+      "convert": "兑换",
+      "sofi": {
+        "title": "社会金融",
+        "child": {
+          "dashboard": "仪表板",
+          "market": "市场",
+          "myPortfolio": "我的组合",
+          "following": "已关注"
         }
       },
-      "connect": "连接钱包",
-      "tokenSale": "代币预售",
-      "subTitle": "Metaminers 的产量农业\n最大化您的APY",
-      "earnNow": "现在赚"
+      "nft": "NFT",
+      "win": "获胜",
+      "more": {
+        "title": "更多",
+        "child": {
+          "info": "资料",
+          "voting": "投票",
+          "docs": "文档"
+        }
+      }
+    },
+    "home": {
+      "connectWallet": "连接钱包",
+      "preSale": "代币预售",
+      "totalValueLocked": "已锁定总值",
+      "marketCapital": "MNC总市值",
+      "yieldFarmingSlogan": {
+        "1": "经Metaminers作流动性挖矿",
+        "2": "最大化您的年收益"
+      },
+      "earnNow": "马上赚",
+      "card": {
+        "mysteryBox": {
+          "title": "神秘宝箱及NFT挖矿",
+          "info":{
+            "1": "从神秘宝箱中获取收藏品！",
+            "2": "挖掘奖励，玩游戏并升级以赢取更多！"
+          }
+        },
+        "nftMarketplace": {
+          "title": "NFT市场",
+          "info":{
+            "1": "交易你的矿工头像",
+            "2": "借出你的头像和工具来赚取额外的利息！"
+          }
+        },
+        "gameFi": {
+          "title": "游戏化金融",
+          "info":{
+            "1": "以游戏推动的令牌经济",
+            "2": "为整个Metaminers社群提供持续收益！"
+          }
+        }
+      }
     },
     "tools": {
       "earning": "收益",
