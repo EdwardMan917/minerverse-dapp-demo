@@ -113,50 +113,61 @@ async function updateAccountState(wallet: any, provider: any, isWalletConnect: b
  *
  */
 export async function getBalance(tokenType: string, tokenAddress: string) {
-  let myStore = store.getState();
-  const provider = myStore.account.provider;
-  if(!provider) return;
-  const address = await provider.listAccounts();
-  let result;
-  switch (tokenType) {
-    case NativeToken:
-      result = await provider.getBalance(address[0]);
-      break;
-    case LPToken:
-    case Token:
-      const contract = new ethers.Contract(tokenAddress, ERC20, provider);
-      result = await contract.balanceOf(address[0]);
-      break
-    default:
-      return "-";
+  try{
+    let myStore = store.getState();
+    const provider = myStore.account.provider;
+    if(!provider) return;
+    const address = await provider.listAccounts();
+    let result;
+    switch (tokenType) {
+      case NativeToken:
+        result = await provider.getBalance(address[0]);
+        break;
+      case LPToken:
+      case Token:
+        const contract = new ethers.Contract(tokenAddress, ERC20, provider);
+        result = await contract.balanceOf(address[0]);
+        break
+      default:
+        return "-";
+    }
+    return parseFloat(formatEther(result.toString())).toFixed(4);  
+  } catch (e){
+    console.log(e);
+    return "-";
   }
-  return parseFloat(formatEther(result.toString())).toFixed(4);  
+  
 }
 
 
 export async function getConversionRate(tokenPair: ITokenPair) {
-  let myStore = store.getState();
-  const provider = myStore.account.provider;
-  if(!provider) return;
-  const contract = new ethers.Contract(Contracts.priceCalculatorBSC, PriceCalculatorBSC, provider);
-  
-  let fromTokenPrice;
-  let toTokenPrice;
+  try{
+    let myStore = store.getState();
+    const provider = myStore.account.provider;
+    if(!provider) return;
+    const contract = new ethers.Contract(Contracts.priceCalculatorBSC, PriceCalculatorBSC, provider);
+    
+    let fromTokenPrice;
+    let toTokenPrice;
 
-  if (tokenPair.from.type === NativeToken) {
-    fromTokenPrice = formatEther(await contract.priceOfBNB());
-    toTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.to.address]))[0]);
-  } else if (tokenPair.to.type === NativeToken) {
-    fromTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.from.address]))[0]);
-    toTokenPrice = formatEther(await contract.priceOfBNB());
-  } else {
-    let prices: BigNumber[] = await contract.pricesInUSD([tokenPair.from.address, tokenPair.to.address]);
-    fromTokenPrice = formatEther(prices[0]);
-    toTokenPrice = formatEther(prices[1]);
+    if (tokenPair.from.type === NativeToken) {
+      fromTokenPrice = formatEther(await contract.priceOfBNB());
+      toTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.to.address]))[0]);
+    } else if (tokenPair.to.type === NativeToken) {
+      fromTokenPrice = formatEther((await contract.pricesInUSD([tokenPair.from.address]))[0]);
+      toTokenPrice = formatEther(await contract.priceOfBNB());
+    } else {
+      let prices: BigNumber[] = await contract.pricesInUSD([tokenPair.from.address, tokenPair.to.address]);
+      fromTokenPrice = formatEther(prices[0]);
+      toTokenPrice = formatEther(prices[1]);
+    }
+    
+    let rate = (parseFloat(fromTokenPrice) / parseFloat(toTokenPrice)).toFixed(5);
+    return rate === "Infinity" ? "0.00000" : rate; 
+  } catch (e){
+    console.log(e);
+    return "0.00000";
   }
-  
-  let rate = (parseFloat(fromTokenPrice) / parseFloat(toTokenPrice)).toFixed(5);
-  return rate === "Infinity" ? "0.00000" : rate; 
 }
 
 
